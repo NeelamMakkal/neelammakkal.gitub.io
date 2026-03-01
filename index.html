@@ -7,61 +7,87 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@700&family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-blue: #1a53ff;
-            --deep-black: #000000;
-            --text-gray: #444444;
-            --light-border: #eeeeee;
+            --primary-blue: #001f3f; /* Deep Royal Blue */
+            --gold-color: #FFD700;   /* Bright Golden */
+            --light-white: rgba(255, 255, 255, 0.05); /* Light White for Chakra */
         }
 
-        body { font-family: 'Inter', sans-serif; margin: 0; background-color: #ffffff; color: var(--deep-black); }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            background-color: var(--primary-blue); 
+            color: var(--gold-color);
+            position: relative;
+            min-height: 100vh;
+        }
 
-        /* --- LOGO SECTION (As requested) --- */
+        /* --- BACKGROUND ASHOKA CHAKRA --- */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 80vw;
+            height: 80vw;
+            max-width: 600px;
+            max-height: 600px;
+            transform: translate(-50%, -50%);
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/17/Ashoka_Chakra.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            opacity: 0.1; /* Light white effect */
+            filter: brightness(0) invert(1); /* Makes the black SVG white */
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* --- LOGO SECTION --- */
         .header-section { padding: 60px 20px 20px; text-align: center; }
         .logo-container { display: inline-block; text-align: center; margin-bottom: 20px; }
-        .neelam-text { color: var(--primary-blue); font-family: 'Noto Serif Tamil', serif; font-size: 65px; line-height: 1; margin-bottom: -8px; letter-spacing: -1px; }
-        .bottom-row { display: flex; align-items: center; border-top: 2px solid #333; padding-top: 5px; }
-        .chakra { width: 25px; height: 25px; border: 2px solid #2e3192; border-radius: 50%; position: relative; margin-right: 8px; }
-        .chakra::before { content: ''; position: absolute; top: 50%; left: 50%; width: 80%; height: 80%; transform: translate(-50%, -50%); background: repeating-conic-gradient(from 0deg, #2e3192 0deg 2deg, transparent 2deg 15deg); border-radius: 50%; }
-        .makkal-text { font-family: 'Playfair Display', serif; font-size: 26px; letter-spacing: 2px; text-transform: uppercase; font-weight: bold; }
+        .neelam-text { color: var(--gold-color); font-family: 'Noto Serif Tamil', serif; font-size: 65px; line-height: 1; margin-bottom: -8px; letter-spacing: -1px; }
+        .bottom-row { display: flex; align-items: center; border-top: 2px solid var(--gold-color); padding-top: 5px; }
+        .chakra { width: 25px; height: 25px; border: 2px solid var(--gold-color); border-radius: 50%; position: relative; margin-right: 8px; }
+        .chakra::before { content: ''; position: absolute; top: 50%; left: 50%; width: 80%; height: 80%; transform: translate(-50%, -50%); background: repeating-conic-gradient(from 0deg, var(--gold-color) 0deg 2deg, transparent 2deg 15deg); border-radius: 50%; }
+        .makkal-text { font-family: 'Playfair Display', serif; font-size: 26px; letter-spacing: 2px; text-transform: uppercase; font-weight: bold; color: var(--gold-color); }
 
         /* --- QUOTES SECTION --- */
         .quotes-wrapper { max-width: 800px; margin: 0 auto 40px; text-align: center; padding: 0 20px; }
-        .quote-box { margin-bottom: 30px; }
-        .tamil-quote { font-family: 'Noto Serif Tamil', serif; font-size: 1.1rem; line-height: 1.6; color: #333; margin-bottom: 8px; }
-        .english-quote { font-family: 'Inter', sans-serif; font-size: 0.95rem; color: #666; font-style: italic; }
-        .quote-author { display: block; margin-top: 10px; font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; color: var(--primary-blue); }
-        .divider { width: 40px; height: 2px; background: #ddd; margin: 20px auto; }
+        .tamil-quote { font-family: 'Noto Serif Tamil', serif; font-size: 1.1rem; line-height: 1.6; margin-bottom: 8px; color: #fff; }
+        .english-quote { font-family: 'Inter', sans-serif; font-size: 0.95rem; color: #ccc; font-style: italic; }
+        .quote-author { display: block; margin-top: 10px; font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; color: var(--gold-color); }
+        .divider { width: 40px; height: 2px; background: var(--gold-color); margin: 20px auto; }
 
         /* --- SEARCH SECTION --- */
         .search-section { max-width: 600px; margin: 0 auto 60px; padding: 0 20px; }
-        .search-container { position: relative; display: flex; align-items: center; }
-        .search-input { width: 100%; padding: 15px 50px 15px 25px; border: 1.5px solid #000; border-radius: 4px; font-size: 1rem; outline: none; font-family: 'Inter', sans-serif; }
-        .search-icon { position: absolute; right: 20px; font-size: 1.2rem; cursor: pointer; }
+        .search-input { 
+            width: 100%; padding: 15px 25px; 
+            border: 1.5px solid var(--gold-color); 
+            border-radius: 4px; font-size: 1rem; 
+            outline: none; background: rgba(255,255,255,0.1); 
+            color: #fff;
+        }
+        .search-input::placeholder { color: #aaa; }
 
         /* --- BOOKS SECTION --- */
         .books-container { max-width: 1000px; margin: 0 auto 80px; padding: 0 20px; }
-        .book-list { display: flex; flex-direction: column; gap: 15px; }
-        .book-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--light-border); transition: 0.2s; }
-        .book-row:hover { background: #fcfcfc; }
-        .book-info h3 { margin: 0; font-size: 1.1rem; font-weight: 600; }
-        .read-link { color: var(--primary-blue); text-decoration: none; font-weight: 600; font-size: 0.9rem; border: 1px solid var(--primary-blue); padding: 5px 15px; border-radius: 4px; }
-        .read-link:hover { background: var(--primary-blue); color: #fff; }
+        .book-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(255, 215, 0, 0.3); }
+        .read-link { color: var(--gold-color); text-decoration: none; font-weight: 600; font-size: 0.9rem; border: 1px solid var(--gold-color); padding: 5px 15px; border-radius: 4px; transition: 0.3s; }
+        .read-link:hover { background: var(--gold-color); color: var(--primary-blue); }
 
-        /* --- FOUNDER & PURPOSE SECTION --- */
-        .purpose-section { background: #f9f9f9; padding: 80px 20px; text-align: center; border-top: 1px solid var(--light-border); }
-        .founder-name { font-family: 'Montserrat', sans-serif; font-size: 2.5rem; font-weight: 900; letter-spacing: 8px; text-transform: uppercase; color: #000; margin-bottom: 30px; }
-        .purpose-text { max-width: 800px; margin: 0 auto; line-height: 1.8; color: var(--text-gray); font-size: 1.05rem; }
-        .purpose-text strong { color: #000; }
+        /* --- FOUNDER SECTION --- */
+        .purpose-section { background: rgba(0, 0, 0, 0.2); padding: 80px 20px; text-align: center; border-top: 1px solid rgba(255, 215, 0, 0.2); }
+        .founder-name { font-family: 'Montserrat', sans-serif; font-size: 2.5rem; font-weight: 900; letter-spacing: 8px; text-transform: uppercase; color: var(--gold-color); margin-bottom: 30px; }
+        .purpose-text { max-width: 800px; margin: 0 auto; line-height: 1.8; color: #eee; font-size: 1.05rem; }
+        .jaibhim { margin-top: 50px; font-weight: 800; letter-spacing: 4px; color: var(--gold-color); font-size: 1.2rem; text-shadow: 0 0 10px rgba(255,215,0,0.5); }
 
-        /* --- CONTACT SECTION --- */
-        footer { padding: 60px 20px; border-top: 1px solid var(--light-border); text-align: center; }
-        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1000px; margin: 0 auto; text-align: left; }
-        .contact-col h4 { text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 20px; color: #888; }
-        .contact-col a { display: block; color: #000; text-decoration: none; margin-bottom: 10px; font-size: 0.95rem; font-weight: 500; }
-        .contact-col a:hover { color: var(--primary-blue); }
-        .jaibhim { margin-top: 50px; font-weight: 800; letter-spacing: 4px; color: var(--primary-blue); font-size: 1.2rem; }
+        /* --- FOOTER --- */
+        footer { padding: 60px 20px; border-top: 1px solid rgba(255, 215, 0, 0.2); text-align: center; }
+        .contact-col a { color: #fff; text-decoration: none; margin-bottom: 10px; display: block; opacity: 0.8; }
+        .contact-col a:hover { color: var(--gold-color); opacity: 1; }
+        h4 { color: var(--gold-color); letter-spacing: 2px; }
 
-        @media (max-width: 600px) { .neelam-text { font-size: 50px; } .makkal-text { font-size: 20px; } .founder-name { font-size: 1.8rem; } }
+        @media (max-width: 600px) { .neelam-text { font-size: 50px; } .founder-name { font-size: 1.8rem; } }
     </style>
 </head>
 <body>
@@ -79,39 +105,32 @@
     <div class="quotes-wrapper">
         <div class="quote-box">
             <div class="tamil-quote">"கல்வி என்பது வெறும் காகிதமல்ல... உன் தலைமுறை சுமந்த வலிக்கு, நீ தரும் ஒரே புரட்சிகரமான பதில் உன் அறிவாற்றல் மட்டுமே!"</div>
-            <div class="english-quote">"Education is not just paper; it is the sharp weapon. Your intellect is the only revolutionary answer to the pain your generation carried."</div>
+            <div class="english-quote">"Education is not just paper; it is the sharp weapon."</div>
             <span class="quote-author">~ VASANTH</span>
         </div>
         <div class="divider"></div>
         <div class="quote-box">
-            <div class="tamil-quote" style="font-weight: 700; font-size: 1.3rem; letter-spacing: 1px;">"BE EDUCATED, BE ORGANISED, BE AGITATED."</div>
+            <div class="tamil-quote" style="font-weight: 700; font-size: 1.3rem; letter-spacing: 1px; color: var(--gold-color);">"BE EDUCATED, BE ORGANISED, BE AGITATED."</div>
             <span class="quote-author">~ DR. B.R. AMBEDKAR</span>
         </div>
     </div>
 
     <div class="search-section">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search Neelam Makkal Books...">
-            <span class="search-icon">🔍</span>
-        </div>
+        <input type="text" class="search-input" placeholder="Search Neelam Makkal Books...">
     </div>
 
     <div class="books-container">
         <div class="book-list">
             <div class="book-row">
-                <div class="book-info"><h3>The Buddha and His Dhamma</h3></div>
+                <h3>The Buddha and His Dhamma</h3>
                 <a href="#" class="read-link">READ ONLINE</a>
             </div>
             <div class="book-row">
-                <div class="book-info"><h3>Annihilation of Caste</h3></div>
+                <h3>Annihilation of Caste</h3>
                 <a href="#" class="read-link">READ ONLINE</a>
             </div>
             <div class="book-row">
-                <div class="book-info"><h3>The Untouchables</h3></div>
-                <a href="#" class="read-link">READ ONLINE</a>
-            </div>
-            <div class="book-row">
-                <div class="book-info"><h3>Philosophy of Hinduism</h3></div>
+                <h3>The Untouchables</h3>
                 <a href="#" class="read-link">READ ONLINE</a>
             </div>
         </div>
@@ -120,39 +139,17 @@
     <div class="purpose-section">
         <div class="founder-name">VASANTH</div>
         <div class="purpose-text">
-            <strong>Purpose:</strong> This website has been created so that every citizen of India can learn about and read Dr. B.R. Ambedkar. Understanding our history and the vision of Babasaheb is essential for progress. To facilitate this, <strong>Vasanth</strong> and the <strong>Neelam Makkal</strong> team are providing these books <strong>Free of Cost</strong>. Our goal is to ensure that knowledge is accessible to all.
+            Every citizen of India should learn about Dr. B.R. Ambedkar. Knowledge is the path to equality.
             <div class="jaibhim">JAI BHIM</div>
         </div>
     </div>
 
     <footer>
-        <div class="contact-grid">
-            <div class="contact-col">
-                <h4>Official Contacts</h4>
-                <a href="mailto:officialneelammakkal@gmail.com">officialneelammakkal@gmail.com</a>
-                <a href="https://instagram.com/neelam.makkal" target="_blank">Instagram: @neelam.makkal</a>
-                <a href="https://youtube.com/@Neelam.Makkal" target="_blank">YouTube: @Neelam.Makkal</a>
-            </div>
-            <div class="contact-col">
-                <h4>Founder Details</h4>
-                <a href="mailto:officialvelvasanth@gmail.com">officialvelvasanth@gmail.com</a>
-                <a href="https://instagram.com/therealspringgg" target="_blank">Instagram: @therealspringgg</a>
-            </div>
+        <div class="contact-col">
+            <h4>CONTACT</h4>
+            <a href="mailto:officialneelammakkal@gmail.com">officialneelammakkal@gmail.com</a>
         </div>
     </footer>
 
-    <script>
-        // Simple search functionality
-        document.querySelector('.search-input').addEventListener('keyup', function(e) {
-            let term = e.target.value.toLowerCase();
-            let books = document.querySelectorAll('.book-row');
-            books.forEach(book => {
-                let title = book.querySelector('h3').innerText.toLowerCase();
-                book.style.display = title.includes(term) ? 'flex' : 'none';
-            });
-        });
-    </script>
-
 </body>
 </html>
-<!DOCTYPE html>
