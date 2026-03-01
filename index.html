@@ -3,158 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neelam Makkal | Digital Library</title>
+    <title>NEELAM MAKKAL | Founder Mr. Vasanth</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;600;800&family=Noto+Sans+Tamil:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary-blue: #003399; --gold: #D4AF37; --light-bg: #f8f9fa; --text-dark: #2c3e50; }
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; background-color: var(--light-bg); color: var(--text-dark); line-height: 1.6; }
+        :root {
+            --royal-blue: #0038A8; /* Ambedkarite Blue */
+            --gold: #D4AF37;
+            --deep-dark: #0a0a0a;
+            --pure-white: #ffffff;
+        }
+
+        body { font-family: 'Montserrat', sans-serif; margin: 0; background-color: #f9f9f9; color: var(--deep-dark); }
+
+        /* Hero Section */
+        header { 
+            background: var(--pure-white); 
+            padding: 40px 20px; 
+            text-align: center; 
+            border-bottom: 6px solid var(--royal-blue);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .logo-center { width: 180px; margin-bottom: 10px; transition: 0.4s; }
         
-        /* Header & Logo */
-        header { background: white; padding: 40px 20px; text-align: center; border-bottom: 4px solid var(--primary-blue); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .logo-placeholder { font-size: 2.5rem; font-weight: bold; color: var(--primary-blue); letter-spacing: 2px; text-transform: uppercase; }
-        .founder-tag { color: var(--gold); font-weight: 600; font-size: 0.9rem; margin-top: 5px; }
+        .founder-title { 
+            font-family: 'Cinzel', serif; 
+            font-size: 2rem; 
+            font-weight: 800; 
+            color: var(--royal-blue); 
+            letter-spacing: 4px;
+            margin-top: 15px;
+        }
 
-        /* Search Bar Section */
-        .search-container { max-width: 600px; margin: 30px auto; text-align: center; padding: 0 20px; }
-        #bookSearch { width: 100%; padding: 15px 25px; font-size: 1rem; border: 2px solid #ddd; border-radius: 30px; outline: none; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        #bookSearch:focus { border-color: var(--primary-blue); box-shadow: 0 4px 12px rgba(0,51,153,0.1); }
+        /* Babasaheb Image Section */
+        .ambedkar-section {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('your-background-pattern.png');
+        }
+        .ambedkar-img {
+            width: 250px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: 4px solid var(--royal-blue);
+        }
 
-        /* Quote Section */
-        .quote-container { max-width: 800px; margin: 20px auto 40px; text-align: center; padding: 20px; border-left: 4px solid var(--gold); background: #fff; font-style: italic; font-size: 1.2rem; }
+        /* Search Section */
+        .search-container { 
+            max-width: 800px; 
+            margin: -40px auto 50px; 
+            position: relative; 
+            z-index: 100;
+        }
+        .search-box { 
+            width: 100%; 
+            padding: 22px 70px; 
+            border-radius: 50px; 
+            border: none; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+            font-size: 1.2rem; 
+            outline: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .search-box:focus { border: 2px solid var(--gold); }
+        .search-icon-btn { position: absolute; left: 30px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; color: var(--royal-blue); }
 
-        /* Main Content */
-        .container { max-width: 1100px; margin: auto; padding: 20px; min-height: 400px; }
-        .section-title { text-align: center; margin-bottom: 40px; font-size: 2rem; border-bottom: 2px solid var(--gold); display: inline-block; width: 100%; padding-bottom: 10px; }
+        /* Quotes Styling */
+        .quote-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .premium-card { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03); 
+            border-bottom: 5px solid var(--gold);
+        }
+        .tamil-text { 
+            font-family: 'Noto Sans Tamil', sans-serif; 
+            font-size: 1.4rem; 
+            line-height: 1.8; 
+            color: #222; 
+            font-weight: 700;
+        }
+        .english-sub { font-family: 'Playfair Display', serif; font-style: italic; color: #555; margin-top: 15px; }
 
-        /* Book Grid */
-        .book-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .book-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid #eee; }
-        .book-card.hidden { display: none; }
-        .book-info { padding: 25px; text-align: center; }
-        .book-info h3 { margin: 0 0 10px 0; color: var(--primary-blue); }
-        
-        /* Buttons */
-        .btn-group { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
-        .btn { padding: 10px 18px; text-decoration: none; border-radius: 25px; font-size: 0.85rem; font-weight: bold; transition: 0.3s; cursor: pointer; }
-        .btn-read { border: 2px solid var(--primary-blue); color: var(--primary-blue); background: transparent; }
-        .btn-read:hover { background: var(--primary-blue); color: white; }
-        .btn-download { background: var(--primary-blue); color: white; border: 2px solid var(--primary-blue); }
-        .btn-download:hover { background: #002266; }
+        /* Purpose Section */
+        .purpose-box { background: var(--royal-blue); color: white; padding: 80px 20px; text-align: center; }
+        .purpose-box h2 { font-family: 'Cinzel', serif; color: var(--gold); font-size: 2.5rem; }
+        .purpose-box p { max-width: 900px; margin: 20px auto; font-size: 1.2rem; line-height: 2; font-weight: 300; }
 
-        /* Footer */
-        footer { background: #1a1a1a; color: white; padding: 60px 20px 20px; margin-top: 80px; }
-        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1100px; margin: auto; }
-        .footer-column h4 { color: var(--gold); margin-bottom: 20px; text-transform: uppercase; }
-        .footer-column p, .footer-column a { color: #bbb; text-decoration: none; font-size: 0.9rem; display: block; margin-bottom: 10px; }
-        .footer-column a:hover { color: white; }
-        .copyright { text-align: center; margin-top: 50px; border-top: 1px solid #333; padding-top: 20px; font-size: 0.8rem; color: #777; }
+        /* Library Cards */
+        .library { max-width: 1200px; margin: 80px auto; padding: 0 20px; }
+        .book-card { 
+            background: white; 
+            border-radius: 15px; 
+            overflow: hidden; 
+            text-align: center; 
+            padding: 30px; 
+            border: 1px solid #eee;
+            transition: 0.3s;
+        }
+        .book-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .btn-action { 
+            display: inline-block; 
+            margin-top: 20px; 
+            padding: 12px 30px; 
+            background: var(--royal-blue); 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        footer { background: #111; color: #eee; padding: 60px 20px; text-align: center; }
+        .footer-links a { color: var(--gold); margin: 0 15px; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-placeholder">NEELAM MAKKAL</div>
-    <div class="founder-tag">Founded by Vasanth</div>
+    <img src="https://i.ibb.co/XkyY3Vw/1000006940.png" alt="Neelam Makkal Logo" class="logo-center">
+    <div class="founder-title">FOUNDER: MR. VASANTH</div>
 </header>
 
-<div class="search-container">
-    <input type="text" id="bookSearch" placeholder="Search for books, authors, or topics..." onkeyup="filterBooks()">
+<div class="ambedkar-section">
+    <img src="https://i.ibb.co/D4mN9T6/1000019059.jpg" alt="Dr. B.R. Ambedkar" class="ambedkar-img">
 </div>
 
-<div class="container">
-    <div class="quote-container">
-        "Educate, Agitate, Organize." <br>
-        <strong>— Dr. B.R. Ambedkar</strong>
+<div class="search-container">
+    <span class="search-icon-btn">🔍</span>
+    <input type="text" class="search-box" placeholder="Search Neelam Makkal Books...">
+</div>
+
+<div class="quote-grid">
+    <div class="premium-card">
+        <div class="tamil-text">
+            "கல்வி என்பது வெறும் காகிதமல்ல... உன் தலைமுறை சுமந்த வலிக்கு, நீ தரும் ஒரே புரட்சிகரமான பதில் உன் அறிவாற்றல் மட்டுமே!"
+        </div>
+        <div class="english-sub">
+            "Education is not just paper; it is the sharp weapon. Your intellect is the only revolutionary answer to the pain your generation carried!"
+        </div>
+        <p style="font-weight: bold; color: var(--royal-blue); margin-top: 20px;">— MR. VASANTH</p>
     </div>
 
-    <h2 class="section-title">Digital Library</h2>
-    
-    <div class="book-grid" id="bookGrid">
-        <div class="book-card">
-            <div class="book-info">
-                <h3>The Buddha and His Dhamma</h3>
-                <p>A masterpiece on the philosophy and life of Lord Buddha.</p>
-                <div class="btn-group">
-                    <button class="btn btn-read">Read Online</button>
-                    <button class="btn btn-download">Download PDF</button>
-                </div>
-            </div>
+    <div class="premium-card">
+        <div class="tamil-text" style="font-size: 2.2rem; font-family: 'Cinzel';">
+            EDUCATE, <br>ORGANIZE, <br>AGITATE.
         </div>
+        <div class="english-sub">
+            The eternal call for social justice and equality.
+        </div>
+        <p style="font-weight: bold; color: var(--royal-blue); margin-top: 20px;">— DR. B.R. AMBEDKAR</p>
+    </div>
+</div>
 
-        <div class="book-card">
-            <div class="book-info">
-                <h3>Annihilation of Caste</h3>
-                <p>Fundamental text for social reform and equality.</p>
-                <div class="btn-group">
-                    <button class="btn btn-read">Read Online</button>
-                    <button class="btn btn-download">Download PDF</button>
-                </div>
-            </div>
-        </div>
+<div class="purpose-box">
+    <h2>OUR PURPOSE</h2>
+    <p>
+        Neelam Makkal is driven by the mission to make the profound wisdom of Babasaheb Ambedkar accessible to every citizen of India. 
+        Knowledge should not be a privilege. Therefore, Founder <strong>Mr. Vasanth</strong> offers these digital books 
+        completely <strong>Free of Cost</strong>, ensuring that the light of education reaches every household.
+    </p>
+</div>
 
+<div class="library">
+    <h2 style="text-align: center; font-family: 'Cinzel'; margin-bottom: 50px;">Digital Repository</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
         <div class="book-card">
-            <div class="book-info">
-                <h3>Constitution of India</h3>
-                <p>The supreme law of India drafted by Dr. Ambedkar.</p>
-                <div class="btn-group">
-                    <button class="btn btn-read">Read Online</button>
-                    <button class="btn btn-download">Download PDF</button>
-                </div>
-            </div>
+            <h3 style="color: var(--royal-blue);">Annihilation of Caste</h3>
+            <p>A fundamental text on social reform.</p>
+            <a href="#" class="btn-action">READ ONLINE</a>
         </div>
-        
         <div class="book-card">
-            <div class="book-info">
-                <h3>Waiting for a Visa</h3>
-                <p>Autobiographical notes on untouchability experiences.</p>
-                <div class="btn-group">
-                    <button class="btn btn-read">Read Online</button>
-                    <button class="btn btn-download">Download PDF</button>
-                </div>
-            </div>
+            <h3 style="color: var(--royal-blue);">The Buddha and His Dhamma</h3>
+            <p>Philosophy of life and Lord Buddha.</p>
+            <a href="#" class="btn-action">READ ONLINE</a>
         </div>
     </div>
 </div>
 
 <footer>
-    <div class="footer-content">
-        <div class="footer-column">
-            <h4>Contact Us</h4>
-            <a href="mailto:officialneelammakkal@gmail.com">officialneelammakkal@gmail.com</a>
-            <a href="https://instagram.com/neelam.makkal" target="_blank">Instagram: @neelam.makkal</a>
-        </div>
-        <div class="footer-column">
-            <h4>Founder Details</h4>
-            <p><strong>Vasanth</strong></p>
-            <a href="mailto:officialvelvasanth@gmail.com">officialvelvasanth@gmail.com</a>
-            <a href="https://instagram.com/therealspringgg" target="_blank">Instagram: @therealspringgg</a>
-        </div>
-        <div class="footer-column">
-            <h4>Mission</h4>
-            <p>Dedicated to spreading constitutional values and social justice through digital accessibility.</p>
-        </div>
+    <div class="footer-links">
+        <a href="https://instagram.com/therealspringgg">@therealspringgg</a> | 
+        <a href="https://instagram.com/neelam.makkal">@neelam.makkal</a>
     </div>
-    <div class="copyright">
-        &copy; 2026 Neelam Makkal. All Rights Reserved. | Designed for Excellence.
-    </div>
+    <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.6;">&copy; 2026 Neelam Makkal | Created for Revolution through Education.</p>
 </footer>
-
-<script>
-    function filterBooks() {
-        let input = document.getElementById('bookSearch').value.toLowerCase();
-        let cards = document.getElementsByClassName('book-card');
-        
-        for (let i = 0; i < cards.length; i++) {
-            let title = cards[i].querySelector('h3').innerText.toLowerCase();
-            let desc = cards[i].querySelector('p').innerText.toLowerCase();
-            
-            if (title.includes(input) || desc.includes(input)) {
-                cards[i].classList.remove('hidden');
-            } else {
-                cards[i].classList.add('hidden');
-            }
-        }
-    }
-</script>
 
 </body>
 </html>
