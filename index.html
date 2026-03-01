@@ -3,217 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEELAM MAKKAL | Digital Library by Vasanth</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;600;800&family=Noto+Sans+Tamil:wght@700&display=swap" rel="stylesheet">
+    <title>NEELAM MAKKAL | Digital Library</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@700&family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --ambedkar-blue: #0038A8;
-            --premium-gold: #C5A022;
-            --ivory: #FCFAFA;
-            --deep-slate: #1A1A1A;
+            --primary-blue: #1a53ff;
+            --deep-black: #000000;
+            --text-gray: #444444;
+            --light-border: #eeeeee;
         }
 
-        body { font-family: 'Montserrat', sans-serif; margin: 0; background-color: var(--ivory); color: var(--deep-slate); line-height: 1.6; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: #ffffff; color: var(--deep-black); }
 
-        /* Header & Logo Section */
-        header { 
-            background: white; 
-            padding: 50px 20px; 
-            text-align: center; 
-            border-bottom: 8px solid var(--ambedkar-blue);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-        .main-logo { width: 220px; height: auto; margin-bottom: 15px; }
-        .founder-brand { 
-            font-family: 'Cinzel', serif; 
-            font-size: 2.2rem; 
-            font-weight: 900; 
-            color: var(--ambedkar-blue); 
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            margin-top: 10px;
-        }
+        /* --- LOGO SECTION (As requested) --- */
+        .header-section { padding: 60px 20px 20px; text-align: center; }
+        .logo-container { display: inline-block; text-align: center; margin-bottom: 20px; }
+        .neelam-text { color: var(--primary-blue); font-family: 'Noto Serif Tamil', serif; font-size: 65px; line-height: 1; margin-bottom: -8px; letter-spacing: -1px; }
+        .bottom-row { display: flex; align-items: center; border-top: 2px solid #333; padding-top: 5px; }
+        .chakra { width: 25px; height: 25px; border: 2px solid #2e3192; border-radius: 50%; position: relative; margin-right: 8px; }
+        .chakra::before { content: ''; position: absolute; top: 50%; left: 50%; width: 80%; height: 80%; transform: translate(-50%, -50%); background: repeating-conic-gradient(from 0deg, #2e3192 0deg 2deg, transparent 2deg 15deg); border-radius: 50%; }
+        .makkal-text { font-family: 'Playfair Display', serif; font-size: 26px; letter-spacing: 2px; text-transform: uppercase; font-weight: bold; }
 
-        /* Hero Image Section (Babasaheb) */
-        .hero-banner {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 60px 20px;
-            background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('https://www.transparenttextures.com/patterns/paper-fibers.png');
-        }
-        .ambedkar-portrait {
-            width: 300px;
-            border-radius: 4px;
-            box-shadow: 20px 20px 0px var(--ambedkar-blue), -1px 10px 30px rgba(0,0,0,0.2);
-            border: 1px solid #ddd;
-        }
+        /* --- QUOTES SECTION --- */
+        .quotes-wrapper { max-width: 800px; margin: 0 auto 40px; text-align: center; padding: 0 20px; }
+        .quote-box { margin-bottom: 30px; }
+        .tamil-quote { font-family: 'Noto Serif Tamil', serif; font-size: 1.1rem; line-height: 1.6; color: #333; margin-bottom: 8px; }
+        .english-quote { font-family: 'Inter', sans-serif; font-size: 0.95rem; color: #666; font-style: italic; }
+        .quote-author { display: block; margin-top: 10px; font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; color: var(--primary-blue); }
+        .divider { width: 40px; height: 2px; background: #ddd; margin: 20px auto; }
 
-        /* Premium Search Section */
-        .search-area { max-width: 850px; margin: -45px auto 60px; position: relative; padding: 0 20px; }
-        .search-wrapper { position: relative; }
-        .search-input { 
-            width: 100%; 
-            padding: 25px 80px; 
-            border-radius: 60px; 
-            border: 2px solid #eee; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08); 
-            font-size: 1.2rem; 
-            outline: none;
-            transition: 0.3s;
-            background: white;
-        }
-        .search-input:focus { border-color: var(--premium-gold); box-shadow: 0 20px 40px rgba(197,160,34,0.15); }
-        .search-icon { position: absolute; left: 35px; top: 50%; transform: translateY(-50%); font-size: 1.8rem; color: var(--ambedkar-blue); }
+        /* --- SEARCH SECTION --- */
+        .search-section { max-width: 600px; margin: 0 auto 60px; padding: 0 20px; }
+        .search-container { position: relative; display: flex; align-items: center; }
+        .search-input { width: 100%; padding: 15px 50px 15px 25px; border: 1.5px solid #000; border-radius: 4px; font-size: 1rem; outline: none; font-family: 'Inter', sans-serif; }
+        .search-icon { position: absolute; right: 20px; font-size: 1.2rem; cursor: pointer; }
 
-        /* Quotes Display */
-        .quotes-container { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); 
-            gap: 40px; 
-            max-width: 1250px; 
-            margin: 40px auto; 
-            padding: 0 20px; 
-        }
-        .quote-card { 
-            background: white; 
-            padding: 50px; 
-            border-radius: 2px; 
-            position: relative;
-            border-left: 10px solid var(--ambedkar-blue);
-            box-shadow: 0 5px 25px rgba(0,0,0,0.02);
-        }
-        .tamil-quote { 
-            font-family: 'Noto Sans Tamil', sans-serif; 
-            font-size: 1.5rem; 
-            color: #111; 
-            margin-bottom: 20px; 
-            line-height: 1.8;
-        }
-        .english-translation { font-family: 'Playfair Display', serif; font-style: italic; color: #555; font-size: 1.1rem; }
-        .author-sign { 
-            display: block; 
-            margin-top: 30px; 
-            font-weight: 800; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            color: var(--ambedkar-blue);
-        }
+        /* --- BOOKS SECTION --- */
+        .books-container { max-width: 1000px; margin: 0 auto 80px; padding: 0 20px; }
+        .book-list { display: flex; flex-direction: column; gap: 15px; }
+        .book-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--light-border); transition: 0.2s; }
+        .book-row:hover { background: #fcfcfc; }
+        .book-info h3 { margin: 0; font-size: 1.1rem; font-weight: 600; }
+        .read-link { color: var(--primary-blue); text-decoration: none; font-weight: 600; font-size: 0.9rem; border: 1px solid var(--primary-blue); padding: 5px 15px; border-radius: 4px; }
+        .read-link:hover { background: var(--primary-blue); color: #fff; }
 
-        /* Purpose Section */
-        .mission-strip { 
-            background: var(--ambedkar-blue); 
-            color: white; 
-            padding: 100px 20px; 
-            text-align: center; 
-            margin: 80px 0;
-        }
-        .mission-content { max-width: 900px; margin: auto; }
-        .mission-content h2 { font-family: 'Cinzel', serif; color: var(--premium-gold); font-size: 2.8rem; margin-bottom: 30px; }
-        .mission-content p { font-size: 1.3rem; font-weight: 300; line-height: 2; opacity: 0.95; }
+        /* --- FOUNDER & PURPOSE SECTION --- */
+        .purpose-section { background: #f9f9f9; padding: 80px 20px; text-align: center; border-top: 1px solid var(--light-border); }
+        .founder-name { font-family: 'Montserrat', sans-serif; font-size: 2.5rem; font-weight: 900; letter-spacing: 8px; text-transform: uppercase; color: #000; margin-bottom: 30px; }
+        .purpose-text { max-width: 800px; margin: 0 auto; line-height: 1.8; color: var(--text-gray); font-size: 1.05rem; }
+        .purpose-text strong { color: #000; }
 
-        /* Book Grid */
-        .bookshelf { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .book-item { background: white; padding: 40px; text-align: center; border: 1px solid #f0f0f0; transition: 0.4s; }
-        .book-item:hover { box-shadow: 0 30px 60px rgba(0,0,0,0.1); border-color: var(--premium-gold); }
-        .read-btn { 
-            display: inline-block; 
-            margin-top: 25px; 
-            padding: 15px 40px; 
-            background: var(--ambedkar-blue); 
-            color: white; 
-            text-decoration: none; 
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
+        /* --- CONTACT SECTION --- */
+        footer { padding: 60px 20px; border-top: 1px solid var(--light-border); text-align: center; }
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1000px; margin: 0 auto; text-align: left; }
+        .contact-col h4 { text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 20px; color: #888; }
+        .contact-col a { display: block; color: #000; text-decoration: none; margin-bottom: 10px; font-size: 0.95rem; font-weight: 500; }
+        .contact-col a:hover { color: var(--primary-blue); }
+        .jaibhim { margin-top: 50px; font-weight: 800; letter-spacing: 4px; color: var(--primary-blue); font-size: 1.2rem; }
 
-        footer { background: #0c0c0c; color: #777; padding: 80px 20px; text-align: center; }
-        .social-link { color: var(--premium-gold); text-decoration: none; margin: 0 15px; font-weight: bold; }
-
-        @media (max-width: 768px) { .quotes-container { grid-template-columns: 1fr; } .founder-brand { font-size: 1.5rem; } }
+        @media (max-width: 600px) { .neelam-text { font-size: 50px; } .makkal-text { font-size: 20px; } .founder-name { font-size: 1.8rem; } }
     </style>
 </head>
 <body>
 
-<header>
-    <img src="https://i.ibb.co/XkyY3Vw/1000006940.png" alt="Neelam Makkal" class="main-logo">
-    <div class="founder-brand">FOUNDER: MR. VASANTH</div>
-</header>
-
-<section class="hero-banner">
-    <img src="https://i.ibb.co/D4mN9T6/1000019059.jpg" alt="Dr. Ambedkar" class="ambedkar-portrait">
-</section>
-
-<div class="search-area">
-    <div class="search-wrapper">
-        <span class="search-icon">🔍</span>
-        <input type="text" class="search-input" placeholder="Search Neelam Makkal Books...">
-    </div>
-</div>
-
-<div class="quotes-container">
-    <div class="quote-card">
-        <div class="tamil-quote">
-            "கல்வி என்பது வெறும் காகிதமல்ல... உன் தலைமுறை சுமந்த வலிக்கு, நீ தரும் ஒரே புரட்சிகரமான பதில் உன் அறிவாற்றல் மட்டுமே!"
-        </div>
-        <div class="english-translation">
-            "Education is not just paper; it is the sharp weapon. Your intellect is the only revolutionary answer to the pain your generation carried!"
-        </div>
-        <span class="author-sign">~ MR. VASANTH</span>
-    </div>
-
-    <div class="quote-card" style="border-left-color: var(--premium-gold);">
-        <div class="tamil-quote" style="font-family: 'Cinzel'; font-size: 2.5rem; color: var(--ambedkar-blue);">
-            BE EDUCATED,<br> BE ORGANISED,<br> BE AGITATED.
-        </div>
-        <div class="english-translation">
-            "Cultivation of mind should be the ultimate aim of human existence."
-        </div>
-        <span class="author-sign">~ DR. B.R. AMBEDKAR</span>
-    </div>
-</div>
-
-<div class="mission-strip">
-    <div class="mission-content">
-        <h2>OUR PURPOSE</h2>
-        <p>
-            Neelam Makkal is founded on the principle that the liberation of mind is the greatest revolution. 
-            We believe every citizen of India must have access to the works of Babasaheb Ambedkar. 
-            Founder <strong>Mr. Vasanth</strong> provides this digital library <strong>Free of Cost</strong> to empower 
-            every individual with the weapon of knowledge.
-        </p>
-    </div>
-</div>
-
-<section class="bookshelf">
-    <h2 style="text-align: center; font-family: 'Cinzel'; margin-bottom: 50px; letter-spacing: 3px;">COLLECTIONS</h2>
-    <div class="grid">
-        <div class="book-item">
-            <h3>The Buddha and His Dhamma</h3>
-            <p>Master the path of equality and wisdom.</p>
-            <a href="#" class="read-btn">READ ONLINE</a>
-        </div>
-        <div class="book-item">
-            <h3>Annihilation of Caste</h3>
-            <p>The blueprint for social justice in India.</p>
-            <a href="#" class="read-btn">READ ONLINE</a>
-        </div>
-        <div class="book-item">
-            <h3>Waiting for a Visa</h3>
-            <p>Personal reflections on the struggle for dignity.</p>
-            <a href="#" class="read-btn">READ ONLINE</a>
+    <div class="header-section">
+        <div class="logo-container">
+            <div class="neelam-text">நீலம்</div>
+            <div class="bottom-row">
+                <div class="chakra"></div>
+                <div class="makkal-text">MAKKAL</div>
+            </div>
         </div>
     </div>
-</section>
 
-<footer>
-    <div>
-        <a href="https://instagram.com/therealspringgg" class="social-link">@THEREALSPRINGGG</a>
-        <a href="https://instagram.com/neelam.makkal" class="social-link">@NEELAM.MAKKAL</a>
+    <div class="quotes-wrapper">
+        <div class="quote-box">
+            <div class="tamil-quote">"கல்வி என்பது வெறும் காகிதமல்ல... உன் தலைமுறை சுமந்த வலிக்கு, நீ தரும் ஒரே புரட்சிகரமான பதில் உன் அறிவாற்றல் மட்டுமே!"</div>
+            <div class="english-quote">"Education is not just paper; it is the sharp weapon. Your intellect is the only revolutionary answer to the pain your generation carried."</div>
+            <span class="quote-author">~ VASANTH</span>
+        </div>
+        <div class="divider"></div>
+        <div class="quote-box">
+            <div class="tamil-quote" style="font-weight: 700; font-size: 1.3rem; letter-spacing: 1px;">"BE EDUCATED, BE ORGANISED, BE AGITATED."</div>
+            <span class="quote-author">~ DR. B.R. AMBEDKAR</span>
+        </div>
     </div>
-    <p style="margin-top: 40px; font-size: 0.8rem; letter-spacing: 1px;">&copy; 2026 NEELAM MAKKAL | ESTABLISHED BY VASANTH</p>
-</footer>
+
+    <div class="search-section">
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search Neelam Makkal Books...">
+            <span class="search-icon">🔍</span>
+        </div>
+    </div>
+
+    <div class="books-container">
+        <div class="book-list">
+            <div class="book-row">
+                <div class="book-info"><h3>The Buddha and His Dhamma</h3></div>
+                <a href="#" class="read-link">READ ONLINE</a>
+            </div>
+            <div class="book-row">
+                <div class="book-info"><h3>Annihilation of Caste</h3></div>
+                <a href="#" class="read-link">READ ONLINE</a>
+            </div>
+            <div class="book-row">
+                <div class="book-info"><h3>The Untouchables</h3></div>
+                <a href="#" class="read-link">READ ONLINE</a>
+            </div>
+            <div class="book-row">
+                <div class="book-info"><h3>Philosophy of Hinduism</h3></div>
+                <a href="#" class="read-link">READ ONLINE</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="purpose-section">
+        <div class="founder-name">VASANTH</div>
+        <div class="purpose-text">
+            <strong>Purpose:</strong> This website has been created so that every citizen of India can learn about and read Dr. B.R. Ambedkar. Understanding our history and the vision of Babasaheb is essential for progress. To facilitate this, <strong>Vasanth</strong> and the <strong>Neelam Makkal</strong> team are providing these books <strong>Free of Cost</strong>. Our goal is to ensure that knowledge is accessible to all.
+            <div class="jaibhim">JAI BHIM</div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="contact-grid">
+            <div class="contact-col">
+                <h4>Official Contacts</h4>
+                <a href="mailto:officialneelammakkal@gmail.com">officialneelammakkal@gmail.com</a>
+                <a href="https://instagram.com/neelam.makkal" target="_blank">Instagram: @neelam.makkal</a>
+                <a href="https://youtube.com/@Neelam.Makkal" target="_blank">YouTube: @Neelam.Makkal</a>
+            </div>
+            <div class="contact-col">
+                <h4>Founder Details</h4>
+                <a href="mailto:officialvelvasanth@gmail.com">officialvelvasanth@gmail.com</a>
+                <a href="https://instagram.com/therealspringgg" target="_blank">Instagram: @therealspringgg</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple search functionality
+        document.querySelector('.search-input').addEventListener('keyup', function(e) {
+            let term = e.target.value.toLowerCase();
+            let books = document.querySelectorAll('.book-row');
+            books.forEach(book => {
+                let title = book.querySelector('h3').innerText.toLowerCase();
+                book.style.display = title.includes(term) ? 'flex' : 'none';
+            });
+        });
+    </script>
 
 </body>
 </html>
