@@ -3,232 +3,329 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neelam Makkal | Jai Bhim</title>
-    <link href="https://fonts.googleapis.com/css2?family=Arima:wght@700&family=Cinzel:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Neelam Makkal | Educate, Organize, Agitate</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;600&family=Kavivanar&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
         :root {
-            --ambedkar-blue: #003399; 
-            --deep-black: #1a1a1a;
-            --pure-white: #ffffff;
-            --soft-grey: #f4f4f4;
-            --chakra-color: rgba(0, 51, 153, 0.08); /* Bahut halka blue chakra ke liye */
+            --primary-blue: #000080;
+            --accent-glow: rgba(0, 0, 128, 0.2);
+            --text-dark: #1a1a1a;
         }
 
-        body, html {
+        * {
             margin: 0;
             padding: 0;
-            background-color: var(--pure-white);
-            color: var(--deep-black);
-            font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
+            box-sizing: border-box;
         }
 
-        /* Fixed Background Ashoka Chakra */
-        .fixed-bg-chakra {
+        body {
+            background-color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Fixed Glowing Ashoka Chakra Background */
+        .background-chakra {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 60vw;
-            height: 60vw;
+            width: 60vh;
+            height: 60vh;
+            background: url('https://instasize.com/p/b3378d215c50df0dc1e8e600e280f8ca2c7e112cba071ffc69249b91014f23d3') no-repeat center;
+            background-size: contain;
+            opacity: 0.12;
             z-index: -1;
-            pointer-events: none;
+            filter: drop-shadow(0 0 20px var(--accent-glow));
         }
 
-        /* Navigation */
-        nav {
+        /* Header & Navigation */
+        header {
             position: fixed;
             top: 0;
             width: 100%;
+            padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 5%;
             background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
             z-index: 1000;
-            box-sizing: border-box;
         }
 
-        .logo-small { display: flex; flex-direction: column; }
-        .logo-small .neelam { font-family: 'Arima'; font-size: 28px; color: var(--ambedkar-blue); line-height: 1; }
-        .logo-small .makkal { font-family: 'Cinzel'; font-size: 12px; border-top: 1px solid var(--ambedkar-blue); color: var(--deep-black); }
+        .logo img {
+            height: 60px;
+            width: auto;
+        }
 
-        .menu-icon { font-size: 28px; cursor: pointer; color: var(--ambedkar-blue); }
+        .menu-icon {
+            cursor: pointer;
+            font-size: 2rem;
+            color: var(--primary-blue);
+        }
 
-        /* Menu Overlay */
+        /* Overlay Menu */
         .nav-overlay {
-            height: 100%; width: 0; position: fixed; z-index: 2000;
-            top: 0; right: 0; background-color: var(--ambedkar-blue);
-            overflow-x: hidden; transition: 0.5s;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100%;
+            background: #fff;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            z-index: 2000;
+            transition: 0.4s;
+            padding: 50px 30px;
         }
-        .nav-overlay a { padding: 15px; font-size: 30px; color: white; text-decoration: none; font-family: 'Cinzel'; }
-        .nav-overlay a:hover { color: #80aaff; }
-        .close-btn { position: absolute; top: 20px; right: 45px; font-size: 50px; color: white; cursor: pointer; }
 
-        /* Sections */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        .nav-overlay.active { right: 0; }
+
+        .nav-overlay a {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 120px;
+            padding: 0 10%;
             text-align: center;
-            padding: 0 20px;
         }
 
-        .main-heading {
-            font-size: 2.8rem;
-            font-family: 'Cinzel';
-            color: var(--ambedkar-blue);
-            margin-bottom: 25px;
-        }
-
-        .quote-box {
-            max-width: 850px;
-            background: var(--soft-grey);
-            padding: 35px;
-            border-radius: 10px;
-            border-bottom: 4px solid var(--ambedkar-blue);
+        .top-thought {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+            text-transform: uppercase;
             margin-bottom: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            letter-spacing: 1px;
         }
 
-        .tamil-quote { font-size: 1.3rem; color: var(--ambedkar-blue); font-weight: 600; margin-bottom: 15px; }
-        .english-quote { font-style: italic; color: #555; margin-bottom: 10px; }
-        .ambedkar-quote { color: var(--deep-black); font-weight: bold; font-size: 1.4rem; margin-top: 20px; text-transform: uppercase; }
+        .quotes-container {
+            max-width: 800px;
+            margin: 0 auto 50px;
+            background: rgba(255,255,255,0.7);
+            padding: 30px;
+            border-radius: 20px;
+        }
 
-        /* Search bar */
-        .search-container { position: relative; width: 85%; max-width: 600px; }
+        .tamil-quote {
+            font-family: 'Kavivanar', cursive;
+            font-size: 1.4rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .english-translation {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .ambedkar-quote {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary-blue);
+            text-transform: uppercase;
+            border-top: 2px solid #eee;
+            padding-top: 20px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin: 40px auto;
+            max-width: 600px;
+            position: relative;
+        }
+
         .search-container input {
-            width: 100%; padding: 16px 55px 16px 25px;
-            border-radius: 50px; border: 2px solid var(--ambedkar-blue);
-            font-size: 1rem; color: var(--deep-black); outline: none;
+            width: 100%;
+            padding: 15px 50px 15px 25px;
+            border: 2px solid var(--primary-blue);
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(0,0,128,0.1);
         }
-        .search-container i { position: absolute; right: 25px; top: 50%; transform: translateY(-50%); color: var(--ambedkar-blue); }
 
-        /* Patti */
-        .section-patti {
-            background: var(--ambedkar-blue);
+        .search-container i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-blue);
+        }
+
+        /* Books Section */
+        .books-header {
+            background: var(--primary-blue);
             color: white;
-            padding: 12px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.6rem;
-            margin: 60px 0 30px 0;
-            font-family: 'Cinzel';
+            padding: 15px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 30px;
+            border-radius: 5px;
         }
 
-        /* Purpose */
-        .purpose { padding: 60px 12%; text-align: center; background: #fafafa; border-top: 1px solid #eee; }
-        .purpose h2 { color: var(--ambedkar-blue); font-family: 'Cinzel'; margin-bottom: 20px; }
-        .purpose p { font-size: 1.1rem; line-height: 1.8; color: #333; }
-
-        /* Contact Footer */
-        footer { padding: 50px 10%; text-align: center; background: var(--pure-white); border-top: 2px solid var(--soft-grey); }
-        .social-icons { display: flex; justify-content: center; gap: 40px; }
-        .social-icons a { color: var(--ambedkar-blue); font-size: 2.8rem; transition: 0.3s; }
-        .social-icons a:hover { transform: scale(1.15); color: var(--deep-black); }
-
-        /* Signup Screen */
-        #auth-screen {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 3000;
-            justify-content: center; align-items: center;
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
         }
-        .auth-card { background: white; padding: 40px; border-radius: 15px; width: 320px; text-align: center; border-top: 8px solid var(--ambedkar-blue); }
-        .auth-card h2 { color: var(--ambedkar-blue); }
-        .auth-card input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; box-sizing: border-box; }
-        .auth-card button { background: var(--ambedkar-blue); color: white; border: none; padding: 12px 25px; cursor: pointer; width: 100%; font-weight: bold; }
+
+        .book-card {
+            background: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ddd;
+            transition: 0.3s;
+        }
+
+        .book-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+
+        .btn-group { margin-top: 15px; }
+        .btn-group button {
+            padding: 8px 15px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .read-btn { background: #eee; }
+        .download-btn { background: var(--primary-blue); color: white; }
+
+        /* Login/Sign Up Box */
+        .auth-notice {
+            background: #f0f2ff;
+            padding: 40px;
+            margin: 50px 0;
+            border-radius: 15px;
+            border: 1px dashed var(--primary-blue);
+        }
+
+        /* Footer Icons */
+        .footer-contacts {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 50px 0;
+            font-size: 2.5rem;
+        }
+
+        .footer-contacts a { color: var(--primary-blue); transition: 0.3s; }
+        .footer-contacts a:hover { transform: scale(1.2); color: #0000ff; }
+
     </style>
 </head>
 <body>
 
-    <div class="fixed-bg-chakra">
-        <svg viewBox="0 0 200 200">
-            <g fill="var(--chakra-color)">
-                <path d="M100,10 A90,90 0 1,0 100,190 A90,90 0 1,0 100,10 Z M100,20 A80,80 0 1,1 100,180 A80,80 0 1,1 100,20 Z" />
-                <circle cx="100" cy="100" r="15" />
-                <script>
-                    for (let i = 0; i < 24; i++) {
-                        let angle = i * 15;
-                        document.write(`<path d="M100,100 L102,100 L100,25 L98,100 Z" transform="rotate(${angle}, 100, 100)" />`);
-                        let rad = (angle - 7.5) * (Math.PI / 180);
-                        document.write(`<circle cx="${100 + 85 * Math.sin(rad)}" cy="${100 - 85 * Math.cos(rad)}" r="3.5" />`);
-                    }
-                </script>
-            </g>
-        </svg>
-    </div>
+    <div class="background-chakra"></div>
 
-    <nav>
-        <div class="logo-small">
-            <span class="neelam">நீலம்</span>
-            <span class="makkal">MAKKAL</span>
+    <header>
+        <div class="logo">
+            <img src="https://instasize.com/p/47df5cd6d928e88a9d1537081a1c97cf9cb5381572610458fbe99fe59709ef31" alt="Neelam Makkal Logo">
         </div>
-        <div class="menu-icon" onclick="openNav()"><i class="fas fa-bars"></i></div>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars-staggered"></i>
+        </div>
+    </header>
+
+    <nav class="nav-overlay" id="navMenu">
+        <div style="text-align: right; cursor: pointer;" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></div>
+        <a href="#">HOME</a>
+        <a href="#" onclick="alert('About Us: Founded by Vasanth & Team Neelam Makkal. Our purpose is to ensure every citizen of India can read and understand Babasaheb Ambedkar, our history, and hidden truths. We provide books free of cost. Jai Bhim!')">ABOUT US</a>
+        <a href="#">LOGIN</a>
+        <a href="#">SIGN UP</a>
     </nav>
 
-    <div id="myNav" class="nav-overlay">
-        <span class="close-btn" onclick="closeNav()">&times;</span>
-        <a href="#" onclick="closeNav()">Home</a>
-        <a href="#purpose" onclick="closeNav()">About Us</a>
-        <a href="#" onclick="showAuth()">Login / Sign Up</a>
-    </div>
+    <main>
+        <h1 class="top-thought">Periyar, Ambedkar & Marx Thought-Driven Neelam Makkal</h1>
 
-    <section class="hero">
-        <h1 class="main-heading">Let's Read Ambedkarite, <br>Periyarite and Marxite</h1>
-        
-        <div class="quote-box">
-            <p class="tamil-quote">"கல்வி என்பது வெறும் காகிதமல்ல... நீ தரும் ஒரே புரட்சிகரமான பதில் உன் அறிவாற்றல் மட்டுமே!"</p>
-            <p class="english-quote">"Education is not just a piece of paper... The only revolutionary answer to the pain your generations carried is your intelligence!"</p>
-            <p style="color:var(--ambedkar-blue); font-weight:bold;">— Vasanth</p>
-            <div class="ambedkar-quote">"Be Educated, Be Organised and Be Agitated!"</div>
+        <div class="quotes-container">
+            <p class="tamil-quote">
+                "கல்வி என்பது வெறும் காகிதமல்ல<br>
+                அது உன்னைக் கட்டிப்போட்டிருக்கும் சங்கிலிகளை அறுக்கும் கூர்மையான ஆயுதம்.<br>
+                உன் தலைமுறை சுமந்த வலிக்கு,<br>
+                நீ தரும் ஒரே புரட்சிகரமான பதில் உன் அறிவாற்றல் மட்டுமே!"<br>
+                <strong>~ வசந்த்</strong>
+            </p>
+            <p class="english-translation">
+                "Education is not just paper; it is a sharp weapon that cuts the chains that bind you. 
+                The only revolutionary answer you give to the pain your generation carried is your intellect!"
+            </p>
+            <h2 class="ambedkar-quote">Be Educated, Be Organised, and Be Agitated</h2>
         </div>
 
         <div class="search-container">
-            <input type="text" placeholder="Type here to search in NEELAM MAKKAL...">
-            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Type here to search in NEELAM MAKKAL">
+            <i class="fa-solid fa-magnifying-glass"></i>
         </div>
-    </section>
 
-    <div class="section-patti">Free Books Collection</div>
-    <div style="padding: 20px 10%; text-align: center; color: #666;">Books list will appear here...</div>
-
-    <section class="purpose" id="purpose">
-        <h2>Our Purpose</h2>
-        <p>Founder <b>Vasanth</b> aur <b>Neelam Makkal Team</b> ka maqsad hai ki is Bharat ka har nagrik Babasaheb Ambedkar ke bare mein jaan sake. Humara maksad us itihaas ko samne lana hai jo dabaya gaya hai. Yahan sabhi books <b>free of cost</b> hain taaki gyaan par sabka barabar haq ho. Jai Bhim!</p>
-    </section>
-
-    <div id="auth-screen">
-        <div class="auth-card">
+        <div class="auth-notice">
             <h2>Jai Bhim!</h2>
-            <p>Join the community of NEELAM MAKKAL readers.</p>
-            <input type="text" placeholder="Full Name">
-            <input type="email" placeholder="Email Address">
-            <input type="password" placeholder="Create Password">
-            <button onclick="hideAuth()">SIGN UP NOW</button>
-            <p onclick="hideAuth()" style="cursor:pointer; font-size:13px; margin-top:15px; color:var(--ambedkar-blue);">Cancel</p>
+            <p>Join the community of Neelam Makkal readers.</p>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Note: You must sign in to read and download books.</p>
         </div>
-    </div>
 
-    <footer>
-        <div class="social-icons">
-            <a href="mailto:officialneelammakkal@gmail.com"><i class="fas fa-envelope-open-text"></i></a>
-            <a href="https://www.instagram.com/neelam.makkal" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://whatsapp.com/channel/0029VbCIHi3BadmgM4ujo41W" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <div class="books-header">BOOKS COLLECTION</div>
+        <div class="books-grid">
+            <div class="book-card">
+                <div style="height: 150px; background: #ddd; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">Book Cover</div>
+                <strong>Annihilation of Caste</strong>
+                <div class="btn-group">
+                    <button class="read-btn">Read</button>
+                    <button class="download-btn">Download</button>
+                </div>
+            </div>
+            <div class="book-card">
+                <div style="height: 150px; background: #ddd; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">Book Cover</div>
+                <strong>Buddha or Karl Marx</strong>
+                <div class="btn-group">
+                    <button class="read-btn">Read</button>
+                    <button class="download-btn">Download</button>
+                </div>
+            </div>
+            <div class="book-card">
+                <div style="height: 150px; background: #ddd; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">Book Cover</div>
+                <strong>Castes in India</strong>
+                <div class="btn-group">
+                    <button class="read-btn">Read</button>
+                    <button class="download-btn">Download</button>
+                </div>
+            </div>
         </div>
-        <p style="margin-top:25px; font-weight:bold; color: var(--ambedkar-blue);">© 2026 Neelam Makkal | Founder: Vasanth</p>
-    </footer>
+
+        <div class="footer-contacts">
+            <a href="mailto:officialneelammakkal@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
+            <a href="https://www.instagram.com/neelam.makkal" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@Neelam.Makkal" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://whatsapp.com/channel/0029VbCIHi3BadmgM4ujo41W" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+    </main>
 
     <script>
-        function openNav() { document.getElementById("myNav").style.width = "100%"; }
-        function closeNav() { document.getElementById("myNav").style.width = "0%"; }
-        function showAuth() { document.getElementById("auth-screen").style.display = "flex"; closeNav(); }
-        function hideAuth() { document.getElementById("auth-screen").style.display = "none"; }
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('active');
+        }
     </script>
+
 </body>
 </html>
