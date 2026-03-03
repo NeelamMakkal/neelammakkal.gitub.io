@@ -1,15 +1,20 @@
-function toggleMenu() {
-    const nav = document.getElementById('sideNav');
-    nav.style.right = nav.style.right === '0px' ? '-300px' : '0px';
+function openNav() {
+    document.getElementById("mySidebar").style.width = "250px";
 }
 
-function showPage(pageId) {
-    document.querySelectorAll('section').forEach(sec => sec.classList.add('hidden'));
-    document.getElementById(pageId).classList.remove('hidden');
-    toggleMenu(); // Close menu after selection
+function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
 }
 
-function toggleAuth(type) {
-    // Logic to switch between login and signup forms
-    alert("Please complete the " + type + " setup.");
+function showSection(sectionId) {
+    // Hide all sections
+    document.getElementById('home').classList.add('hidden');
+    document.getElementById('about').classList.add('hidden');
+    document.getElementById('auth').classList.add('hidden');
+    
+    // Show the selected one
+    document.getElementById(sectionId).classList.remove('hidden');
+    
+    // Close the sidebar
+    closeNav();
 }
