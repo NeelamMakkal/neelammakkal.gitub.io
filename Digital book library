@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Digital Library</title>
+    <style>
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-main: #1a1a1b;
+            --accent: #1877f2;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: var(--text-main);
+        }
+
+        /* Login Overlay Style */
+        #auth-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .auth-box {
+            text-align: center;
+            max-width: 400px;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .login-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        /* Library Layout */
+        .main-content {
+            display: none; /* Hidden until login */
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #1c1e21;
+            margin-bottom: 10px;
+        }
+
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        /* Book Item (Clickable) */
+        .book-item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-decoration: none; /* Link decoration remove */
+            display: block;
+        }
+
+        .book-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .cover-wrapper {
+            width: 100%;
+            height: 300px;
+            background-color: #ddd;
+        }
+
+        .book-cover {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-info {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .book-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #333;
+            margin: 0;
+        }
+
+        .series-tag {
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="auth-overlay">
+        <div class="auth-box">
+            <h1>Welcome Back</h1>
+            <p>Please sign in to access your digital book collection.</p>
+            <button class="login-btn" onclick="performLogin()">Sign In to Library</button>
+        </div>
+    </div>
+
+    <div class="main-content" id="library-ui">
+        <header>
+            <h1>MY ARCHIVE</h1>
+            <p>Click on any book to open the PDF instantly</p>
+        </header>
+
+        <div class="book-grid">
+            
+            <a href="books/volume1.pdf" target="_blank" class="book-item">
+                <div class="cover-wrapper">
+                    <img src="images/cover1.jpg" alt="Cover" class="book-cover">
+                </div>
+                <div class="book-info">
+                    <span class="series-tag">Series 01</span>
+                    <p class="book-title">The First Adventure</p>
+                </div>
+            </a>
+
+            <a href="books/volume2.pdf" target="_blank" class="book-item">
+                <div class="cover-wrapper">
+                    <img src="images/cover2.jpg" alt="Cover" class="book-cover">
+                </div>
+                <div class="book-info">
+                    <span class="series-tag">Series 02</span>
+                    <p class="book-title">The Lost Kingdom</p>
+                </div>
+            </a>
+
+            <a href="books/volume3.pdf" target="_blank" class="book-item">
+                <div class="cover-wrapper">
+                    <img src="images/cover3.jpg" alt="Cover" class="book-cover">
+                </div>
+                <div class="book-info">
+                    <span class="series-tag">Series 03</span>
+                    <p class="book-title">Shadows of Time</p>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <script>
+        function performLogin() {
+            // Login wall remove karke library dikhane ka logic
+            document.getElementById('auth-overlay').style.display = 'none';
+            document.getElementById('library-ui').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
