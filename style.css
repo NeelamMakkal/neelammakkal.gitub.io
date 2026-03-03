@@ -1,108 +1,67 @@
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff;
-    font-family: 'Poppins', sans-serif;
-    color: #333;
-    overflow-x: hidden;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #ffffff; font-family: 'Poppins', sans-serif; overflow-x: hidden; }
 
-/* Glowing Ashoka Chakra Background */
-.ashoka-bg {
+/* The Ashoka Chakra Background */
+.background-overlay {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     z-index: -1;
-    opacity: 0.1; /* Light effect */
-    filter: drop-shadow(0 0 20px rgba(0, 0, 255, 0.2));
+    opacity: 0.15;
 }
-
-.ashoka-bg img {
-    width: 80vh;
-    animation: rotate 60s linear infinite;
+.chakra-glow {
+    width: 70vh;
+    filter: drop-shadow(0 0 15px #000080);
+    animation: rotate 100s linear infinite;
 }
+@keyframes rotate { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
 
-@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-/* Header Styling */
-header {
+/* Fixed Top Navigation */
+.header-nav {
     position: fixed;
-    top: 0;
-    width: 100%;
+    top: 20px; width: 100%;
+    padding: 0 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 30px;
-    background: rgba(255,255,255,0.9);
-    z-index: 1000;
+    z-index: 100;
 }
+.main-logo { height: 70px; border-radius: 50%; }
+.menu-btn { cursor: pointer; display: flex; flex-direction: column; gap: 6px; }
+.menu-btn span { width: 35px; height: 3px; background: #000; border-radius: 2px; }
 
-.logo img { height: 60px; }
-
-.menu-icon {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+/* Sidebar Menu */
+.sidebar {
+    height: 100%; width: 0;
+    position: fixed; z-index: 1000; top: 0; right: 0;
+    background-color: #000080; overflow-x: hidden;
+    transition: 0.5s; padding-top: 60px;
 }
-
-.menu-icon span {
-    width: 30px;
-    height: 3px;
-    background: #000;
+.sidebar a {
+    padding: 15px 32px; text-decoration: none;
+    font-size: 20px; color: #fff; display: block; transition: 0.3s;
 }
+.sidebar .closebtn { position: absolute; top: 0; right: 25px; font-size: 36px; }
 
-/* Unique Typography */
-.hero-text {
-    text-align: center;
-    margin-top: 150px;
-    padding: 20px;
-}
+/* Main Content Styling */
+.hero-content { text-align: center; padding-top: 150px; }
+.brand-title { font-family: 'Cinzel', serif; font-size: 2.5rem; letter-spacing: 8px; margin: 20px 0; }
+.top-tagline { font-size: 12px; font-weight: 600; text-transform: uppercase; }
 
-.brand-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    letter-spacing: 5px;
-    color: #000080; /* Deep blue */
-}
-
-.tagline { font-size: 0.9rem; font-style: italic; color: #555; }
-
-.tamil-quote {
-    font-family: 'Mukta Malar', sans-serif;
-    font-size: 1.1rem;
-    color: #d32f2f;
-}
+.quote-box { max-width: 600px; margin: 0 auto; padding: 20px; }
+.tamil-text { font-family: 'Mukta Malar', sans-serif; font-size: 1.2rem; color: #d32f2f; margin-bottom: 10px; }
+.eng-text { font-size: 0.9rem; font-style: italic; line-height: 1.6; }
+.author { display: block; margin-top: 10px; font-weight: bold; }
 
 /* Search Bar */
-.search-container {
-    margin: 40px auto;
-    width: 60%;
-    display: flex;
-}
+.search-bar { margin: 40px auto; width: 80%; max-width: 500px; display: flex; }
+.search-bar input { flex: 1; padding: 12px; border: 2px solid #000080; border-radius: 5px 0 0 5px; outline: none; }
+.search-bar button { background: #000080; color: white; border: none; padding: 0 20px; border-radius: 0 5px 5px 0; cursor: pointer; }
 
-.search-container input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 25px 0 0 25px;
-}
-
-.search-container button {
-    padding: 12px 20px;
-    border: none;
-    background: #000080;
-    color: #fff;
-    border-radius: 0 25px 25px 0;
-    cursor: pointer;
-}
-
-/* Books Section */
-.books-section {
-    background: #f9f9f9;
-    padding: 40px;
-    border-top: 4px solid #000080;
-}
+/* Footer */
+.main-footer { position: fixed; bottom: 0; width: 100%; background: #fff; border-top: 1px solid #eee; text-align: center; padding: 10px; }
+.footer-icons a { font-size: 24px; margin: 0 15px; text-decoration: none; }
 
 .hidden { display: none; }
+.page-section { padding: 150px 50px; text-align: center; }
+.founder-img { width: 150px; border-radius: 50%; margin: 20px 0; border: 3px solid #000080; }
