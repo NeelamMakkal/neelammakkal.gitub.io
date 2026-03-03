@@ -3,180 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neelam Makkal | Digital Library</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;400;600&family=Mukta+Malar:wght@500&display=swap" rel="stylesheet">
+    <title>Neelam Makkal | Educational Revolution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@300;400;600&family=Noto+Sans+Tamil:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-blue: #000080;
+            --glow-blue: #4d4dff;
+            --text-dark: #222;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+            color: var(--text-dark);
+        }
+
+        /* Fixed Background Ashoka Chakra */
+        .bg-chakra {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            opacity: 0.15;
+            z-index: -1;
+            filter: drop-shadow(0 0 10px var(--glow-blue));
+            animation: slow-rotate 20s linear infinite;
+        }
+
+        @keyframes slow-rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Sticky Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .logo img {
+            height: 60px;
+        }
+
+        .menu-icon {
+            cursor: pointer;
+            font-size: 24px;
+            padding-right: 60px;
+        }
+
+        /* Sidebar Menu */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            right: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 15px 32px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover { color: #f1f1f1; }
+
+        .sidebar .close-btn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+        }
+
+        /* Main Content Hero */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .quote-container {
+            max-width: 600px;
+            margin-top: 20px;
+        }
+
+        .tamil-quote {
+            font-family: 'Noto Sans Tamil', sans-serif;
+            font-size: 0.9rem;
+            font-weight: bold;
+            line-height: 1.6;
+        }
+
+        .english-quote {
+            font-size: 0.85rem;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .ambedkar-quote {
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-top: 20px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        /* Search Bar */
+        .search-box {
+            margin-top: 30px;
+            display: flex;
+            border-bottom: 2px solid var(--primary-blue);
+            padding: 5px;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            padding: 10px;
+            width: 300px;
+            font-size: 1rem;
+        }
+
+        /* Sections */
+        .section-title {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            width: 100%;
+            margin: 50px 0;
+        }
+
+        .founder-card {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .founder-img {
+            width: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 3px solid var(--primary-blue);
+        }
+
+        .powerful-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        .social-icon {
+            font-size: 24px;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        /* Button styling */
+        .btn-access {
+            padding: 10px 20px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="background-overlay">
-        <img src="https://instasize.com/p/b3378d215c50df0dc1e8e600e280f8ca2c7e112cba071ffc69249b91014f23d3" class="chakra-glow">
-    </div>
+    <img src="https://instasize.com/p/b3378d215c50df0dc1e8e600e280f8ca2c7e112cba071ffc69249b91014f23d3" class="bg-chakra" alt="Ashoka Chakra">
 
-    <div class="header-nav">
-        <img src="https://instasize.com/p/47df5cd6d928e88a9d1537081a1c97cf9cb5381572610458fbe99fe59709ef31" class="main-logo">
-        <div class="menu-btn" onclick="openNav()">
-            <span></span>
-            <span></span>
-            <span></span>
+    <header>
+        <div class="logo">
+            <img src="https://instasize.com/p/47df5cd6d928e88a9d1537081a1c97cf9cb5381572610458fbe99fe59709ef31" alt="Neelam Makkal Logo">
         </div>
-    </div>
+        <div class="menu-icon" onclick="openNav()">&#9776;</div>
+    </header>
 
     <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="#" onclick="showSection('home')">Home</a>
-        <a href="#" onclick="showSection('about')">About Us</a>
-        <a href="#" onclick="showSection('auth')">Login / Sign Up</a>
+        <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">&times;</a>
+        <a href="#home">Home</a>
+        <a href="#about">About Us</a>
+        <a href="#login">Login / Sign Up</a>
     </div>
 
-    <div id="main">
-        <section id="home">
-            <div class="hero-content">
-                <p class="top-tagline">Built with Ambedkar's Rights, Periyar's Ideology, and Karl Marx's Worldview.</p>
-                <h1 class="brand-title">NEELAM MAKKAL</h1>
-                
-                <div class="quote-box">
-                    <p class="tamil-text">"கல்வி என்பது வெறும் காகிதமல்ல... உன் அறிவாற்றல் மட்டுமே!"</p>
-                    <p class="eng-text">"Education is not just paper; it is the sharp weapon to break the chains that bind you. Your intellect is the only revolutionary answer to the pain your generation carried."</p>
-                    <span class="author">~ Vasanth</span>
-                </div>
-
-                <p class="ambedkar-line">"Be Educated, Be Organised, and Be Agitated." — Dr. B.R. Ambedkar</p>
-
-                <div class="search-bar">
-                    <input type="text" placeholder="Type here to search Neelam Makkal...">
-                    <button>SEARCH</button>
-                </div>
-
-                <div class="book-banner">BOOKS COLLECTION</div>
-                <div class="lock-grid">
-                    <p>🔒 Please Sign In to unlock the digital library.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="page-section hidden">
-            <h2 class="section-heading">Our Purpose</h2>
-            <p class="about-desc">Neelam Makkal follows the path of Ambedkar, Periyar, and Karl Marx. Founder Vasanth established this platform so every citizen of India can learn about their true, suppressed history. From Babasaheb’s struggle for the Constitution to Periyar’s revolution in Tamil Nadu and Marx’s vision of a communist world—we bring it all to you for free.</p>
-            
-            <div class="founder-section">
-                <img src="https://instasize.com/p/6737e39802328845dd3f37b79ef3d15f874744dbdee9fa04c3c6cdc0e9aa99ba" class="founder-img">
-                <h3>Founder of Neelam Makkal: Vasanth</h3>
-                <p class="manifesto">"I know exactly what casteism is because I belong to such a family. If you still carry a surname like Thakur, Sharma, or Bhardwaj, you haven't left casteism—you are clutching it. My mentor Periyar changed his name from Ramaswamy Naicker to E.V. Ramaswamy for this reason. My name is simply Vasanth. JAI BHIM."</p>
-                <div class="social-links">
-                    <a href="mailto:officialvelvasanth@gmail.com">Email</a> | <a href="https://instagram.com/therealspringgg">Instagram</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="auth" class="page-section hidden">
-            <h2 class="section-heading">Jai Bhim! Join the Community</h2>
-            <div class="form-card">
-                <input type="text" placeholder="Username">
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
-                <button class="sign-btn">Sign In / Up</button>
-            </div>
-        </section>
-    </div>
-
-    <footer class="main-footer">
-        <div class="footer-icons">
-            <a href="mailto:officialneelammakkal@gmail.com">✉️</a>
-            <a href="https://instagram.com/neelam.makkal">📸</a>
-            <a href="https://whatsapp.com/channel/0029VbCIHi3BadmgM4ujo41W">💬</a>
+    <div class="hero" id="home">
+        <h2>Built with the rights of Ambedkar, the ideology of Periyar, and the world of Karl Marx.</h2>
+        
+        <div class="quote-container">
+            <p class="tamil-quote">
+                "கல்வி என்பது வெறும் காகிதமல்ல, அது உன்னைக் கட்டிப்போட்டிருக்கும் சங்கிலிகளை அறுக்கும் கூர்மையான ஆயுதம். உன் தலைமுறை சுமந்த வலிக்கு, நீ தரும் ஒரே புரட்சிகரமான பதில் உன் அறிவாற்றல் மட்டுமே!"<br>
+                — வசந்த்
+            </p>
+            <p class="english-quote">
+                "Education is not mere paper; it is a sharp weapon to break the chains that bind you. For the pain your generations carried, your intellect is the only revolutionary answer!"
+            </p>
+            <p class="ambedkar-quote">BE EDUCATED, BE ORGANISED, BE AGITATED — Dr. B.R. Ambedkar</p>
         </div>
-        <p class="donate">Support: 7639439924@ibl (GPay/PhonePe)</p>
-    </footer>
 
-    <script src="script.js"></script>
+        <div class="search-box">
+            <input type="text" placeholder="Type here to search Neelam Makkal...">
+            <span>🔍</span>
+        </div>
+    </div>
+
+    <div class="section-title">
+        <h2>BOOKS COLLECTION</h2>
+    </div>
+    <div style="text-align: center; padding: 20px;">
+        <p>Please <a href="#login">Login</a> to access the Digital Library. Books are available for online reading only.</p>
+        <div style="opacity: 0.5;">[ PDF Library Protected ]</div>
+    </div>
+
+    <div class="section-title" id="about">
+        <h2>ABOUT US & FOUNDER</h2>
+    </div>
+
+    <div class="founder-card">
+        <img src="https://instasize.com/p/6737e39802328845dd3f37b79ef3d15f874744dbdee9fa04c3c6cdc0e9aa99ba" class="founder-img" alt="Vasanth">
+        <h3>Founder of Neelam Makkal: Vasanth</h3>
+        <p class="powerful-text">
+            I know exactly what casteism is because I belong to such a family. The world that looks at casteism is never going to change. It is 2026, and if anyone thinks casteism has ended, just look at your own name. If a surname is attached to your name, you haven't left casteism, friend; you are holding onto it. You proudly say names like Thakur, Sharma, or Bhardwaj, continuing the game of casteism. This is why my mentor Periyar said that as long as there is a surname behind the name, casteism will never end. He changed his name from Ramaswamy Naicker to E.V. Ramaswamy. I also belong to that Tamil Nadu lineage. My name is simply <strong>Vasanth</strong>.
+        </p>
+        <p><strong>JAI BHIM</strong></p>
+        
+        <div style="margin-top: 20px;">
+            <p>Connect with Founder:</p>
+            <a href="mailto:officialvelvasanth@gmail.com">📧 Email</a> | 
+            <a href="https://instagram.com/therealspringgg">📸 Instagram</a>
+        </div>
+    </div>
+
+    <div class="section-title">
+        <h2>OFFICIAL CONTACTS & SUPPORT</h2>
+    </div>
+    <div class="footer-socials">
+        <a href="mailto:officialneelammakkal@gmail.com" class="social-icon">✉️</a>
+        <a href="https://instagram.com/neelam.makkal" class="social-icon">📷</a>
+        <a href="https://youtube.com/@Neelam.Makkal" class="social-icon">🎥</a>
+        <a href="https://whatsapp.com/channel/0029VbCIHi3BadmgM4ujo41W" class="social-icon">💬</a>
+    </div>
+    <div style="text-align: center; margin-bottom: 50px;">
+        <p>Support our mission (PhonePe/G-Pay):</p>
+        <p><strong>7639439924@ibl</strong></p>
+    </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "300px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+        }
+    </script>
 </body>
-                    </html>
-                  * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #ffffff; font-family: 'Poppins', sans-serif; overflow-x: hidden; }
-
-/* The Ashoka Chakra Background */
-.background-overlay {
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
-    opacity: 0.15;
-}
-.chakra-glow {
-    width: 70vh;
-    filter: drop-shadow(0 0 15px #000080);
-    animation: rotate 100s linear infinite;
-}
-@keyframes rotate { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
-
-/* Fixed Top Navigation */
-.header-nav {
-    position: fixed;
-    top: 20px; width: 100%;
-    padding: 0 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
-}
-.main-logo { height: 70px; border-radius: 50%; }
-.menu-btn { cursor: pointer; display: flex; flex-direction: column; gap: 6px; }
-.menu-btn span { width: 35px; height: 3px; background: #000; border-radius: 2px; }
-
-/* Sidebar Menu */
-.sidebar {
-    height: 100%; width: 0;
-    position: fixed; z-index: 1000; top: 0; right: 0;
-    background-color: #000080; overflow-x: hidden;
-    transition: 0.5s; padding-top: 60px;
-}
-.sidebar a {
-    padding: 15px 32px; text-decoration: none;
-    font-size: 20px; color: #fff; display: block; transition: 0.3s;
-}
-.sidebar .closebtn { position: absolute; top: 0; right: 25px; font-size: 36px; }
-
-/* Main Content Styling */
-.hero-content { text-align: center; padding-top: 150px; }
-.brand-title { font-family: 'Cinzel', serif; font-size: 2.5rem; letter-spacing: 8px; margin: 20px 0; }
-.top-tagline { font-size: 12px; font-weight: 600; text-transform: uppercase; }
-
-.quote-box { max-width: 600px; margin: 0 auto; padding: 20px; }
-.tamil-text { font-family: 'Mukta Malar', sans-serif; font-size: 1.2rem; color: #d32f2f; margin-bottom: 10px; }
-.eng-text { font-size: 0.9rem; font-style: italic; line-height: 1.6; }
-.author { display: block; margin-top: 10px; font-weight: bold; }
-
-/* Search Bar */
-.search-bar { margin: 40px auto; width: 80%; max-width: 500px; display: flex; }
-.search-bar input { flex: 1; padding: 12px; border: 2px solid #000080; border-radius: 5px 0 0 5px; outline: none; }
-.search-bar button { background: #000080; color: white; border: none; padding: 0 20px; border-radius: 0 5px 5px 0; cursor: pointer; }
-
-/* Footer */
-.main-footer { position: fixed; bottom: 0; width: 100%; background: #fff; border-top: 1px solid #eee; text-align: center; padding: 10px; }
-.footer-icons a { font-size: 24px; margin: 0 15px; text-decoration: none; }
-
-.hidden { display: none; }
-.page-section { padding: 150px 50px; text-align: center; }
-.founder-img { width: 150px; border-radius: 50%; margin: 20px 0; border: 3px solid #000080; }
-function openNav() {
-    document.getElementById("mySidebar").style.width = "250px";
-}
-
-function closeNav() {
-    document.getElementById("mySidebar").style.width = "0";
-}
-
-function showSection(sectionId) {
-    // Hide all sections
-    document.getElementById('home').classList.add('hidden');
-    document.getElementById('about').classList.add('hidden');
-    document.getElementById('auth').classList.add('hidden');
-    
-    // Show the selected one
-    document.getElementById(sectionId).classList.remove('hidden');
-    
-    // Close the sidebar
-    closeNav();
-}
-
+</html>
