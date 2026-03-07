@@ -3,272 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neelam Makkal | Library</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Montserrat:wght@300;500;700&family=Noto+Sans+Tamil:wght@500;700&display=swap" rel="stylesheet">
+    <title>Neelam Makkal Digital Library</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
+            margin: 0;
+            font-family: 'Times New Roman', serif;
+            text-align: center;
             background-color: #ffffff;
-            font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden;
-            color: #1a1a1a;
+            /* Ashoka Chakra Watermark */
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/17/Ashoka_Chakra.svg');
+            background-repeat: no-repeat;
+            background-position: center 300px;
+            background-size: 600px;
+            background-attachment: fixed;
         }
 
-        /* --- STICKY NAVIGATION --- */
+        /* Header & Logo */
         header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 100px;
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 40px;
-            z-index: 1000;
-            background: transparent;
+        }
+        .logo-text {
+            color: #0033cc;
+            font-size: 32px;
+            font-weight: bold;
+            text-align: left;
         }
 
-        .logo img {
-            height: 70px;
-            filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.1));
-        }
-
-        .menu-btn {
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            z-index: 1001;
-        }
-
-        .menu-btn span {
-            width: 35px;
-            height: 3px;
-            background: #000080;
-            transition: 0.3s;
-        }
-
-        /* --- BACKGROUND ASHOKA CHAKRA --- */
-        .chakra-bg {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80vh;
-            z-index: -1;
-            opacity: 0.2;
-            filter: drop-shadow(0 0 15px rgba(0, 0, 128, 0.4));
-            animation: rotateChakra 30s linear infinite;
-        }
-
-        @keyframes rotateChakra {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        /* --- HERO SECTION --- */
-        .home-content {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .tagline {
-            font-family: 'Cinzel', serif;
-            font-size: 14px;
+        /* Main Titles */
+        h1 {
+            color: #2b57ff;
+            font-size: 48px;
+            margin-bottom: 5px;
             letter-spacing: 2px;
+        }
+        .tagline {
+            font-style: italic;
+            font-size: 14px;
             color: #333;
-            max-width: 700px;
             margin-bottom: 30px;
         }
 
-        .quotes-box {
+        /* Quotes Section */
+        .quotes {
+            max-width: 80%;
+            margin: 0 auto 40px auto;
+            line-height: 1.6;
+        }
+        .quote-tamil { font-weight: bold; margin-bottom: 10px; }
+        .quote-english { font-style: italic; color: #444; }
+
+        /* Search Bar */
+        .search-container {
+            margin-bottom: 50px;
+        }
+        .search-bar {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #000;
+            font-family: inherit;
+        }
+
+        /* Section Banner */
+        .banner {
+            background-color: #0033cc;
+            color: white;
+            padding: 15px;
+            font-size: 28px;
+            font-style: italic;
+            text-transform: uppercase;
             margin-bottom: 40px;
         }
 
-        .tamil-q {
-            font-family: 'Noto Sans Tamil', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .english-q {
-            font-size: 0.8rem;
-            font-style: italic;
-            color: #555;
-        }
-
-        .ambedkar-line {
-            font-weight: 700;
-            color: #000080;
-            margin-top: 15px;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-        }
-
-        .search-area {
-            width: 100%;
-            max-width: 400px;
-            position: relative;
-        }
-
-        .search-area input {
-            width: 100%;
-            padding: 12px 20px;
-            border: 1.5px solid #000080;
-            border-radius: 25px;
-            outline: none;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        /* --- NAVIGATION OVERLAY --- */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            z-index: 999;
-            display: none;
-            flex-direction: column;
+        /* Book Grid */
+        .book-container {
+            display: flex;
             justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.4s ease;
+            gap: 50px;
+            padding-bottom: 100px;
         }
-
-        .overlay a {
-            font-size: 2rem;
-            text-decoration: none;
-            color: #000080;
-            margin: 20px;
-            font-weight: 700;
-            transition: 0.3s;
+        .book-item {
+            width: 200px;
         }
-
-        /* --- ABOUT US MODAL CONTENT --- */
-        #about-page {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .book-cover {
             width: 100%;
-            height: 100%;
-            background: white;
-            z-index: 1002;
-            display: none;
-            overflow-y: auto;
-            padding: 100px 40px;
+            border: 2px solid #000;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
         }
-
-        .about-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .founder-img {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #000080;
-            margin-bottom: 20px;
-        }
-
-        .powerful-p {
-            line-height: 1.8;
-            font-size: 1rem;
-            text-align: justify;
-            margin-bottom: 20px;
-        }
-
-        .close-about {
-            position: fixed;
-            top: 30px;
-            right: 40px;
-            font-size: 30px;
-            cursor: pointer;
-            color: #000080;
+        .book-title {
+            font-size: 16px;
             font-weight: bold;
+            text-transform: uppercase;
         }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">
-            <img src="https://instasize.com/p/47df5cd6d928e88a9d1537081a1c97cf9cb5381572610458fbe99fe59709ef31" alt="Neelam Makkal Logo">
-        </div>
-        <div class="menu-btn" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+        <div class="logo-text">நீலம்<br><small>MAKKAL</small></div>
+        <div style="font-size: 30px;">☰</div>
     </header>
 
-    <img src="https://instasize.com/p/b3378d215c50df0dc1e8e600e280f8ca2c7e112cba071ffc69249b91014f23d3" class="chakra-bg">
+    <h1>NEELAM MAKKAL</h1>
+    <p class="tagline">Built on the Iron Rights of AMBEDKAR Fuelled by the Radical Fire of PERIYAR Forging the Global Vision of MARX.</p>
 
-    <div class="home-content">
-        <p class="tagline">BUILT WITH THE RIGHTS OF AMBEDKAR, THE IDEOLOGY OF PERIYAR, AND THE WORLD OF KARL MARX.</p>
-        
-        <div class="quotes-box">
-            <p class="tamil-q">"கல்வி என்பது வெறும் காகிதமல்ல, அது உன்னைக் கட்டிப்போட்டிருக்கும் சங்கிலிகளை அறுக்கும் கூர்மையான ஆயுதம்."</p>
-            <p class="english-q">"Education is not mere paper; it is a sharp weapon to break the chains that bind you."</p>
-            <p class="ambedkar-line">BE EDUCATED, BE ORGANISED, BE AGITATED</p>
+    <div class="quotes">
+        <div class="quote-tamil">"கல்வி என்பது வெறும் காகிதமல்ல... உங்கள் அறிவாற்றல் தான் ஒரே புரட்சிகர ஆயுதம்" <br> — வஸந்த்</div>
+        <div class="quote-english">
+            "Education is no mere leaf of paper; it is the sharpened blade that severs the chains binding you to the agony carried by your generations. Your intellect is the only revolutionary strike!" <br> — Vasanth
         </div>
-
-        <div class="search-area">
-            <input type="text" placeholder="Type here to search Neelam Makkal...">
-        </div>
+        <p><strong>BE EDUCATED BE ORGANISED AND BE AGITATED <br> -DR. B.R. AMBEDKAR</strong></p>
     </div>
 
-    <div class="overlay" id="menuOverlay">
-        <a href="#" onclick="toggleMenu()">HOME</a>
-        <a href="#" onclick="showAbout()">ABOUT US</a>
-        <a href="#" onclick="alert('Redirecting to Sign-up...')">SIGN UP / LOGIN</a>
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Type here to search NEELAM MAKKAL 🔍">
     </div>
 
-    <div id="about-page">
-        <span class="close-about" onclick="hideAbout()">&times;</span>
-        <div class="about-container">
-            <img src="https://instasize.com/p/6737e39802328845dd3f37b79ef3d15f874744dbdee9fa04c3c6cdc0e9aa99ba" class="founder-img" alt="Founder Vasanth">
-            <h2>Founder: Vasanth</h2>
-            <br>
-            <p class="powerful-p">
-                Neelam Makkal, walking the path of Ambedkar, Periyar, and Karl Marx, created this website because founder Vasanth believes every citizen of India should know about these leaders. To know their suppressed history, to understand the battle Babasaheb fought for the Constitution, to learn how Periyar created history in Tamil Nadu, and to understand Karl Marx’s communist world.
-            </p>
-            <hr><br>
-            <p class="powerful-p">
-                <strong>"I know exactly what casteism is because I belong to such a family.</strong> The world that looks at casteism is never going to change. It is 2026, and if anyone thinks casteism has ended, just look at your own name. If a surname is attached to your name, you haven't left casteism, friend; you are holding onto it. As my mentor Periyar said, as long as there is a surname, casteism will not end. I am simply <strong>Vasanth</strong>."
-            </p>
-            <h3>JAI BHIM</h3>
-            <br>
-            <p><strong>Contact Founder:</strong> officialvelvasanth@gmail.com | @therealspringgg</p>
+    <div class="banner">Books Collection</div>
+
+    <div class="book-container">
+        <!-- Book 1 -->
+        <div class="book-item">
+            <img src="https://via.placeholder.com/200x280?text=Constitution+of+India" alt="Constitution" class="book-cover">
+            <div class="book-title">CONSTITUTION OF INDIA PDF</div>
+        </div>
+        <!-- Book 2 -->
+        <div class="book-item">
+            <img src="https://via.placeholder.com/200x280?text=Thoughts+of+Periyar" alt="Periyar" class="book-cover">
+            <div class="book-title">THOUGHTS OF PERIYAR PDF</div>
         </div>
     </div>
 
-    <script>
-        function toggleMenu() {
-            const overlay = document.getElementById('menuOverlay');
-            overlay.style.display = (overlay.style.display === 'flex') ? 'none' : 'flex';
-        }
-
-        function showAbout() {
-            document.getElementById('about-page').style.display = 'block';
-            document.getElementById('menuOverlay').style.display = 'none';
-        }
-
-        function hideAbout() {
-            document.getElementById('about-page').style.display = 'none';
-        }
-    </script>
 </body>
 </html>
