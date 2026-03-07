@@ -5,135 +5,213 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neelam Makkal Digital Library</title>
     <style>
+        /* 1. Global Styles */
         body {
             margin: 0;
+            padding: 0;
             font-family: 'Times New Roman', serif;
             text-align: center;
             background-color: #ffffff;
-            /* Ashoka Chakra Watermark */
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/17/Ashoka_Chakra.svg');
-            background-repeat: no-repeat;
-            background-position: center 300px;
-            background-size: 600px;
-            background-attachment: fixed;
+            overflow-x: hidden;
         }
 
-        /* Header & Logo */
+        /* 2. Rotating Ashoka Chakra Background */
+        .chakra-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1; /* Keeps it behind the text */
+            pointer-events: none; /* Allows clicking through it */
+        }
+
+        .chakra-image {
+            width: 650px; /* Adjust size here */
+            height: 650px;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/17/Ashoka_Chakra.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            
+            /* Light Blue Glow Effect */
+            filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(190deg) brightness(118%) contrast(119%) 
+                    drop-shadow(0 0 20px rgba(0, 150, 255, 0.6));
+            
+            opacity: 0.25; /* Transparency level */
+            
+            /* Rotation Animation: 20s for one full circle */
+            animation: rotateChakra 20s linear infinite;
+        }
+
+        @keyframes rotateChakra {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* 3. Header & Logo */
         header {
             padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
         }
+
         .logo-text {
             color: #0033cc;
             font-size: 32px;
             font-weight: bold;
             text-align: left;
+            line-height: 1;
         }
 
-        /* Main Titles */
+        .menu-icon {
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        /* 4. Content Styles */
         h1 {
             color: #2b57ff;
-            font-size: 48px;
-            margin-bottom: 5px;
-            letter-spacing: 2px;
+            font-size: clamp(32px, 8vw, 60px);
+            margin-top: 40px;
+            margin-bottom: 0;
+            letter-spacing: 3px;
         }
+
         .tagline {
             font-style: italic;
             font-size: 14px;
             color: #333;
-            margin-bottom: 30px;
+            max-width: 800px;
+            margin: 10px auto 40px;
+            padding: 0 20px;
         }
 
-        /* Quotes Section */
         .quotes {
-            max-width: 80%;
-            margin: 0 auto 40px auto;
-            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto 50px auto;
+            line-height: 1.8;
+            padding: 0 20px;
         }
-        .quote-tamil { font-weight: bold; margin-bottom: 10px; }
-        .quote-english { font-style: italic; color: #444; }
 
-        /* Search Bar */
-        .search-container {
-            margin-bottom: 50px;
+        /* 5. Search Bar */
+        .search-box {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 60px;
         }
-        .search-bar {
-            width: 300px;
-            padding: 10px;
+
+        .search-box input {
+            width: 350px;
+            padding: 12px 40px 12px 15px;
             border: 1px solid #000;
-            font-family: inherit;
+            font-size: 16px;
+            outline: none;
         }
 
-        /* Section Banner */
-        .banner {
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
+
+        /* 6. Section Banner */
+        .blue-banner {
             background-color: #0033cc;
             color: white;
-            padding: 15px;
-            font-size: 28px;
+            padding: 15px 0;
+            font-size: 26px;
             font-style: italic;
+            font-weight: bold;
             text-transform: uppercase;
-            margin-bottom: 40px;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* Book Grid */
-        .book-container {
+        /* 7. Books Grid */
+        .books-grid {
             display: flex;
             justify-content: center;
-            gap: 50px;
-            padding-bottom: 100px;
+            flex-wrap: wrap;
+            gap: 60px;
+            padding: 60px 20px;
         }
-        .book-item {
-            width: 200px;
+
+        .book {
+            width: 220px;
+            transition: transform 0.3s ease;
         }
-        .book-cover {
+
+        .book:hover {
+            transform: translateY(-10px);
+        }
+
+        .book img {
             width: 100%;
-            border: 2px solid #000;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
-            margin-bottom: 10px;
+            height: 300px;
+            object-fit: cover;
+            border: 2px solid #222;
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.15);
         }
-        .book-title {
-            font-size: 16px;
+
+        .book p {
+            margin-top: 15px;
             font-weight: bold;
+            font-size: 16px;
             text-transform: uppercase;
         }
     </style>
 </head>
 <body>
 
+    <!-- Background Layer -->
+    <div class="chakra-container">
+        <div class="chakra-image"></div>
+    </div>
+
+    <!-- Website Header -->
     <header>
-        <div class="logo-text">நீலம்<br><small>MAKKAL</small></div>
-        <div style="font-size: 30px;">☰</div>
+        <div class="logo-text">நீலம்<br><small style="font-size: 18px;">MAKKAL</small></div>
+        <div class="menu-icon">☰</div>
     </header>
 
+    <!-- Hero Section -->
     <h1>NEELAM MAKKAL</h1>
     <p class="tagline">Built on the Iron Rights of AMBEDKAR Fuelled by the Radical Fire of PERIYAR Forging the Global Vision of MARX.</p>
 
+    <!-- Quotes Section -->
     <div class="quotes">
-        <div class="quote-tamil">"கல்வி என்பது வெறும் காகிதமல்ல... உங்கள் அறிவாற்றல் தான் ஒரே புரட்சிகர ஆயுதம்" <br> — வஸந்த்</div>
-        <div class="quote-english">
-            "Education is no mere leaf of paper; it is the sharpened blade that severs the chains binding you to the agony carried by your generations. Your intellect is the only revolutionary strike!" <br> — Vasanth
-        </div>
-        <p><strong>BE EDUCATED BE ORGANISED AND BE AGITATED <br> -DR. B.R. AMBEDKAR</strong></p>
+        <p style="font-weight: bold; font-size: 18px;">"கல்வி என்பது வெறும் காகிதமல்ல... <br> உங்கள் அறிவாற்றல் தான் ஒரே புரட்சிகர ஆயுதம்" <br> <small>— வஸந்த்</small></p>
+        
+        <p style="font-style: italic; color: #444;">"Education is no mere leaf of paper; it is the sharpened blade that severs the chains binding you to the agony carried by your generations. Your intellect is the only revolutionary strike!" <br> — Vasanth</p>
+        
+        <p style="font-weight: 900; color: #000; font-size: 20px; border-top: 1px solid #ddd; padding-top: 15px;">
+            BE EDUCATED BE ORGANISED AND BE AGITATED <br> -DR. B.R. AMBEDKAR
+        </p>
     </div>
 
-    <div class="search-container">
-        <input type="text" class="search-bar" placeholder="Type here to search NEELAM MAKKAL 🔍">
+    <!-- Search Section -->
+    <div class="search-box">
+        <input type="text" placeholder="Type here to search NEELAM MAKKAL">
+        <span class="search-icon">🔍</span>
     </div>
 
-    <div class="banner">Books Collection</div>
+    <!-- Collection Banner -->
+    <div class="blue-banner">BOOKS COLLECTION</div>
 
-    <div class="book-container">
-        <!-- Book 1 -->
-        <div class="book-item">
-            <img src="https://via.placeholder.com/200x280?text=Constitution+of+India" alt="Constitution" class="book-cover">
-            <div class="book-title">CONSTITUTION OF INDIA PDF</div>
+    <!-- Books Display -->
+    <div class="books-grid">
+        <div class="book">
+            <img src="https://m.media-amazon.com/images/I/91p5beNfS6L.jpg" alt="Constitution of India">
+            <p>CONSTITUTION OF INDIA. PDF</p>
         </div>
-        <!-- Book 2 -->
-        <div class="book-item">
-            <img src="https://via.placeholder.com/200x280?text=Thoughts+of+Periyar" alt="Periyar" class="book-cover">
-            <div class="book-title">THOUGHTS OF PERIYAR PDF</div>
+        <div class="book">
+            <img src="https://m.media-amazon.com/images/I/71G8-nS9S1L.jpg" alt="Thoughts of Periyar">
+            <p>THOUGHTS OF PERIYAR PDF</p>
         </div>
     </div>
 
