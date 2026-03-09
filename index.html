@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neelam Makkal | Library of Revolution</title>
     
-    <!-- Premium Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@1,600&family=Kavivanar&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -43,12 +42,11 @@
             z-index: 1000; background: rgba(255,255,255,0.9); border-bottom: 2px solid var(--makkal-blue);
         }
 
-        /* LOGO STYLING */
+        /* LOGO STYLING FOR PNG - Preserving height and effects */
         .logo-box img { 
             height: 65px; 
-            width: auto;
+            width: auto; 
             border-radius: 5px; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
             display: block;
         }
 
@@ -163,8 +161,7 @@
 
     <header>
         <div class="logo-box">
-            <!-- Updated Logo Path -->
-            <img src="logo.jpg" alt="Neelam Makkal Logo" onerror="this.src='https://via.placeholder.com/150x70?text=Neelam+Makkal'">
+            <img src="logo.png" alt="Neelam Makkal Logo" onerror="this.src='https://via.placeholder.com/150x70?text=Neelam+Makkal'">
         </div>
         <div class="menu-trigger" onclick="toggleMenu()">☰</div>
     </header>
