@@ -26,12 +26,12 @@
             display: flex; justify-content: center; align-items: center;
         }
         .ashoka-chakra {
-            width: 85vh; /* Screen ke height ke barabar perfect size */
+            width: 85vh;
             height: 85vh;
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/17/Ashoka_Chakra.svg');
             background-size: contain; background-repeat: no-repeat;
             filter: invert(15%) sepia(95%) saturate(3000%) hue-rotate(210deg) brightness(1.1) drop-shadow(0 0 20px var(--soft-glow));
-            opacity: 0.15; /* Clean white look ke liye light rakha hai */
+            opacity: 0.15;
             animation: spin 50s linear infinite;
         }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -70,8 +70,56 @@
         .search-box i { position: absolute; right: 20px; top: 18px; color: var(--makkal-blue); }
 
         /* --- BOOKS ARCHIVE --- */
-        .banner-blue { background: var(--makkal-blue); color: #fff; padding: 15px; font-family: 'Cinzel Decorative'; letter-spacing: 3px; font-size: 22px; }
-        .books-placeholder { padding: 80px 20px; font-style: italic; color: #999; font-size: 14px; }
+        .banner-blue { background: var(--makkal-blue); color: #fff; padding: 15px; font-family: 'Cinzel Decorative'; letter-spacing: 3px; font-size: 22px; text-align: center; }
+        
+        /* Updated Book Grid */
+        .book-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            padding: 60px 10%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .book-card {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-bottom: 6px solid var(--makkal-blue);
+            text-align: center;
+            transition: 0.4s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .book-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .book-card h3 { font-family: 'Cinzel Decorative'; font-size: 18px; color: var(--makkal-blue); margin-bottom: 10px; }
+        .book-card p { font-size: 12px; color: #666; margin-bottom: 20px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+
+        .read-btn {
+            display: block;
+            background: var(--makkal-blue);
+            color: #fff;
+            padding: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: 'Montserrat';
+            font-size: 13px;
+            letter-spacing: 2px;
+            border-radius: 4px;
+        }
 
         /* --- ABOUT US / FOUNDER PAGE --- */
         .page-container { display: none; padding: 140px 20px 100px; max-width: 850px; margin: 0 auto; text-align: center; }
@@ -100,28 +148,23 @@
 </head>
 <body>
 
-    <!-- Ashoka Chakra Background -->
     <div class="chakra-container">
         <div class="ashoka-chakra"></div>
     </div>
 
-    <!-- Header -->
     <header>
         <div class="logo-box">
-            <!-- Using your provided logo link -->
             <img src="https://instasize.com/p/47df5cd6d928e88a9d1537081a1c97cf9cb5381572610458fbe99fe59709ef31" alt="Neelam Makkal Logo" onerror="this.src='https://via.placeholder.com/70x70?text=Logo'">
         </div>
         <div class="menu-trigger" onclick="toggleMenu()">☰</div>
     </header>
 
-    <!-- Navigation Overlay -->
     <div class="nav-overlay" id="menu">
         <div style="position:absolute; top:30px; right:40px; font-size:40px; cursor:pointer" onclick="toggleMenu()">×</div>
         <a href="#" onclick="showHome()">HOME</a>
         <a href="#" onclick="showAbout()">ABOUT US</a>
     </div>
 
-    <!-- HOME PAGE -->
     <main id="home">
         <section class="hero-section">
             <h1>NEELAM MAKKAL</h1>
@@ -140,10 +183,23 @@
         </section>
 
         <div class="banner-blue">BOOKS COLLECTION</div>
-        <div class="books-placeholder">
-            <!-- Jab books upload hongi, yahan grid aayega -->
-            Digital library is currently being updated. Revolutionary literature coming soon.
+        
+        <!-- START OF BOOKS CONTAINER -->
+        <div class="book-container">
+            
+            <!-- THE CONSTITUTION OF INDIA -->
+            <div class="book-card">
+                <!-- Cover Image set from books folder -->
+                <img src="books/cover.jpg" alt="Constitution of India Cover" onerror="this.src='https://kommodo.ai/i/fg1LGRogEyoQTU8YBzyD'">
+                <h3>CONSTITUTION OF INDIA</h3>
+                <p>EDUCATIONAL EDITION BY NEELAM MAKKAL</p>
+                <a href="books/constitution.pdf" target="_blank" class="read-btn">READ FULL PDF</a>
+            </div>
+
+            <!-- Future Books Yahan Add Kar sakte hain -->
+
         </div>
+        <!-- END OF BOOKS CONTAINER -->
 
         <div class="social-row">
             <a href="mailto:officialneelammakkal@gmail.com"><i class="fa-solid fa-envelope"></i></a>
@@ -152,7 +208,6 @@
             <a href="https://whatsapp.com/channel/0029VbCIHi3BadmgM4ujo41W" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
         </div>
 
-        <!-- LEGAL FOOTER -->
         <footer class="legal-footer">
             <div style="max-width: 1000px; margin: 0 auto;">
                 <h4>LEGAL NOTICE & PRIVACY</h4>
@@ -163,7 +218,6 @@
         </footer>
     </main>
 
-    <!-- ABOUT US PAGE -->
     <main id="about" class="page-container">
         <h2 style="font-family: 'Cinzel Decorative'; color: var(--makkal-blue); font-size: 35px;">OUR PURPOSE</h2>
         <div style="text-align: left; margin: 30px 0; font-size: 18px; line-height: 1.8;">
