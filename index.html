@@ -9,10 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@1,600&family=Kavivanar&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- DEARFLIP CSS (For Book Flip Effect) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dflip-lite@1.0.0/css/dflip.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dflip-lite@1.0.0/css/themify-icons.min.css">
-
     <style>
         :root {
             --makkal-blue: #0033cc;
@@ -76,6 +72,7 @@
         /* --- BOOKS ARCHIVE --- */
         .banner-blue { background: var(--makkal-blue); color: #fff; padding: 15px; font-family: 'Cinzel Decorative'; letter-spacing: 3px; font-size: 22px; text-align: center; }
         
+        /* Updated Book Grid */
         .book-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -95,7 +92,10 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
-        .book-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
 
         .book-card img {
             width: 100%;
@@ -103,7 +103,6 @@
             border-radius: 4px;
             margin-bottom: 15px;
             border: 1px solid #f0f0f0;
-            cursor: pointer;
         }
 
         .book-card h3 { font-family: 'Cinzel Decorative'; font-size: 18px; color: var(--makkal-blue); margin-bottom: 10px; }
@@ -120,9 +119,6 @@
             font-size: 13px;
             letter-spacing: 2px;
             border-radius: 4px;
-            border: none;
-            cursor: pointer;
-            width: 100%;
         }
 
         /* --- ABOUT US / FOUNDER PAGE --- */
@@ -158,8 +154,7 @@
 
     <header>
         <div class="logo-box">
-            <!-- LOGO FIXED -->
-            <img src="https://instasize.com/p/47df5cd6d928e88a9d1537081a1c97cf9cb5381572610458fbe99fe59709ef31" alt="Neelam Makkal Logo">
+            <img src="https://instasize.com/p/47df5cd6d928e88a9d1537081a1c97cf9cb5381572610458fbe99fe59709ef31" alt="Neelam Makkal Logo" onerror="this.src='https://via.placeholder.com/70x70?text=Logo'">
         </div>
         <div class="menu-trigger" onclick="toggleMenu()">☰</div>
     </header>
@@ -189,19 +184,22 @@
 
         <div class="banner-blue">BOOKS COLLECTION</div>
         
+        <!-- START OF BOOKS CONTAINER -->
         <div class="book-container">
+            
             <!-- THE CONSTITUTION OF INDIA -->
             <div class="book-card">
-                <!-- Cover Image & Flip Trigger -->
-                <div class="_df_button" source="books/constitution.pdf">
-                    <img src="https://kommodo.ai/i/fg1LGRogEyoQTU8YBzyD" alt="Constitution of India Cover">
-                </div>
+                <!-- Cover Image set from books folder -->
+                <img src="books/cover.jpg" alt="Constitution of India Cover" onerror="this.src='https://kommodo.ai/i/fg1LGRogEyoQTU8YBzyD'">
                 <h3>CONSTITUTION OF INDIA</h3>
                 <p>EDUCATIONAL EDITION BY NEELAM MAKKAL</p>
-                <!-- Flipbook Button -->
-                <button class="_df_button read-btn" source="books/constitution.pdf">READ INTERACTIVE BOOK</button>
+                <a href="books/constitution.pdf" target="_blank" class="read-btn">READ FULL PDF</a>
             </div>
+
+            <!-- Future Books Yahan Add Kar sakte hain -->
+
         </div>
+        <!-- END OF BOOKS CONTAINER -->
 
         <div class="social-row">
             <a href="mailto:officialneelammakkal@gmail.com"><i class="fa-solid fa-envelope"></i></a>
@@ -213,7 +211,9 @@
         <footer class="legal-footer">
             <div style="max-width: 1000px; margin: 0 auto;">
                 <h4>LEGAL NOTICE & PRIVACY</h4>
-                <p>© 2026 NEELAM MAKKAL | MANAGED BY VASANTH | JAI BHIM</p>
+                <p>This website, <strong>Neelam Makkal Digital Library</strong>, is a non-profit educational platform operated and controlled exclusively by <strong>Founder Vasanth</strong> and the Neelam Makkal team. All rights reserved. The content provided here is for intellectual awakening and educational purposes only.</p>
+                <p style="margin-top: 10px;">By accessing this site, you agree that the distribution of knowledge is free and any unauthorized commercial use of the Neelam Makkal brand is strictly prohibited. All revolutionary texts are hosted to ensure constitutional rights to education.</p>
+                <p style="margin-top: 20px; font-weight: bold; color: #fff;">© 2026 NEELAM MAKKAL | MANAGED BY VASANTH | JAI BHIM</p>
             </div>
         </footer>
     </main>
@@ -221,29 +221,28 @@
     <main id="about" class="page-container">
         <h2 style="font-family: 'Cinzel Decorative'; color: var(--makkal-blue); font-size: 35px;">OUR PURPOSE</h2>
         <div style="text-align: left; margin: 30px 0; font-size: 18px; line-height: 1.8;">
-            <p>Founder Vasanth believes that every citizen of India must read and understand the ideologies...</p>
+            <p>Founder Vasanth believes that every citizen of India must read and understand the ideologies of <strong>Babasaheb Ambedkar, Thanthai Periyar, Karl Marx</strong>, and other revolutionary leaders. This platform is built to reclaim the history that was suppressed or hidden from the people. </p>
+            <p style="margin-top: 15px;">Our mission is to provide these books <strong>free of cost</strong> so that every single citizen can read and awaken their consciousness. Jai Bhim.</p>
         </div>
 
-        <!-- FOUNDER PHOTO FIXED -->
         <div class="folder-box" onclick="toggleBio()">
-            <img src="https://instasize.com/p/dd501a79a4db3bba9c1bf79ff5060be55249c9e7b364fc1ae5402559aa0aa2a4" alt="Vasanth">
+            <img src="https://instasize.com/p/dd501a79a4db3bba9c1bf79ff5060be55249c9e7b364fc1ae5402559aa0aa2a4" alt="Vasanth" onerror="this.src='https://via.placeholder.com/250x250?text=Founder+Vasanth'">
         </div>
         <p class="founder-label">FOUNDER OF NEELAM MAKKAL: VASANTH</p>
 
         <div id="bio" class="founder-bio">
             <h3 style="font-family: 'Cinzel Decorative'; margin-bottom: 20px;">The Founder's Story</h3>
-            <p>"My name is Vasanth..."</p>
+            <p>"My name is Vasanth. You might wonder why I only use my first name. I come from the land where <strong>Thanthai Periyar</strong> lived—a land where attaching a caste surname is considered a sign of regression. There is no need for it."</p>
+            <p style="margin-top: 15px;">"Thanthai Periyar E.V. Ramaswamy taught us that as long as the surname—which holds the seed of caste discrimination—is not discarded, the hierarchy of high and low will never end. This is why he threw away his own caste name. Similarly, Babasaheb Ambedkar chose the path of Buddhism to leave behind the discrimination of the caste system."</p>
+            <p style="margin-top: 15px;">"To advance their vision, I started <strong>Neelam Makkal</strong>. Through this, I aim to amplify their mission. Thank you. Jai Bhim."</p>
+            
             <div class="social-row" style="justify-content: flex-start; margin-top: 30px;">
                 <a href="mailto:officialvelvasanth@gmail.com"><i class="fa-solid fa-envelope-circle-check"></i></a>
                 <a href="https://instagram.com/therealspringgg" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                <a href="upi://pay?pa=officialvelvasanth@oksbi&pn=Vasanth&cu=INR" class="upi-link">SUPPORT VIA UPI</a>
+                <a href="upi://pay?pa=officialvelvasanth@oksbi&pn=Vasanth&cu=INR" class="upi-link">SUPPORT VIA UPI (Google Pay / PhonePe)</a>
             </div>
         </div>
     </main>
-
-    <!-- SCRIPTS FOR FLIPBOOK -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dflip-lite@1.0.0/js/dflip.min.js"></script>
 
     <script>
         function toggleMenu() { document.getElementById('menu').classList.toggle('active'); }
