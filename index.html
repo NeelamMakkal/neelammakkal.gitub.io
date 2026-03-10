@@ -100,7 +100,7 @@
         }
 
         #flipbook { width: 800px; height: 550px; margin: 0 auto; visibility: hidden; }
-        .page { background: white; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
+        .page { background: white; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .page canvas { width: 100% !important; height: 100% !important; object-fit: contain; }
 
         .reader-controls {
@@ -235,7 +235,8 @@
     <footer class="legal-footer" id="main-footer">
         <div style="max-width: 1000px; margin: 0 auto;">
             <h4>LEGAL NOTICE & PRIVACY</h4>
-            <p>This website, <strong>Neelam Makkal Digital Library</strong>, is a non-profit educational platform operated and controlled exclusively by <strong>Founder Vasanth</strong> and the Neelam Makkal team. All rights reserved.</p>
+            <p>This website, <strong>Neelam Makkal Digital Library</strong>, is a non-profit educational platform operated and controlled exclusively by <strong>Founder Vasanth</strong> and the Neelam Makkal team. All rights reserved. The content provided here is for intellectual awakening and educational purposes only.</p>
+            <p style="margin-top: 10px;">By accessing this site, you agree that the distribution of knowledge is free and any unauthorized commercial use of the Neelam Makkal brand is strictly prohibited. All revolutionary texts are hosted to ensure constitutional rights to education.</p>
             <p style="margin-top: 20px; font-weight: bold; color: #fff;">© 2026 NEELAM MAKKAL | MANAGED BY VASANTH | JAI BHIM</p>
         </div>
     </footer>
@@ -264,7 +265,6 @@
             b.style.display = (b.style.display === 'block') ? 'none' : 'block';
         }
 
-        // --- THE FLIP SYSTEM ---
         async function openBook(pdfUrl) {
             const overlay = document.getElementById('pdf-reader-overlay');
             const flipbook = $("#flipbook");
@@ -334,4 +334,5 @@
         });
     </script>
 </body>
-</html>
+                                                                                                                                                                                                </html>
+                                                                                                                                                                                                
