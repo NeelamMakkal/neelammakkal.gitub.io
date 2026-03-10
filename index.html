@@ -87,32 +87,21 @@
         .book-card img { width: 100%; height: 100%; object-fit: cover; border-left: 8px solid #001a66; display: block; }
         .book-title-sub { text-align: center; margin-top: 15px; font-family: 'Cinzel Decorative'; color: var(--makkal-blue); font-size: 14px; }
 
-        /* --- PROFESSIONAL PDF READER OVERLAY --- */
+        /* --- PDF FLIP READER OVERLAY --- */
         #pdf-reader-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #f4f4f4; z-index: 2500; overflow-y: auto;
+            background: #fff; z-index: 2500; overflow-y: auto;
         }
         
-        .top-toolbar {
-            position: fixed; top: 0; width: 100%; background: #fff; padding: 10px;
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
-            border-bottom: 2px solid var(--makkal-blue); z-index: 2600;
-        }
-
-        .tool-btn { background: #eee; border: 1px solid #ccc; padding: 8px 12px; cursor: pointer; border-radius: 4px; font-size: 14px; font-weight: bold; }
-        .tool-btn:hover { background: var(--makkal-blue); color: #fff; }
-
-        #translate-dropdown { padding: 8px; border-radius: 4px; border: 1px solid var(--makkal-blue); outline: none; }
-
         #book-viewport {
-            width: 100%; min-height: 80vh; margin-top: 120px;
-            display: flex; flex-direction: column; align-items: center;
-            padding: 40px 0; transition: transform 0.3s ease;
+            width: 100%; min-height: 80vh; margin-top: 100px;
+            display: flex; justify-content: center; align-items: center;
+            background: #e0e0e0; padding: 40px 0;
         }
 
         #flipbook { width: 800px; height: 550px; margin: 0 auto; visibility: hidden; }
-        .page { background: white; border: 1px solid #ddd; position: relative; }
-        .page canvas { width: 100% !important; height: 100% !important; }
+        .page { background: white; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .page canvas { width: 100% !important; height: 100% !important; object-fit: contain; }
 
         .reader-controls {
             display: flex; justify-content: center; gap: 20px; padding: 25px; 
@@ -136,12 +125,11 @@
         .legal-footer { background: #1a1a1a; color: #aaa; padding: 60px 5% 30px; text-align: left; font-size: 13px; line-height: 1.8; margin-top: 50px; }
         .legal-footer h4 { color: #fff; margin-bottom: 15px; font-family: 'Cinzel Decorative'; }
 
-        #loading-msg { position: absolute; font-weight: bold; color: var(--makkal-blue); font-size: 18px; top: 50%; }
+        #loading-msg { position: absolute; font-weight: bold; color: var(--makkal-blue); font-size: 18px; }
 
         @media (max-width: 768px) {
-            #flipbook { width: 95vw; height: 60vh; }
-            #book-viewport { margin-top: 160px; }
-            .top-toolbar { padding: 5px; gap: 5px; }
+            #flipbook { width: 95vw; height: 65vh; }
+            #book-viewport { padding: 10px 0; margin-top: 80px; }
         }
     </style>
 </head>
@@ -230,25 +218,6 @@
 
     <!-- BOOK READER OVERLAY -->
     <div id="pdf-reader-overlay">
-        <div class="top-toolbar">
-            <button class="tool-btn" onclick="zoomIn()"><i class="fa fa-search-plus"></i></button>
-            <button class="tool-btn" onclick="zoomOut()"><i class="fa fa-search-minus"></i></button>
-            <select id="translate-dropdown" onchange="translateText()">
-                <option value="en">Translate Language</option>
-                <option value="hi">Hindi</option>
-                <option value="ta">Tamil</option>
-                <option value="te">Telugu</option>
-                <option value="kn">Kannada</option>
-                <option value="ml">Malayalam</option>
-                <option value="mr">Marathi</option>
-                <option value="bn">Bengali</option>
-                <option value="gu">Gujarati</option>
-                <option value="pa">Punjabi</option>
-            </select>
-            <button class="tool-btn" onclick="listenToPage()"><i class="fa fa-volume-up"></i> LISTEN</button>
-            <button class="tool-btn" onclick="stopListening()"><i class="fa fa-stop"></i> STOP</button>
-        </div>
-
         <div id="book-viewport">
             <div id="loading-msg">REVOLUTION IS LOADING...</div>
             <div id="flipbook"></div>
@@ -274,12 +243,6 @@
 
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
-
-        let currentScale = 1;
-        let pdfDoc = null;
-        let synthesis = window.speechSynthesis;
-        let currentUtterance = null;
-        let pageTexts = [];
 
         function toggleMenu() { document.getElementById('menu').classList.toggle('active'); }
         
@@ -314,14 +277,13 @@
 
             if (flipbook.data().turn) { flipbook.turn("destroy"); }
             flipbook.empty().css('visibility', 'hidden');
-            pageTexts = [];
 
             try {
                 const loadingTask = pdfjsLib.getDocument(pdfUrl);
-                pdfDoc = await loadingTask.promise;
+                const pdf = await loadingTask.promise;
                 
-                for (let i = 1; i <= pdfDoc.numPages; i++) {
-                    const page = await pdfDoc.getPage(i);
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
                     const viewport = page.getViewport({ scale: 1.5 });
                     
                     const pageDiv = $('<div class="page"></div>');
@@ -331,12 +293,6 @@
                     canvas.width = viewport.width;
                     
                     await page.render({ canvasContext: context, viewport: viewport }).promise;
-                    
-                    // Extract Text for Voice and Translation
-                    const textContent = await page.getTextContent();
-                    const textStr = textContent.items.map(item => item.str).join(' ');
-                    pageTexts.push(textStr);
-
                     pageDiv.append(canvas);
                     flipbook.append(pageDiv);
                 }
@@ -349,4 +305,33 @@
                     height: ($(window).width() > 800) ? 550 : 500,
                     autoCenter: true,
                     display: ($(window).width() > 800) ? 'double' : 'single',
-                    
+                    acceleration: true,
+                    elevation: 50,
+                    gradients: true
+                });
+
+            } catch (err) {
+                loader.text("Error loading PDF. Please check file path.");
+                console.error(err);
+            }
+        }
+
+        function closeBook() {
+            document.getElementById('pdf-reader-overlay').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.body.appendChild(document.getElementById('main-footer'));
+        }
+
+        function nextPage() { $("#flipbook").turn("next"); }
+        function prevPage() { $("#flipbook").turn("previous"); }
+
+        $(window).resize(function() {
+            if ($("#pdf-reader-overlay").is(":visible")) {
+                let w = ($(window).width() > 800) ? 800 : $(window).width() * 0.95;
+                let h = ($(window).width() > 800) ? 550 : 500;
+                $("#flipbook").turn("size", w, h);
+            }
+        });
+    </script>
+</body>
+    </html>
