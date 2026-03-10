@@ -8,9 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@1,600&family=Kavivanar&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
-    <!-- Dependencies for Flip Effect -->
+    <!-- Dependencies -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
+    <!-- PDF.js for rendering PDF pages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     
     <style>
         :root {
@@ -42,7 +44,7 @@
         header {
             position: fixed; top: 0; width: 100%; padding: 8px 5%;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; background: rgba(255,255,255,0.95); border-bottom: 2px solid var(--makkal-blue);
+            z-index: 2000; background: rgba(255,255,255,0.95); border-bottom: 2px solid var(--makkal-blue);
         }
         .logo-box img { height: 45px; width: auto; display: block; cursor: pointer; }
         .menu-trigger { font-size: 28px; color: var(--makkal-blue); cursor: pointer; }
@@ -50,7 +52,7 @@
         /* --- NAVIGATION --- */
         .nav-overlay {
             position: fixed; top: 0; right: -100%; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.98); z-index: 1002; transition: 0.4s;
+            background: rgba(255,255,255,0.98); z-index: 2002; transition: 0.4s;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
         .nav-overlay.active { right: 0; }
@@ -86,44 +88,27 @@
         .book-card img { width: 100%; height: 100%; object-fit: cover; border-left: 8px solid #001a66; display: block; }
         .book-title-sub { text-align: center; margin-top: 15px; font-family: 'Cinzel Decorative'; color: var(--makkal-blue); font-size: 14px; }
 
-        /* --- ADVANCED PDF READER OVERLAY --- */
+        /* --- PDF FLIP READER OVERLAY --- */
         #pdf-reader-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #e5e5e5; z-index: 2000; overflow: hidden;
+            background: #fff; z-index: 1001; overflow-y: auto;
         }
-
-        /* PDF Toolbar */
-        .pdf-toolbar {
-            position: absolute; top: 0; left: 0; width: 100%; height: 60px;
-            background: #333; color: white; display: flex; align-items: center;
-            justify-content: space-between; padding: 0 20px; z-index: 2010;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        .pdf-toolbar .tool-group { display: flex; gap: 15px; align-items: center; }
-        .pdf-toolbar button { background: transparent; border: none; color: white; cursor: pointer; font-size: 18px; padding: 5px 10px; border-radius: 4px; transition: 0.2s; }
-        .pdf-toolbar button:hover { background: rgba(255,255,255,0.1); }
-        .page-counter { font-size: 14px; font-weight: bold; }
-
-        /* Flipbook Container */
+        
         #book-viewport {
-            width: 100%; height: 100%;
+            width: 100%; min-height: 80vh; margin-top: 80px;
             display: flex; justify-content: center; align-items: center;
-            padding-top: 60px;
-            transition: transform 0.3s ease;
+            background: #f0f0f0; padding: 20px 0;
         }
-        #flipbook { width: 900px; height: 600px; }
-        .page { background: white; box-shadow: 0 0 20px rgba(0,0,0,0.2); overflow: hidden; }
-        .page img { width: 100%; height: 100%; object-fit: fill; }
 
-        /* Mobile Controls */
-        .mobile-nav {
-            position: absolute; bottom: 30px; left: 0; width: 100%;
-            display: flex; justify-content: center; gap: 40px; z-index: 2010;
+        #flipbook { width: 800px; height: 500px; margin: 0 auto; }
+        .page { background: white; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .page canvas { width: 100% !important; height: 100% !important; object-fit: contain; }
+
+        .reader-controls {
+            display: flex; justify-content: center; gap: 20px; padding: 20px; 
+            background: #fff; border-top: 1px solid #eee;
         }
-        .mobile-nav button {
-            width: 50px; height: 50px; border-radius: 50%; background: var(--makkal-blue);
-            color: white; border: none; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
+        .reader-btn { background: var(--makkal-blue); color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; font-weight: bold; }
 
         /* --- ABOUT PAGE --- */
         .page-container { display: none; padding: 140px 20px 100px; max-width: 850px; margin: 0 auto; text-align: center; }
@@ -142,8 +127,8 @@
         .legal-footer h4 { color: #fff; margin-bottom: 15px; font-family: 'Cinzel Decorative'; }
 
         @media (max-width: 768px) {
-            #flipbook { width: 100vw; height: 70vh; }
-            .pdf-toolbar .tool-group:nth-child(2) { display: none; }
+            #flipbook { width: 95vw; height: 60vh; }
+            #book-viewport { min-height: 65vh; }
         }
     </style>
 </head>
@@ -153,8 +138,8 @@
         <div class="ashoka-chakra"></div>
     </div>
 
-    <!-- MAIN HEADER -->
-    <header>
+    <!-- MAIN HEADER (Always Visible & Reused in Reader) -->
+    <header id="main-header">
         <div class="logo-box" onclick="showHome()">
             <img src="logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/120x45?text=Logo'">
         </div>
@@ -188,7 +173,8 @@
 
         <div class="banner-blue">BOOKS COLLECTION</div>
         <div class="book-library">
-            <div class="book-wrap" onclick="openBook()">
+            <!-- PDF Link passed to openBook function -->
+            <div class="book-wrap" onclick="openBook('constitution.pdf')">
                 <div class="book-card">
                     <img src="constitutioncover.jpg" alt="Constitution.pdf" onerror="this.src='https://via.placeholder.com/200x280?text=Constitution+Cover'">
                 </div>
@@ -230,46 +216,22 @@
         </div>
     </main>
 
-    <!-- ADVANCED PDF READER OVERLAY -->
+    <!-- BOOK READER OVERLAY -->
     <div id="pdf-reader-overlay">
-        <!-- PDF Toolbar -->
-        <div class="pdf-toolbar">
-            <div class="tool-group">
-                <button onclick="closeBook()"><i class="fa fa-arrow-left"></i></button>
-                <span style="font-family: 'Cinzel Decorative'; font-size: 14px;">CONSTITUTION OF INDIA</span>
-            </div>
-            <div class="tool-group">
-                <button onclick="zoomOut()"><i class="fa fa-minus"></i></button>
-                <button onclick="zoomIn()"><i class="fa fa-plus"></i></button>
-                <button onclick="toggleFullScreen()"><i class="fa fa-expand"></i></button>
-            </div>
-            <div class="tool-group">
-                <span class="page-counter">Page: <span id="page-num">1</span> / 6</span>
-                <button onclick="closeBook()" style="color: #ff4d4d;"><i class="fa fa-times"></i></button>
-            </div>
-        </div>
-
+        <!-- The header remains visible (z-index handled) -->
         <div id="book-viewport">
             <div id="flipbook">
-                <!-- Hardcover and Pages -->
-                <div class="page" style="background:#001a66; color:white; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:20px;">
-                    <h2 style="font-family:'Cinzel Decorative';">CONSTITUTION OF INDIA</h2>
-                    <p style="margin-top:20px;">Digital Library Edition</p>
-                </div>
-                <div class="page"><img src="https://via.placeholder.com/450x600?text=Preamble+Page"></div>
-                <div class="page"><img src="https://via.placeholder.com/450x600?text=Fundamental+Rights"></div>
-                <div class="page"><img src="https://via.placeholder.com/450x600?text=Directive+Principles"></div>
-                <div class="page"><img src="https://via.placeholder.com/450x600?text=Duties+of+Citizens"></div>
-                <div class="page" style="background:#f4f4f4; display:flex; justify-content:center; align-items:center;">
-                    <h3 style="color:var(--makkal-blue);">JAI BHIM</h3>
-                </div>
+                <!-- PDF Pages will be rendered here as canvases -->
             </div>
         </div>
-
-        <div class="mobile-nav">
-            <button onclick="prevPage()"><i class="fa fa-chevron-left"></i></button>
-            <button onclick="nextPage()"><i class="fa fa-chevron-right"></i></button>
+        
+        <div class="reader-controls">
+            <button class="reader-btn" onclick="prevPage()"><i class="fa fa-arrow-left"></i> PREVIOUS</button>
+            <button class="reader-btn" style="background:#cc0000;" onclick="closeBook()">CLOSE BOOK</button>
+            <button class="reader-btn" onclick="nextPage()">NEXT <i class="fa fa-arrow-right"></i></button>
         </div>
+
+        <div id="reader-footer-anchor"></div>
     </div>
 
     <!-- SHARED LEGAL FOOTER -->
@@ -283,7 +245,8 @@
     </footer>
 
     <script>
-        // Menu Toggle
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
         function toggleMenu() { document.getElementById('menu').classList.toggle('active'); }
         
         function showHome() { 
@@ -308,49 +271,70 @@
             if(b.style.display === 'block') b.scrollIntoView({behavior:'smooth'});
         }
 
-        // --- ENHANCED BOOK FLIP SYSTEM ---
-        let currentZoom = 1;
-
-        function openBook() {
-            document.getElementById('pdf-reader-overlay').style.display = 'block';
+        // --- ENHANCED PDF FLIP LOGIC ---
+        async function openBook(pdfUrl) {
+            const overlay = document.getElementById('pdf-reader-overlay');
+            const flipbook = $("#flipbook");
+            
+            overlay.style.display = 'block';
             document.body.style.overflow = 'hidden';
             
-            // Initialize Turn.js only if not initialized
-            if (!$("#flipbook").hasClass("turn-to-page")) {
-                $("#flipbook").turn({
-                    width: 900,
-                    height: 600,
+            // Move footer into reader
+            document.getElementById('reader-footer-anchor').appendChild(document.getElementById('main-footer'));
+
+            // Clear previous book if any
+            flipbook.turn("destroy").html(""); 
+
+            try {
+                const loadingTask = pdfjsLib.getDocument(pdfUrl);
+                const pdf = await loadingTask.promise;
+                
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const viewport = page.getViewport({ scale: 1.5 });
+                    
+                    const pageDiv = $('<div class="page"></div>');
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    
+                    await page.render({ canvasContext: context, viewport: viewport }).promise;
+                    pageDiv.append(canvas);
+                    flipbook.append(pageDiv);
+                }
+
+                // Initialize Turn.js
+                flipbook.turn({
+                    width: ($(window).width() > 800) ? 800 : $(window).width() * 0.95,
+                    height: ($(window).width() > 800) ? 550 : 450,
                     autoCenter: true,
                     gradients: true,
-                    acceleration: true,
-                    when: {
-                        turned: function(e, page) {
-                            document.getElementById('page-num').innerText = page;
-                        }
-                    }
+                    acceleration: true
                 });
+
+            } catch (err) {
+                console.error("Error loading PDF: ", err);
+                flipbook.html("<p style='padding:50px;'>Error loading PDF. Please ensure the file exists.</p>");
             }
-            handleResize();
         }
 
         function closeBook() {
             document.getElementById('pdf-reader-overlay').style.display = 'none';
             document.body.style.overflow = 'auto';
-            if (document.fullscreenElement) document.exitFullscreen();
+            document.body.appendChild(document.getElementById('main-footer'));
         }
 
         function nextPage() { $("#flipbook").turn("next"); }
         function prevPage() { $("#flipbook").turn("previous"); }
 
-        // PDF Options
-        function zoomIn() {
-            currentZoom += 0.1;
-            document.getElementById('book-viewport').style.transform = `scale(${currentZoom})`;
-        }
-
-        function zoomOut() {
-            if(currentZoom > 0.5) {
-                currentZoom -= 0.1;
-                document.getElementById('book-viewport').style.transform = `scale(${currentZoom})`;
+        $(window).resize(function() {
+            if ($("#pdf-reader-overlay").is(":visible")) {
+                let w = ($(window).width() > 800) ? 800 : $(window).width() * 0.95;
+                let h = ($(window).width() > 800) ? 550 : 450;
+                $("#flipbook").turn("size", w, h);
             }
-        
+        });
+    </script>
+</body>
+</html>
