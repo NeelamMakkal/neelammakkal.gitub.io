@@ -12,8 +12,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
-    <!-- Google Translate for PDF Content -->
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     
     <style>
         :root {
@@ -45,7 +43,7 @@
         header {
             position: fixed; top: 0; width: 100%; padding: 8px 5%;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 3000; background: rgba(255,255,255,0.95); border-bottom: 2px solid var(--makkal-blue);
+            z-index: 2000; background: rgba(255,255,255,0.95); border-bottom: 2px solid var(--makkal-blue);
         }
         .logo-box img { height: 45px; width: auto; display: block; cursor: pointer; }
         .menu-trigger { font-size: 28px; color: var(--makkal-blue); cursor: pointer; }
@@ -89,37 +87,51 @@
         .book-card img { width: 100%; height: 100%; object-fit: cover; border-left: 8px solid #001a66; display: block; }
         .book-title-sub { text-align: center; margin-top: 15px; font-family: 'Cinzel Decorative'; color: var(--makkal-blue); font-size: 14px; }
 
-        /* --- UPDATED PDF READER OVERLAY --- */
+        /* --- NEW PROFESSIONAL READER OVERLAY --- */
         #pdf-reader-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #222; z-index: 5000; overflow: hidden;
+            background: #222; z-index: 2500; overflow-y: auto;
+        }
+
+        .reader-top-bar {
+            position: fixed; top: 0; width: 100%; background: var(--makkal-blue);
+            color: white; padding: 10px 5%; display: flex; justify-content: space-between;
+            align-items: center; z-index: 3100; box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .tools-group { display: flex; gap: 12px; align-items: center; }
+        
+        .tool-btn { 
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); 
+            color: white; padding: 8px 15px; border-radius: 4px; cursor: pointer; 
+            font-size: 13px; font-weight: bold; transition: 0.3s;
+        }
+        .tool-btn:hover { background: rgba(255,255,255,0.3); }
+
+        #language-selector { 
+            background: white; color: var(--makkal-blue); border: none; 
+            padding: 6px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 12px;
         }
         
-        /* New Toolbar */
-        .reader-toolbar {
-            height: 60px; background: #fff; display: flex; align-items: center; 
-            justify-content: space-between; padding: 0 20px; border-bottom: 2px solid var(--makkal-blue);
-        }
-
         #book-viewport {
-            width: 100%; height: calc(100vh - 140px);
+            width: 100%; min-height: 100vh; padding: 100px 0 120px;
             display: flex; justify-content: center; align-items: center;
-            overflow: auto; transition: transform 0.3s;
+            background: #333;
         }
 
-        #flipbook { width: 800px; height: 550px; margin: 0 auto; }
-        .page { background: white; border: 1px solid #ddd; }
-        .page canvas { width: 100% !important; height: 100% !important; }
+        #flipbook { width: 800px; height: 600px; margin: 0 auto; visibility: hidden; }
+        .page { background: white; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .page canvas { width: 100% !important; height: 100% !important; object-fit: contain; }
 
         .reader-controls {
-            height: 80px; display: flex; justify-content: center; align-items: center; gap: 15px; 
-            background: #fff; border-top: 2px solid var(--makkal-blue); position: fixed; bottom: 0; width: 100%;
+            position: fixed; bottom: 0; width: 100%;
+            display: flex; justify-content: center; gap: 20px; padding: 20px; 
+            background: rgba(255,255,255,0.95); border-top: 3px solid var(--makkal-blue);
+            z-index: 3100;
         }
-        .reader-btn { 
-            background: var(--makkal-blue); color: white; border: none; 
-            padding: 10px 18px; cursor: pointer; border-radius: 4px; font-weight: bold; font-size: 14px;
-        }
-        .btn-round { border-radius: 50%; width: 45px; height: 45px; padding: 0; }
+        .reader-btn { background: var(--makkal-blue); color: white; border: none; padding: 12px 25px; cursor: pointer; border-radius: 5px; font-weight: bold; }
+
+        #loading-msg { position: absolute; font-weight: bold; color: white; font-size: 20px; letter-spacing: 2px; text-align: center; }
 
         /* --- ABOUT PAGE --- */
         .page-container { display: none; padding: 140px 20px 100px; max-width: 850px; margin: 0 auto; text-align: center; }
@@ -137,11 +149,10 @@
         .legal-footer { background: #1a1a1a; color: #aaa; padding: 60px 5% 30px; text-align: left; font-size: 13px; line-height: 1.8; margin-top: 50px; }
         .legal-footer h4 { color: #fff; margin-bottom: 15px; font-family: 'Cinzel Decorative'; }
 
-        #loading-msg { position: absolute; font-weight: bold; color: #fff; font-size: 18px; z-index: 10; }
-
         @media (max-width: 768px) {
-            #flipbook { width: 95vw; height: 60vh; }
-            .reader-toolbar { height: auto; flex-wrap: wrap; padding: 10px; }
+            #flipbook { width: 95vw; height: 70vh; }
+            .tools-group:nth-child(2) { flex-wrap: wrap; justify-content: center; }
+            .reader-top-bar { padding: 5px; flex-direction: column; gap: 5px; }
         }
     </style>
 </head>
@@ -151,15 +162,15 @@
         <div class="ashoka-chakra"></div>
     </div>
 
+    <!-- MAIN HEADER -->
     <header id="main-header">
         <div class="logo-box" onclick="showHome()">
             <img src="logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/120x45?text=Logo'">
         </div>
-        <!-- Translation Tool UI -->
-        <div id="google_translate_element"></div>
         <div class="menu-trigger" onclick="toggleMenu()">☰</div>
     </header>
 
+    <!-- NAVIGATION -->
     <div class="nav-overlay" id="menu">
         <div style="position:absolute; top:30px; right:40px; font-size:40px; cursor:pointer" onclick="toggleMenu()">×</div>
         <a href="#" onclick="showHome()">HOME</a>
@@ -228,14 +239,32 @@
         </div>
     </main>
 
-    <!-- PROFESSIONAL BOOK READER OVERLAY -->
+    <!-- ENHANCED PDF READER OVERLAY -->
     <div id="pdf-reader-overlay">
-        <div class="reader-toolbar">
-            <div style="font-weight: bold; color: var(--makkal-blue);">PROFESSIONAL READER</div>
-            <div style="display: flex; gap: 10px;">
-                <button onclick="zoomBook(0.1)" class="reader-btn btn-round"><i class="fa fa-search-plus"></i></button>
-                <button onclick="zoomBook(-0.1)" class="reader-btn btn-round"><i class="fa fa-search-minus"></i></button>
-                <button onclick="readAloud()" class="reader-btn btn-round" style="background:#28a745;" title="Listen to Page"><i class="fa fa-volume-up"></i></button>
+        <div class="reader-top-bar">
+            <div class="tools-group">
+                <button class="tool-btn" onclick="closeBook()"><i class="fa fa-times"></i> EXIT</button>
+                <span id="page-info" style="font-size: 12px;">PAGE: 0 / 0</span>
+            </div>
+            
+            <div class="tools-group">
+                <button class="tool-btn" onclick="zoomIn()"><i class="fa fa-search-plus"></i></button>
+                <button class="tool-btn" onclick="zoomOut()"><i class="fa fa-search-minus"></i></button>
+                
+                <select id="language-selector" onchange="changeLanguage()">
+                    <option value="en-US">ENGLISH</option>
+                    <option value="hi-IN">HINDI (हिंदी)</option>
+                    <option value="ta-IN">TAMIL (தமிழ்)</option>
+                    <option value="te-IN">TELUGU (తెలుగు)</option>
+                    <option value="kn-IN">KANNADA (ಕನ್ನಡ)</option>
+                    <option value="ml-IN">MALAYALAM (മലയാളം)</option>
+                    <option value="mr-IN">MARATHI (मराठी)</option>
+                    <option value="bn-IN">BENGALI (বাংলা)</option>
+                </select>
+                
+                <button id="speak-btn" class="tool-btn" onclick="toggleSpeech()" style="background: #28a745; border:none;">
+                    <i class="fa fa-volume-up"></i> LISTEN
+                </button>
             </div>
         </div>
 
@@ -246,16 +275,16 @@
         
         <div class="reader-controls">
             <button class="reader-btn" onclick="prevPage()"><i class="fa fa-arrow-left"></i> PREV</button>
-            <span id="page-num-display" style="font-weight: bold; color: #555;">Page: 1</span>
             <button class="reader-btn" onclick="nextPage()">NEXT <i class="fa fa-arrow-right"></i></button>
-            <button class="reader-btn" style="background:#cc0000;" onclick="closeBook()">CLOSE</button>
         </div>
     </div>
 
+    <!-- SHARED LEGAL FOOTER -->
     <footer class="legal-footer" id="main-footer">
         <div style="max-width: 1000px; margin: 0 auto;">
             <h4>LEGAL NOTICE & PRIVACY</h4>
-            <p>This website, <strong>Neelam Makkal Digital Library</strong>, is a non-profit educational platform operated and controlled exclusively by <strong>Founder Vasanth</strong> and the Neelam Makkal team. All revolutionary texts are hosted to ensure constitutional rights to education.</p>
+            <p>This website, <strong>Neelam Makkal Digital Library</strong>, is a non-profit educational platform operated and controlled exclusively by <strong>Founder Vasanth</strong> and the Neelam Makkal team. All rights reserved. The content provided here is for intellectual awakening and educational purposes only.</p>
+            <p style="margin-top: 10px;">By accessing this site, you agree that the distribution of knowledge is free and any unauthorized commercial use of the Neelam Makkal brand is strictly prohibited. All revolutionary texts are hosted to ensure constitutional rights to education.</p>
             <p style="margin-top: 20px; font-weight: bold; color: #fff;">© 2026 NEELAM MAKKAL | MANAGED BY VASANTH | JAI BHIM</p>
         </div>
     </footer>
@@ -263,13 +292,10 @@
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
-        let currentZoom = 1;
+        let currentScale = 1.5;
         let pdfDoc = null;
-        let pageTexts = []; // To store text for TTS
-
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'hi,ta,te,kn,ml,mr,gu,bn,pa'}, 'google_translate_element');
-        }
+        let synth = window.speechSynthesis;
+        let isSpeaking = false;
 
         function toggleMenu() { document.getElementById('menu').classList.toggle('active'); }
         
@@ -277,12 +303,14 @@
             closeBook();
             document.getElementById('home').style.display='block'; 
             document.getElementById('about').style.display='none'; 
+            window.scrollTo(0,0); 
         }
 
         function showAbout() { 
             closeBook();
             document.getElementById('home').style.display='none'; 
             document.getElementById('about').style.display='block'; 
+            window.scrollTo(0,0); 
         }
 
         function toggleBio() { 
@@ -290,74 +318,44 @@
             b.style.display = (b.style.display === 'block') ? 'none' : 'block';
         }
 
+        // --- NEW PDF & FLIPBOOK LOGIC ---
+
         async function openBook(pdfUrl) {
             const overlay = document.getElementById('pdf-reader-overlay');
-            const flipbook = $("#flipbook");
             const loader = $("#loading-msg");
-            
+            const flipbook = $("#flipbook");
+
             overlay.style.display = 'block';
             loader.show();
+            flipbook.css('visibility', 'hidden');
             document.body.style.overflow = 'hidden';
-            pageTexts = [];
-
-            if (flipbook.data().turn) { flipbook.turn("destroy"); }
-            flipbook.empty();
 
             try {
                 const loadingTask = pdfjsLib.getDocument(pdfUrl);
                 pdfDoc = await loadingTask.promise;
                 
-                for (let i = 1; i <= pdfDoc.numPages; i++) {
-                    const page = await pdfDoc.getPage(i);
-                    const viewport = page.getViewport({ scale: 1.5 });
-                    
-                    // Extract text for TTS
-                    const textContent = await page.getTextContent();
-                    const textItems = textContent.items.map(item => item.str).join(" ");
-                    pageTexts[i] = textItems;
-
-                    const pageDiv = $('<div class="page"></div>');
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
-                    
-                    await page.render({ canvasContext: context, viewport: viewport }).promise;
-                    pageDiv.append(canvas);
-                    flipbook.append(pageDiv);
-                }
-
+                await renderPages();
+                
                 loader.hide();
-                flipbook.turn({
-                    width: ($(window).width() > 800) ? 800 : $(window).width() * 0.95,
-                    height: ($(window).width() > 800) ? 550 : 500,
-                    autoCenter: true,
-                    display: ($(window).width() > 800) ? 'double' : 'single',
-                    when: {
-                        turned: function(e, page) {
-                            document.getElementById('page-num-display').innerText = "Page: " + page;
-                        }
-                    }
-                });
+                flipbook.css('visibility', 'visible');
+                initFlipbook();
+                
+                document.getElementById('page-info').innerText = `PAGE: 1 / ${pdfDoc.numPages}`;
 
             } catch (err) {
-                loader.text("Error loading PDF.");
+                loader.text("Error loading PDF. Check file path.");
                 console.error(err);
             }
         }
 
-        function zoomBook(delta) {
-            currentZoom += delta;
-            document.getElementById('book-viewport').style.transform = `scale(${currentZoom})`;
-        }
+        async function renderPages() {
+            const flipbook = $("#flipbook");
+            if (flipbook.data().turn) { flipbook.turn("destroy"); }
+            flipbook.empty();
 
-        function readAloud() {
-            const pageNum = $("#flipbook").turn("page");
-            const text = pageTexts[pageNum] || "No text found on this page.";
-            
-            // Cancel existing speech
-            window.speechSynthesis.cancel();
-            
-            const utterance = new SpeechSynthesisUtterance(text);
-            // Detect if translation is active or default to Hindi/English
-        
+            for (let i = 1; i <= pdfDoc.numPages; i++) {
+                const page = await pdfDoc.getPage(i);
+                const viewport = page.getViewport({ scale: currentScale });
+                
+                const pageDiv = $('<div class="page"></div>');
+             
