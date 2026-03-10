@@ -34,11 +34,11 @@
         }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* --- HEADER (Used everywhere) --- */
+        /* --- HEADER --- */
         header {
             position: fixed; top: 0; width: 100%; padding: 8px 5%;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; background: rgba(255,255,255,0.95); border-bottom: 2px solid var(--makkal-blue);
+            z-index: 4000; background: rgba(255,255,255,0.95); border-bottom: 2px solid var(--makkal-blue);
         }
         .logo-box img { height: 45px; width: auto; display: block; }
         .menu-trigger { font-size: 28px; color: var(--makkal-blue); cursor: pointer; }
@@ -46,7 +46,7 @@
         /* --- NAVIGATION --- */
         .nav-overlay {
             position: fixed; top: 0; right: -100%; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.98); z-index: 2000; transition: 0.4s;
+            background: rgba(255,255,255,0.98); z-index: 5000; transition: 0.4s;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
         .nav-overlay.active { right: 0; }
@@ -67,10 +67,11 @@
         .search-box input { width: 100%; padding: 15px 50px 15px 20px; border-radius: 5px; border: 2px solid var(--makkal-blue); font-size: 15px; outline: none; }
         .search-box i { position: absolute; right: 20px; top: 18px; color: var(--makkal-blue); }
 
-        /* --- BOOK COLLECTION (Perfect Small Size & Flip) --- */
+        /* --- BOOK COLLECTION --- */
         .banner-blue { background: var(--makkal-blue); color: #fff; padding: 15px; font-family: 'Cinzel Decorative'; letter-spacing: 3px; font-size: 22px; text-align: center; }
         .book-library { display: flex; justify-content: center; padding: 40px 0; }
-        .book-wrap { width: 160px; height: 230px; perspective: 1000px; cursor: pointer; } /* Made Smaller */
+        /* BOOK CHHOTA KIYA HAI */
+        .book-wrap { width: 140px; height: 200px; perspective: 1000px; cursor: pointer; } 
         .book-card {
             width: 100%; height: 100%;
             position: relative;
@@ -79,34 +80,33 @@
             box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
         }
         .book-wrap:hover .book-card { transform: rotateY(-25deg); }
-        .book-card img { width: 100%; height: 100%; object-fit: cover; border-left: 6px solid #001a66; }
+        .book-card img { width: 100%; height: 100%; object-fit: cover; border-left: 5px solid #001a66; }
 
-        /* --- PDF FLIP VIEWER MODAL --- */
+        /* --- PDF VIEWER --- */
         #pdf-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #fff; z-index: 3000; overflow-y: auto;
         }
         .pdf-viewer-content { 
-            padding-top: 80px; width: 100%; min-height: 100vh;
+            padding-top: 100px; width: 100%; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
         }
-        /* Iframe to handle flip (using Google PDF Viewer for flip feel) */
-        .pdf-frame-wrap { width: 95%; height: 70vh; margin: 20px 0; background: #eee; border: 1px solid #ddd; }
+        .pdf-frame-wrap { width: 95%; height: 75vh; margin-bottom: 40px; background: #f0f0f0; border: 1px solid #ddd; }
         #pdf-frame { width: 100%; height: 100%; border: none; }
 
-        /* --- ABOUT PAGE --- */
-        .page-container { display: none; padding: 140px 20px 100px; max-width: 850px; margin: 0 auto; text-align: center; }
-
-        /* --- FOOTER (Used everywhere) --- */
+        /* --- FOOTER --- */
         .legal-footer { background: #1a1a1a; color: #aaa; padding: 60px 5% 30px; text-align: left; font-size: 13px; line-height: 1.8; }
         .legal-footer h4 { color: #fff; margin-bottom: 15px; font-family: 'Cinzel Decorative'; }
+        
+        .page-container { display: none; padding: 140px 20px 100px; max-width: 850px; margin: 0 auto; text-align: center; }
     </style>
 </head>
 <body>
 
     <div class="chakra-container"><div class="ashoka-chakra"></div></div>
 
-    <header>
+    <!-- HEADER: Always visible on all pages -->
+    <header id="main-header">
         <div class="logo-box">
             <img src="logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/120x45?text=Logo'">
         </div>
@@ -119,13 +119,14 @@
         <a href="#" onclick="showAbout()">ABOUT US</a>
     </div>
 
+    <!-- HOME PAGE -->
     <main id="home">
         <section class="hero-section">
             <h1>NEELAM MAKKAL</h1>
             <p class="motto-text">BUILT WITH THE RIGHTS OF AMBEDKAR, THE IDEOLOGY OF PERIYAR, AND THE WORLD OF KARL MARX.</p>
             <div class="quotes-wrapper">
-                <p class="tamil-font">"கல்வி என்பது வெறும் காகிதமல்ல<br>அது உன்னைக் கட்டிப்போட்டிருக்கும் சங்கிலிகளை அறுக்கும் கூர்மையான ஆயுதம்."</p>
-                <p class="english-font">"Education is not just a leaf of paper... Your intellect is your only revolutionary strike!" <br>— Vasanth</p>
+                <p class="tamil-font">"கல்வி என்பது வெறும் காகிதமல்ல<br>அது உன்னைக் கட்டிப்போட்டிருக்கும் சங்கிலிகளை அறுக்கும் கூர்மையான ஆயுதம்.<br>உன் தலைமுறை சுமந்த வலிக்கு, நீ தரும் ஒரே புரட்சிகரமான பதில் உன் அறிவாற்றல் மட்டுமே!"</p>
+                <p class="english-font">"Education is not just a leaf of paper; it is the sharpened blade that severs the chains binding you to the agony carried by your generations. Your intellect is your only revolutionary strike!" <br>— Vasanth</p>
                 <p class="slogan-bold">BE EDUCATED • BE ORGANISED • BE AGITATED <br> <small>— DR. B.R. AMBEDKAR</small></p>
             </div>
             <div class="search-box">
@@ -144,31 +145,39 @@
             </div>
         </div>
         
-        <footer class="legal-footer" id="main-footer">
+        <footer class="legal-footer">
             <div style="max-width: 1000px; margin: 0 auto;">
                 <h4>LEGAL NOTICE & PRIVACY</h4>
-                <p>This website, <strong>Neelam Makkal Digital Library</strong>, is a non-profit educational platform operated and controlled exclusively by <strong>Founder Vasanth</strong> and the Neelam Makkal team.</p>
+                <p>This website, <strong>Neelam Makkal Digital Library</strong>, is a non-profit educational platform operated and controlled exclusively by <strong>Founder Vasanth</strong> and the Neelam Makkal team. All rights reserved. The content provided here is for intellectual awakening and educational purposes only.</p>
                 <p style="margin-top: 20px; font-weight: bold; color: #fff;">© 2026 NEELAM MAKKAL | MANAGED BY VASANTH | JAI BHIM</p>
             </div>
         </footer>
     </main>
 
+    <!-- ABOUT PAGE -->
     <main id="about" class="page-container">
-        <h2>OUR PURPOSE</h2>
-        <p>Founder Vasanth believes in reclaiming history... Jai Bhim.</p>
-        <footer class="legal-footer"><p>© 2026 NEELAM MAKKAL | JAI BHIM</p></footer>
+        <h2 style="font-family: 'Cinzel Decorative'; color: var(--makkal-blue); font-size: 35px;">OUR PURPOSE</h2>
+        <p style="margin: 20px 0;">Founder Vasanth believes in reclaiming history... Jai Bhim.</p>
+        <footer class="legal-footer">
+            <div style="max-width: 1000px; margin: 0 auto;">
+                <h4>LEGAL NOTICE & PRIVACY</h4>
+                <p>© 2026 NEELAM MAKKAL | MANAGED BY VASANTH | JAI BHIM</p>
+            </div>
+        </footer>
     </main>
 
+    <!-- PDF VIEWER PAGE -->
     <div id="pdf-modal">
         <div class="pdf-viewer-content">
             <div class="pdf-frame-wrap">
+                <!-- Book-like Flip Feel using Google Viewer -->
                 <iframe id="pdf-frame" src=""></iframe>
             </div>
             
             <footer class="legal-footer" style="width: 100%;">
                 <div style="max-width: 1000px; margin: 0 auto;">
                     <h4>LEGAL NOTICE & PRIVACY</h4>
-                    <p>This PDF is part of the <strong>Neelam Makkal Digital Library</strong>. All revolutionary texts are hosted to ensure constitutional rights to education.</p>
+                    <p>This website, <strong>Neelam Makkal Digital Library</strong>, is a non-profit educational platform operated and controlled exclusively by <strong>Founder Vasanth</strong> and the Neelam Makkal team. All rights reserved. The content provided here is for intellectual awakening and educational purposes only.</p>
                     <p style="margin-top: 20px; font-weight: bold; color: #fff;">© 2026 NEELAM MAKKAL | MANAGED BY VASANTH | JAI BHIM</p>
                 </div>
             </footer>
@@ -183,6 +192,7 @@
             document.getElementById('about').style.display='none'; 
             document.getElementById('pdf-modal').style.display='none';
             toggleMenu(); 
+            window.scrollTo(0,0);
         }
         
         function showAbout() { 
@@ -190,18 +200,19 @@
             document.getElementById('about').style.display='block'; 
             document.getElementById('pdf-modal').style.display='none';
             toggleMenu(); 
+            window.scrollTo(0,0);
         }
 
         function openFlipBook(pdfPath) {
-            // Header and Menu are already fixed, so they stay on top
             document.getElementById('home').style.display='none';
             document.getElementById('about').style.display='none';
             document.getElementById('pdf-modal').style.display='block';
             
-            // Google Viewer provides a 'book-like' reading experience better than raw PDF links
-            const fullPath = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1) + pdfPath;
-            document.getElementById('pdf-frame').src = "https://docs.google.com/viewer?url=" + encodeURIComponent(fullPath) + "&embedded=true";
+            // Generate full path for Google Viewer
+            const currentPath = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
+            const fullPdfUrl = currentPath + pdfPath;
             
+            document.getElementById('pdf-frame').src = "https://docs.google.com/viewer?url=" + encodeURIComponent(fullPdfUrl) + "&embedded=true";
             window.scrollTo(0,0);
         }
     </script>
