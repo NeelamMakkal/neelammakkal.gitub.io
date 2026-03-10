@@ -12,6 +12,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <!-- Google Translate for PDF Content -->
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     
     <style>
         :root {
@@ -87,46 +89,37 @@
         .book-card img { width: 100%; height: 100%; object-fit: cover; border-left: 8px solid #001a66; display: block; }
         .book-title-sub { text-align: center; margin-top: 15px; font-family: 'Cinzel Decorative'; color: var(--makkal-blue); font-size: 14px; }
 
-        /* --- PDF ADVANCED READER OVERLAY --- */
+        /* --- UPDATED PDF READER OVERLAY --- */
         #pdf-reader-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #fff; z-index: 2500; overflow: hidden; display: none; flex-direction: column;
+            background: #222; z-index: 5000; overflow: hidden;
         }
         
-        /* New Tools Panel */
-        .reader-tools-panel {
-            background: #f1f3f4; padding: 10px; display: flex; justify-content: center; 
-            gap: 15px; flex-wrap: wrap; border-bottom: 2px solid var(--makkal-blue); align-items: center;
+        /* New Toolbar */
+        .reader-toolbar {
+            height: 60px; background: #fff; display: flex; align-items: center; 
+            justify-content: space-between; padding: 0 20px; border-bottom: 2px solid var(--makkal-blue);
         }
-
-        .lang-select { padding: 8px; border: 1px solid var(--makkal-blue); border-radius: 4px; font-family: 'Montserrat'; font-weight: bold; cursor: pointer; }
 
         #book-viewport {
-            flex-grow: 1; width: 100%;
+            width: 100%; height: calc(100vh - 140px);
             display: flex; justify-content: center; align-items: center;
-            background: #e0e0e0; position: relative; overflow: hidden;
+            overflow: auto; transition: transform 0.3s;
         }
 
-        #flipbook { width: 800px; height: 550px; margin: 0 auto; visibility: hidden; }
-        .page { background: white; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .page canvas { width: 100% !important; height: 100% !important; object-fit: contain; }
+        #flipbook { width: 800px; height: 550px; margin: 0 auto; }
+        .page { background: white; border: 1px solid #ddd; }
+        .page canvas { width: 100% !important; height: 100% !important; }
 
         .reader-controls {
-            display: flex; justify-content: center; gap: 20px; padding: 20px; 
-            background: #fff; border-top: 2px solid var(--makkal-blue);
+            height: 80px; display: flex; justify-content: center; align-items: center; gap: 15px; 
+            background: #fff; border-top: 2px solid var(--makkal-blue); position: fixed; bottom: 0; width: 100%;
         }
-        .reader-btn { background: var(--makkal-blue); color: white; border: none; padding: 12px 25px; cursor: pointer; border-radius: 5px; font-weight: bold; display: flex; align-items: center; gap: 8px; }
-        .voice-btn { background: #28a745; }
-        .stop-btn { background: #cc0000; }
-
-        /* Translated Text Popup */
-        #translation-overlay {
-            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-            width: 85%; background: rgba(255,255,255,0.95); padding: 15px;
-            border-radius: 8px; border-left: 5px solid var(--makkal-blue);
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.1); display: none; z-index: 10;
-            max-height: 120px; overflow-y: auto; font-size: 14px; line-height: 1.5;
+        .reader-btn { 
+            background: var(--makkal-blue); color: white; border: none; 
+            padding: 10px 18px; cursor: pointer; border-radius: 4px; font-weight: bold; font-size: 14px;
         }
+        .btn-round { border-radius: 50%; width: 45px; height: 45px; padding: 0; }
 
         /* --- ABOUT PAGE --- */
         .page-container { display: none; padding: 140px 20px 100px; max-width: 850px; margin: 0 auto; text-align: center; }
@@ -144,10 +137,11 @@
         .legal-footer { background: #1a1a1a; color: #aaa; padding: 60px 5% 30px; text-align: left; font-size: 13px; line-height: 1.8; margin-top: 50px; }
         .legal-footer h4 { color: #fff; margin-bottom: 15px; font-family: 'Cinzel Decorative'; }
 
-        #loading-msg { position: absolute; font-weight: bold; color: var(--makkal-blue); font-size: 18px; z-index: 5; }
+        #loading-msg { position: absolute; font-weight: bold; color: #fff; font-size: 18px; z-index: 10; }
 
         @media (max-width: 768px) {
             #flipbook { width: 95vw; height: 60vh; }
+            .reader-toolbar { height: auto; flex-wrap: wrap; padding: 10px; }
         }
     </style>
 </head>
@@ -157,15 +151,15 @@
         <div class="ashoka-chakra"></div>
     </div>
 
-    <!-- MAIN HEADER -->
     <header id="main-header">
         <div class="logo-box" onclick="showHome()">
             <img src="logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/120x45?text=Logo'">
         </div>
+        <!-- Translation Tool UI -->
+        <div id="google_translate_element"></div>
         <div class="menu-trigger" onclick="toggleMenu()">☰</div>
     </header>
 
-    <!-- NAVIGATION -->
     <div class="nav-overlay" id="menu">
         <div style="position:absolute; top:30px; right:40px; font-size:40px; cursor:pointer" onclick="toggleMenu()">×</div>
         <a href="#" onclick="showHome()">HOME</a>
@@ -194,7 +188,7 @@
         <div class="book-library">
             <div class="book-wrap" onclick="openBook('constitution.pdf')">
                 <div class="book-card">
-                    <img src="constitutioncover.jpg" alt="Constitution" onerror="this.src='https://via.placeholder.com/200x280?text=Constitution+Cover'">
+                    <img src="constitutioncover.jpg" alt="Constitution.pdf" onerror="this.src='https://via.placeholder.com/200x280?text=Constitution+Cover'">
                 </div>
                 <p class="book-title-sub">CONSTITUTION OF INDIA</p>
             </div>
@@ -212,7 +206,7 @@
     <main id="about" class="page-container">
         <h2 style="font-family: 'Cinzel Decorative'; color: var(--makkal-blue); font-size: 35px;">OUR PURPOSE</h2>
         <div style="text-align: left; margin: 30px 0; font-size: 18px; line-height: 1.8;">
-            <p>Founder Vasanth believes that every citizen of India must read and understand the ideologies of <strong>Babasaheb Ambedkar, Thanthai Periyar, Karl Marx</strong>, and other revolutionary leaders.</p>
+            <p>Founder Vasanth believes that every citizen of India must read and understand the ideologies of <strong>Babasaheb Ambedkar, Thanthai Periyar, Karl Marx</strong>, and other revolutionary leaders. This platform is built to reclaim the history that was suppressed or hidden from the people. </p>
             <p style="margin-top: 15px;">Our mission is to provide these books <strong>free of cost</strong> so that every single citizen can read and awaken their consciousness. Jai Bhim.</p>
         </div>
 
@@ -223,7 +217,9 @@
 
         <div id="bio" class="founder-bio">
             <h3 style="font-family: 'Cinzel Decorative'; margin-bottom: 20px;">The Founder's Story</h3>
-            <p>"My name is Vasanth. I started <strong>Neelam Makkal</strong> to amplify the mission of Babasaheb and Periyar. Thank you. Jai Bhim."</p>
+            <p>"My name is Vasanth. You might wonder why I only use my first name. I come from the land where <strong>Thanthai Periyar</strong> lived—a land where attaching a caste surname is considered a sign of regression. There is no need for it."</p>
+            <p style="margin-top: 15px;">"Thanthai Periyar E.V. Ramaswamy taught us that as long as the surname—which holds the seed of caste discrimination—is not discarded, the hierarchy of high and low will never end. This is why he threw away his own caste name. Similarly, Babasaheb Ambedkar chose the path of Buddhism to leave behind the discrimination of the caste system."</p>
+            <p style="margin-top: 15px;">"To advance their vision, I started <strong>Neelam Makkal</strong>. Through this, I aim to amplify their mission. Thank you. Jai Bhim."</p>
             
             <div class="upi-box">
                 <a href="mailto:officialvelvasanth@gmail.com" style="font-size: 32px; color: var(--makkal-blue);"><i class="fa-solid fa-envelope-circle-check"></i></a>
@@ -232,54 +228,48 @@
         </div>
     </main>
 
-    <!-- ADVANCED PDF READER OVERLAY -->
+    <!-- PROFESSIONAL BOOK READER OVERLAY -->
     <div id="pdf-reader-overlay">
-        <div class="reader-tools-panel">
-            <select id="reader-lang" class="lang-select">
-                <option value="hi-IN">HINDI (हिन्दी)</option>
-                <option value="ta-IN">TAMIL (தமிழ்)</option>
-                <option value="te-IN">TELUGU (తెలుగు)</option>
-                <option value="mr-IN">MARATHI (मराठी)</option>
-                <option value="bn-IN">BENGALI (বাংলা)</option>
-                <option value="kn-IN">KANNADA (ಕನ್ನಡ)</option>
-                <option value="ml-IN">MALAYALAM (മലയാളம்)</option>
-                <option value="gu-IN">GUJARATI (ગુજરાતી)</option>
-                <option value="pa-IN">PUNJABI (ਪੰਜਾਬੀ)</option>
-                <option value="en-US">ENGLISH</option>
-            </select>
-            <button class="reader-btn voice-btn" onclick="translateAndRead()"><i class="fa fa-language"></i> TRANSLATE & READ</button>
-            <button class="reader-btn stop-btn" onclick="stopSpeech()"><i class="fa fa-stop"></i> STOP</button>
-            <div style="font-weight:bold; color:var(--makkal-blue)">PAGE: <span id="current-page-num">0</span></div>
+        <div class="reader-toolbar">
+            <div style="font-weight: bold; color: var(--makkal-blue);">PROFESSIONAL READER</div>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="zoomBook(0.1)" class="reader-btn btn-round"><i class="fa fa-search-plus"></i></button>
+                <button onclick="zoomBook(-0.1)" class="reader-btn btn-round"><i class="fa fa-search-minus"></i></button>
+                <button onclick="readAloud()" class="reader-btn btn-round" style="background:#28a745;" title="Listen to Page"><i class="fa fa-volume-up"></i></button>
+            </div>
         </div>
 
         <div id="book-viewport">
             <div id="loading-msg">REVOLUTION IS LOADING...</div>
             <div id="flipbook"></div>
-            <div id="translation-overlay"></div>
         </div>
         
         <div class="reader-controls">
-            <button class="reader-btn" onclick="prevPage()"><i class="fa fa-arrow-left"></i> PREVIOUS</button>
-            <button class="reader-btn" style="background:#cc0000;" onclick="closeBook()">CLOSE BOOK</button>
+            <button class="reader-btn" onclick="prevPage()"><i class="fa fa-arrow-left"></i> PREV</button>
+            <span id="page-num-display" style="font-weight: bold; color: #555;">Page: 1</span>
             <button class="reader-btn" onclick="nextPage()">NEXT <i class="fa fa-arrow-right"></i></button>
+            <button class="reader-btn" style="background:#cc0000;" onclick="closeBook()">CLOSE</button>
         </div>
     </div>
 
-    <!-- SHARED LEGAL FOOTER -->
     <footer class="legal-footer" id="main-footer">
         <div style="max-width: 1000px; margin: 0 auto;">
             <h4>LEGAL NOTICE & PRIVACY</h4>
-            <p>This website, <strong>Neelam Makkal Digital Library</strong>, is a non-profit educational platform operated and controlled exclusively by <strong>Founder Vasanth</strong>.</p>
+            <p>This website, <strong>Neelam Makkal Digital Library</strong>, is a non-profit educational platform operated and controlled exclusively by <strong>Founder Vasanth</strong> and the Neelam Makkal team. All revolutionary texts are hosted to ensure constitutional rights to education.</p>
             <p style="margin-top: 20px; font-weight: bold; color: #fff;">© 2026 NEELAM MAKKAL | MANAGED BY VASANTH | JAI BHIM</p>
         </div>
     </footer>
 
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
-        
+
+        let currentZoom = 1;
         let pdfDoc = null;
-        let pageTexts = [];
-        let synth = window.speechSynthesis;
+        let pageTexts = []; // To store text for TTS
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'hi,ta,te,kn,ml,mr,gu,bn,pa'}, 'google_translate_element');
+        }
 
         function toggleMenu() { document.getElementById('menu').classList.toggle('active'); }
         
@@ -287,14 +277,12 @@
             closeBook();
             document.getElementById('home').style.display='block'; 
             document.getElementById('about').style.display='none'; 
-            window.scrollTo(0,0); 
         }
 
         function showAbout() { 
             closeBook();
             document.getElementById('home').style.display='none'; 
             document.getElementById('about').style.display='block'; 
-            window.scrollTo(0,0); 
         }
 
         function toggleBio() { 
@@ -305,13 +293,15 @@
         async function openBook(pdfUrl) {
             const overlay = document.getElementById('pdf-reader-overlay');
             const flipbook = $("#flipbook");
-            overlay.style.display = 'flex';
-            $("#loading-msg").show();
+            const loader = $("#loading-msg");
+            
+            overlay.style.display = 'block';
+            loader.show();
             document.body.style.overflow = 'hidden';
+            pageTexts = [];
 
             if (flipbook.data().turn) { flipbook.turn("destroy"); }
-            flipbook.empty().css('visibility', 'hidden');
-            pageTexts = [];
+            flipbook.empty();
 
             try {
                 const loadingTask = pdfjsLib.getDocument(pdfUrl);
@@ -321,6 +311,11 @@
                     const page = await pdfDoc.getPage(i);
                     const viewport = page.getViewport({ scale: 1.5 });
                     
+                    // Extract text for TTS
+                    const textContent = await page.getTextContent();
+                    const textItems = textContent.items.map(item => item.str).join(" ");
+                    pageTexts[i] = textItems;
+
                     const pageDiv = $('<div class="page"></div>');
                     const canvas = document.createElement('canvas');
                     const context = canvas.getContext('2d');
@@ -328,48 +323,41 @@
                     canvas.width = viewport.width;
                     
                     await page.render({ canvasContext: context, viewport: viewport }).promise;
-                    
-                    // Extract text for this page
-                    const textContent = await page.getTextContent();
-                    pageTexts[i] = textContent.items.map(s => s.str).join(' ');
-
                     pageDiv.append(canvas);
                     flipbook.append(pageDiv);
                 }
 
-                $("#loading-msg").hide();
-                flipbook.css('visibility', 'visible');
+                loader.hide();
                 flipbook.turn({
                     width: ($(window).width() > 800) ? 800 : $(window).width() * 0.95,
                     height: ($(window).width() > 800) ? 550 : 500,
                     autoCenter: true,
-                    display: 'single',
+                    display: ($(window).width() > 800) ? 'double' : 'single',
                     when: {
                         turned: function(e, page) {
-                            document.getElementById('current-page-num').innerText = page;
-                            stopSpeech();
+                            document.getElementById('page-num-display').innerText = "Page: " + page;
                         }
                     }
                 });
 
-            } catch (err) { console.error(err); }
+            } catch (err) {
+                loader.text("Error loading PDF.");
+                console.error(err);
+            }
         }
 
-        async function translateAndRead() {
-            stopSpeech();
+        function zoomBook(delta) {
+            currentZoom += delta;
+            document.getElementById('book-viewport').style.transform = `scale(${currentZoom})`;
+        }
+
+        function readAloud() {
             const pageNum = $("#flipbook").turn("page");
-            const text = pageTexts[pageNum];
-            const targetLang = document.getElementById('reader-lang').value;
-            const displayBox = document.getElementById('translation-overlay');
-
-            if (!text || text.trim() === "") {
-                alert("No readable text found on this page.");
-                return;
-            }
-
-            displayBox.style.display = "block";
-            displayBox.innerText = "Translating... please wait.";
-
-            try {
-                // Free Translation API (Google Translate Proxy)
-                const res = await fetch(`h
+            const text = pageTexts[pageNum] || "No text found on this page.";
+            
+            // Cancel existing speech
+            window.speechSynthesis.cancel();
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            // Detect if translation is active or default to Hindi/English
+        
