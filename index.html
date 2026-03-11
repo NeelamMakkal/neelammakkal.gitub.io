@@ -12,6 +12,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <!-- Google Translate API -->
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     
     <style>
         :root {
@@ -87,27 +89,42 @@
         .book-card img { width: 100%; height: 100%; object-fit: cover; border-left: 8px solid #001a66; display: block; }
         .book-title-sub { text-align: center; margin-top: 15px; font-family: 'Cinzel Decorative'; color: var(--makkal-blue); font-size: 14px; }
 
-        /* --- PDF FLIP READER OVERLAY --- */
+        /* --- PDF READER OVERLAY --- */
         #pdf-reader-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #fff; z-index: 2500; overflow-y: auto;
+            background: #f0f0f0; z-index: 3500; overflow: hidden;
         }
         
-        #book-viewport {
-            width: 100%; min-height: 80vh; margin-top: 100px;
-            display: flex; justify-content: center; align-items: center;
-            background: #e0e0e0; padding: 40px 0;
+        #reader-toolbar {
+            position: absolute; top: 0; width: 100%; height: 60px;
+            background: #fff; border-bottom: 2px solid var(--makkal-blue);
+            display: flex; justify-content: space-between; align-items: center; padding: 0 20px;
+            z-index: 3600;
         }
 
-        #flipbook { width: 800px; height: 550px; margin: 0 auto; visibility: hidden; }
-        .page { background: white; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        #book-viewport {
+            width: 100%; height: calc(100vh - 120px); margin-top: 60px;
+            display: flex; justify-content: center; align-items: center;
+            overflow: auto;
+        }
+
+        #flipbook { width: 800px; height: 550px; margin: auto; visibility: hidden; transition: transform 0.2s; }
+        .page { background: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .page canvas { width: 100% !important; height: 100% !important; object-fit: contain; }
 
         .reader-controls {
-            display: flex; justify-content: center; gap: 20px; padding: 25px; 
-            background: #fff; border-top: 2px solid var(--makkal-blue);
+            position: absolute; bottom: 0; width: 100%; height: 60px;
+            display: flex; justify-content: center; align-items: center; gap: 15px; 
+            background: #fff; border-top: 2px solid var(--makkal-blue); z-index: 3600;
         }
-        .reader-btn { background: var(--makkal-blue); color: white; border: none; padding: 12px 25px; cursor: pointer; border-radius: 5px; font-weight: bold; }
+        .reader-btn { background: var(--makkal-blue); color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 5px; font-weight: bold; font-size: 12px; transition: 0.2s; }
+        .reader-btn:hover { background: #002288; }
+        .reader-btn.red { background: #cc0000; }
+
+        /* --- GOOGLE TRANSLATE HACK --- */
+        #google_translate_element { display: inline-block; vertical-align: middle; }
+        .goog-te-gadget-icon { display: none !important; }
+        .goog-te-gadget-simple { border: 1px solid var(--makkal-blue) !important; border-radius: 4px; padding: 4px !important; }
 
         /* --- ABOUT PAGE --- */
         .page-container { display: none; padding: 140px 20px 100px; max-width: 850px; margin: 0 auto; text-align: center; }
@@ -125,11 +142,11 @@
         .legal-footer { background: #1a1a1a; color: #aaa; padding: 60px 5% 30px; text-align: left; font-size: 13px; line-height: 1.8; margin-top: 50px; }
         .legal-footer h4 { color: #fff; margin-bottom: 15px; font-family: 'Cinzel Decorative'; }
 
-        #loading-msg { position: absolute; font-weight: bold; color: var(--makkal-blue); font-size: 18px; }
+        #loading-msg { position: absolute; font-weight: bold; color: var(--makkal-blue); font-size: 18px; z-index: 3700; background: white; padding: 10px; border-radius: 5px; }
 
         @media (max-width: 768px) {
-            #flipbook { width: 95vw; height: 65vh; }
-            #book-viewport { padding: 10px 0; margin-top: 80px; }
+            #flipbook { width: 95vw; height: 60vh; }
+            .reader-btn span { display: none; }
         }
     </style>
 </head>
@@ -144,6 +161,7 @@
         <div class="logo-box" onclick="showHome()">
             <img src="logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/120x45?text=Logo'">
         </div>
+        <div id="google_translate_element"></div>
         <div class="menu-trigger" onclick="toggleMenu()">☰</div>
     </header>
 
@@ -218,31 +236,46 @@
 
     <!-- BOOK READER OVERLAY -->
     <div id="pdf-reader-overlay">
+        <div id="reader-toolbar">
+            <button class="reader-btn red" onclick="closeBook()"><i class="fa fa-times"></i> <span>CLOSE</span></button>
+            <div style="display:flex; gap:10px;">
+                <button class="reader-btn" onclick="zoomBook(0.1)"><i class="fa fa-search-plus"></i></button>
+                <button class="reader-btn" onclick="zoomBook(-0.1)"><i class="fa fa-search-minus"></i></button>
+                <button class="reader-btn" style="background:#28a745;" onclick="speakPage()"><i class="fa fa-volume-up"></i> <span>LISTEN PAGE</span></button>
+            </div>
+        </div>
+
         <div id="book-viewport">
             <div id="loading-msg">REVOLUTION IS LOADING...</div>
             <div id="flipbook"></div>
         </div>
         
         <div class="reader-controls">
-            <button class="reader-btn" onclick="prevPage()"><i class="fa fa-arrow-left"></i> PREVIOUS</button>
-            <button class="reader-btn" style="background:#cc0000;" onclick="closeBook()">CLOSE BOOK</button>
+            <button class="reader-btn" onclick="prevPage()"><i class="fa fa-arrow-left"></i> PREV</button>
+            <span id="page-num-display" style="font-weight:bold; color:var(--makkal-blue)">Page: 1</span>
             <button class="reader-btn" onclick="nextPage()">NEXT <i class="fa fa-arrow-right"></i></button>
         </div>
-        <div id="reader-footer-anchor"></div>
     </div>
 
     <!-- SHARED LEGAL FOOTER -->
     <footer class="legal-footer" id="main-footer">
         <div style="max-width: 1000px; margin: 0 auto;">
             <h4>LEGAL NOTICE & PRIVACY</h4>
-            <p>This website, <strong>Neelam Makkal Digital Library</strong>, is a non-profit educational platform operated and controlled exclusively by <strong>Founder Vasanth</strong> and the Neelam Makkal team. All rights reserved. The content provided here is for intellectual awakening and educational purposes only.</p>
-            <p style="margin-top: 10px;">By accessing this site, you agree that the distribution of knowledge is free and any unauthorized commercial use of the Neelam Makkal brand is strictly prohibited. All revolutionary texts are hosted to ensure constitutional rights to education.</p>
+            <p>This website, <strong>Neelam Makkal Digital Library</strong>, is a non-profit educational platform operated and controlled exclusively by <strong>Founder Vasanth</strong> and the Neelam Makkal team. All rights reserved.</p>
             <p style="margin-top: 20px; font-weight: bold; color: #fff;">© 2026 NEELAM MAKKAL | MANAGED BY VASANTH | JAI BHIM</p>
         </div>
     </footer>
 
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+        
+        let currentPdf = null;
+        let currentZoom = 1;
+        let pageTexts = [];
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'hi,ta,te,kn,ml,mr,gu,bn,pa,en'}, 'google_translate_element');
+        }
 
         function toggleMenu() { document.getElementById('menu').classList.toggle('active'); }
         
@@ -273,19 +306,24 @@
             overlay.style.display = 'block';
             loader.show();
             document.body.style.overflow = 'hidden';
-            document.getElementById('reader-footer-anchor').appendChild(document.getElementById('main-footer'));
+            pageTexts = []; // Reset texts
 
             if (flipbook.data().turn) { flipbook.turn("destroy"); }
             flipbook.empty().css('visibility', 'hidden');
 
             try {
                 const loadingTask = pdfjsLib.getDocument(pdfUrl);
-                const pdf = await loadingTask.promise;
+                currentPdf = await loadingTask.promise;
                 
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i);
+                for (let i = 1; i <= currentPdf.numPages; i++) {
+                    const page = await currentPdf.getPage(i);
                     const viewport = page.getViewport({ scale: 1.5 });
                     
+                    // Extract text for Speech
+                    const textContent = await page.getTextContent();
+                    const textItems = textContent.items.map(item => item.str).join(' ');
+                    pageTexts.push(textItems);
+
                     const pageDiv = $('<div class="page"></div>');
                     const canvas = document.createElement('canvas');
                     const context = canvas.getContext('2d');
@@ -302,36 +340,16 @@
 
                 flipbook.turn({
                     width: ($(window).width() > 800) ? 800 : $(window).width() * 0.95,
-                    height: ($(window).width() > 800) ? 550 : 500,
+                    height: ($(window).width() > 800) ? 550 : 450,
                     autoCenter: true,
                     display: ($(window).width() > 800) ? 'double' : 'single',
-                    acceleration: true,
-                    elevation: 50,
-                    gradients: true
+                    when: {
+                        turned: function(e, page) {
+                            document.getElementById('page-num-display').innerText = "Page: " + page;
+                        }
+                    }
                 });
 
             } catch (err) {
                 loader.text("Error loading PDF. Please check file path.");
-                console.error(err);
-            }
-        }
-
-        function closeBook() {
-            document.getElementById('pdf-reader-overlay').style.display = 'none';
-            document.body.style.overflow = 'auto';
-            document.body.appendChild(document.getElementById('main-footer'));
-        }
-
-        function nextPage() { $("#flipbook").turn("next"); }
-        function prevPage() { $("#flipbook").turn("previous"); }
-
-        $(window).resize(function() {
-            if ($("#pdf-reader-overlay").is(":visible")) {
-                let w = ($(window).width() > 800) ? 800 : $(window).width() * 0.95;
-                let h = ($(window).width() > 800) ? 550 : 500;
-                $("#flipbook").turn("size", w, h);
-            }
-        });
-    </script>
-</body>
-    </html>
+                c
