@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="apple-touch-icon" href="favicon.png">
+    <!-- Favicon ke liye ye code use karein -->
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neelam Makkal | Library of Revolution</title>
@@ -10,234 +12,289 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@1,600&family=Kavivanar&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
+    <!-- Dependencies -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
     <style>
         :root {
             --makkal-blue: #0033cc;
             --soft-glow: rgba(0, 51, 204, 0.2);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Montserrat', sans-serif; background: #ffffff; color: #1a1a1a; overflow-x: hidden; transition: var(--transition); }
+        body { font-family: 'Montserrat', sans-serif; background: #ffffff; color: #1a1a1a; overflow-x: hidden; }
 
-        /* --- CLICK FEEL ANIMATIONS --- */
-        a, .menu-trigger, .book-wrap, .reader-btn, .folder-box {
-            transition: var(--transition);
-            cursor: pointer;
-        }
-        a:active, .reader-btn:active { transform: scale(0.92); opacity: 0.8; }
-        .nav-overlay a:hover { letter-spacing: 2px; text-shadow: 0 0 10px var(--soft-glow); }
-
-        /* --- CHAKRA --- */
+        /* --- ROTATING CHAKRA --- */
         .chakra-container {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            z-index: -1; pointer-events: none; display: flex; justify-content: center; align-items: center;
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1; pointer-events: none;
+            display: flex; justify-content: center; align-items: center;
         }
         .ashoka-chakra {
             width: 85vh; height: 85vh;
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/17/Ashoka_Chakra.svg');
             background-size: contain; background-repeat: no-repeat;
-            filter: invert(15%) sepia(95%) saturate(3000%) hue-rotate(210deg) brightness(1.1);
-            opacity: 0.12; animation: spin 60s linear infinite;
+            filter: invert(15%) sepia(95%) saturate(3000%) hue-rotate(210deg) brightness(1.1) drop-shadow(0 0 20px var(--soft-glow));
+            opacity: 0.15;
+            animation: spin 50s linear infinite;
         }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* --- HEADER & TRANSLATE --- */
+        /* --- HEADER --- */
         header {
-            position: fixed; top: 0; width: 100%; padding: 10px 5%;
+            position: fixed; top: 0; width: 100%; padding: 8px 5%;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 3000; background: rgba(255,255,255,0.98); border-bottom: 2px solid var(--makkal-blue);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            z-index: 3000; background: rgba(255,255,255,0.95); border-bottom: 2px solid var(--makkal-blue);
         }
-        #google_translate_element { margin-right: 15px; }
-
-        .logo-box img { height: 45px; width: auto; transition: var(--transition); }
-        .logo-box img:active { transform: scale(0.9); }
+        .logo-box img { height: 45px; width: auto; display: block; cursor: pointer; }
+        .menu-trigger { font-size: 28px; color: var(--makkal-blue); cursor: pointer; }
 
         /* --- NAVIGATION --- */
         .nav-overlay {
             position: fixed; top: 0; right: -100%; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.99); z-index: 3002; transition: 0.5s ease-in-out;
+            background: rgba(255,255,255,0.98); z-index: 3002; transition: 0.4s;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
         .nav-overlay.active { right: 0; }
         .nav-overlay a { font-family: 'Cinzel Decorative'; font-size: 32px; color: var(--makkal-blue); text-decoration: none; margin: 20px; }
 
-        /* --- HERO & QUOTES --- */
-        .hero-section { text-align: center; padding: 160px 20px 60px; }
+        /* --- MAIN CONTENT --- */
+        .hero-section { text-align: center; padding: 140px 20px 60px; }
         .hero-section h1 { font-family: 'Cinzel Decorative'; font-size: clamp(35px, 8vw, 70px); color: var(--makkal-blue); margin-bottom: 10px; }
-        
-        .quotes-wrapper { max-width: 850px; margin: 0 auto 50px; background: #fff; padding: 40px; border-radius: 15px; border: 1px solid #eee; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
-        .tamil-font { font-family: 'Kavivanar', cursive; font-size: 22px; margin-bottom: 20px; color: #000; line-height: 1.6; }
-        
-        /* --- BOOK INTERACTION --- */
-        .book-wrap { width: 220px; margin: 0 auto; position: relative; }
-        .book-card {
-            width: 100%; height: 300px; transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 15px 15px 30px rgba(0,0,0,0.2); border-radius: 0 5px 5px 0;
-        }
-        .book-wrap:hover .book-card { transform: rotateY(-30deg) scale(1.05); }
-        .book-card img { width: 100%; height: 100%; object-fit: cover; border-left: 10px solid #001a66; border-radius: 0 5px 5px 0; }
+        .motto-text { font-size: 13px; font-weight: 700; letter-spacing: 2px; color: #555; margin-bottom: 40px; }
 
-        /* --- PDF READER HD & FEATURES --- */
+        .quotes-wrapper { max-width: 800px; margin: 0 auto 50px; background: rgba(255,255,255,0.7); padding: 30px; border-radius: 10px; border: 1px solid #eee; }
+        .tamil-font { font-family: 'Kavivanar', cursive; font-size: 20px; margin-bottom: 15px; color: #000; }
+        .english-font { font-family: 'Playfair Display', serif; font-size: 16px; font-style: italic; color: #444; margin-bottom: 30px; line-height: 1.7; }
+        .slogan-bold { font-family: 'Montserrat'; font-weight: 900; font-size: 18px; letter-spacing: 2px; color: var(--makkal-blue); text-transform: uppercase; }
+
+        .search-box { position: relative; max-width: 450px; margin: 0 auto 60px; }
+        .search-box input { width: 100%; padding: 15px 50px 15px 20px; border-radius: 5px; border: 2px solid var(--makkal-blue); font-size: 15px; outline: none; }
+        .search-box i { position: absolute; right: 20px; top: 18px; color: var(--makkal-blue); }
+
+        /* --- BOOK SYSTEM --- */
+        .banner-blue { background: var(--makkal-blue); color: #fff; padding: 15px; font-family: 'Cinzel Decorative'; letter-spacing: 3px; font-size: 22px; text-align: center; }
+        
+        .book-library { display: flex; justify-content: center; padding: 60px 0; }
+        .book-wrap { width: 200px; height: 280px; perspective: 1000px; cursor: pointer; text-decoration: none; position: relative; }
+        .book-card {
+            width: 100%; height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.3);
+        }
+        .book-wrap:hover .book-card { transform: rotateY(-25deg); }
+        .book-card img { width: 100%; height: 100%; object-fit: cover; border-left: 8px solid #001a66; display: block; }
+        .book-title-sub { text-align: center; margin-top: 15px; font-family: 'Cinzel Decorative'; color: var(--makkal-blue); font-size: 14px; }
+
+        /* --- PDF FLIP READER OVERLAY --- */
         #pdf-reader-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #1a1a1a; z-index: 4000; overflow: hidden;
+            background: #fff; z-index: 2500; overflow-y: auto;
         }
+        
         #book-viewport {
-            width: 100%; height: 85vh; display: flex; justify-content: center; align-items: center;
-            perspective: 2000px; padding: 20px;
+            width: 100%; min-height: 80vh; margin-top: 100px;
+            display: flex; justify-content: center; align-items: center;
+            background: #e0e0e0; padding: 40px 0;
         }
-        #flipbook { width: 900px; height: 600px; }
-        .page { background: white; box-shadow: inset 5px 0 15px rgba(0,0,0,0.1); }
-        
-        /* UI Controls */
-        .reader-header { position: absolute; top: 0; width: 100%; padding: 15px; background: rgba(0,0,0,0.8); display: flex; justify-content: space-between; color: white; z-index: 4001; }
-        .reader-controls { position: absolute; bottom: 0; width: 100%; display: flex; justify-content: center; gap: 15px; padding: 20px; background: #fff; border-top: 3px solid var(--makkal-blue); }
-        .reader-btn { background: var(--makkal-blue); color: white; border: none; padding: 12px 20px; border-radius: 4px; font-weight: bold; display: flex; align-items: center; gap: 8px; }
 
-        /* --- ABOUT US ANIMATION --- */
-        .page-container { display: none; padding: 140px 20px; max-width: 900px; margin: 0 auto; animation: fadeInUp 0.6s ease; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        #flipbook { width: 800px; height: 550px; margin: 0 auto; visibility: hidden; }
+        .page { background: white; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .page canvas { width: 100% !important; height: 100% !important; object-fit: contain; }
 
-        .folder-box:hover { transform: scale(1.05) rotate(2deg); border-color: #cc0000; }
-        
-        .legal-footer { background: #0a0a0a; color: #777; padding: 60px 5%; font-size: 13px; text-align: center; }
-        
-        #loading-msg { color: white; font-family: 'Cinzel Decorative'; font-size: 20px; text-align: center; }
+        .reader-controls {
+            display: flex; justify-content: center; gap: 20px; padding: 25px; 
+            background: #fff; border-top: 2px solid var(--makkal-blue);
+        }
+        .reader-btn { background: var(--makkal-blue); color: white; border: none; padding: 12px 25px; cursor: pointer; border-radius: 5px; font-weight: bold; }
+
+        /* --- ABOUT PAGE --- */
+        .page-container { display: none; padding: 140px 20px 100px; max-width: 850px; margin: 0 auto; text-align: center; }
+        .folder-box { width: 280px; height: 280px; margin: 40px auto; border: 6px double var(--makkal-blue); padding: 5px; cursor: pointer; transition: 0.3s; background: #fff; }
+        .folder-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .founder-label { font-family: 'Cinzel Decorative'; color: var(--makkal-blue); font-size: 18px; margin-top: 15px; }
+        .founder-bio { display: none; text-align: left; background: #f9f9f9; padding: 40px; border-radius: 5px; margin-top: 30px; border-top: 4px solid var(--makkal-blue); }
+
+        /* --- SOCIALS --- */
+        .social-row { display: flex; justify-content: center; gap: 35px; padding: 40px 0; }
+        .social-row a { font-size: 30px; color: var(--makkal-blue); }
+        .upi-box { display: flex; align-items: center; gap: 20px; margin-top: 30px; }
+        .upi-link { display: inline-block; background: var(--makkal-blue); color: #fff; padding: 12px 25px; text-decoration: none; font-weight: bold; border-radius: 5px; }
+
+        .legal-footer { background: #1a1a1a; color: #aaa; padding: 60px 5% 30px; text-align: left; font-size: 13px; line-height: 1.8; margin-top: 50px; }
+        .legal-footer h4 { color: #fff; margin-bottom: 15px; font-family: 'Cinzel Decorative'; }
+
+        #loading-msg { position: absolute; font-weight: bold; color: var(--makkal-blue); font-size: 18px; }
 
         @media (max-width: 768px) {
-            #flipbook { width: 100%; height: 70vh; }
-            .hero-section { padding-top: 120px; }
+            #flipbook { width: 95vw; height: 65vh; }
+            #book-viewport { padding: 10px 0; margin-top: 80px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="chakra-container"><div class="ashoka-chakra"></div></div>
+    <div class="chakra-container">
+        <div class="ashoka-chakra"></div>
+    </div>
 
-    <header>
+    <!-- MAIN HEADER -->
+    <header id="main-header">
         <div class="logo-box" onclick="showHome()">
             <img src="logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/120x45?text=Logo'">
         </div>
-        <div style="display: flex; align-items: center;">
-            <div id="google_translate_element"></div>
-            <div class="menu-trigger" onclick="toggleMenu()">☰</div>
-        </div>
+        <div class="menu-trigger" onclick="toggleMenu()">☰</div>
     </header>
 
+    <!-- NAVIGATION -->
     <div class="nav-overlay" id="menu">
-        <div style="position:absolute; top:30px; right:40px; font-size:40px; color:var(--makkal-blue)" onclick="toggleMenu()">×</div>
+        <div style="position:absolute; top:30px; right:40px; font-size:40px; cursor:pointer" onclick="toggleMenu()">×</div>
         <a href="#" onclick="showHome()">HOME</a>
         <a href="#" onclick="showAbout()">ABOUT US</a>
     </div>
 
+    <!-- HOME SECTION -->
     <main id="home">
         <section class="hero-section">
             <h1>NEELAM MAKKAL</h1>
-            <p style="font-weight:700; color:#666; letter-spacing:1px;">BUILT WITH THE RIGHTS OF AMBEDKAR, THE IDEOLOGY OF PERIYAR, AND THE WORLD OF KARL MARX.</p>
+            <p class="motto-text">BUILT WITH THE RIGHTS OF AMBEDKAR, THE IDEOLOGY OF PERIYAR, AND THE WORLD OF KARL MARX.</p>
+            
             <div class="quotes-wrapper">
-                <p class="tamil-font">"கல்வி என்பது வெறும் காகிதமல்ல... அது உன் தலைமுறை சுமந்த வலிக்கு நீ தரும் ஒரே புரட்சிகரமான பதில்!"</p>
-                <p style="font-family:'Playfair Display'; font-style:italic; font-size:17px; color:#444;">— Vasanth</p>
+                <p class="tamil-font">"கல்வி என்பது வெறும் காகிதமல்ல<br>அது உன்னைக் கட்டிப்போட்டிருக்கும் சங்கிலிகளை அறுக்கும் கூர்மையான ஆயுதம்.<br>உன் தலைமுறை சுமந்த வலிக்கு, நீ தரும் ஒரே புரட்சிகரமான பதில் உன் அறிவாற்றல் மட்டுமே!"</p>
+                <p class="english-font">"Education is not just a leaf of paper; it is the sharpened blade that severs the chains binding you to the agony carried by your generations. Your intellect is your only revolutionary strike!" <br>— Vasanth</p>
+                <p class="slogan-bold">BE EDUCATED • BE ORGANISED • BE AGITATED <br> <small>— DR. B.R. AMBEDKAR</small></p>
+            </div>
+
+            <div class="search-box">
+                <input type="text" placeholder="Type here to search Neelam Makkal...">
+                <i class="fa fa-search"></i>
             </div>
         </section>
 
-        <div style="background:var(--makkal-blue); color:white; padding:15px; text-align:center; font-family:'Cinzel Decorative'; font-size:22px;">BOOKS COLLECTION</div>
-        
-        <div style="padding: 60px 0; display:flex; justify-content:center;">
+        <div class="banner-blue">BOOKS COLLECTION</div>
+        <div class="book-library">
             <div class="book-wrap" onclick="openBook('constitution.pdf')">
                 <div class="book-card">
-                    <img src="constitutioncover.jpg" alt="Book" onerror="this.src='https://via.placeholder.com/220x300?text=Constitution'">
+                    <img src="constitutioncover.jpg" alt="Constitution.pdf" onerror="this.src='https://via.placeholder.com/200x280?text=Constitution+Cover'">
                 </div>
-                <p style="margin-top:15px; text-align:center; font-family:'Cinzel Decorative'; color:var(--makkal-blue);">CONSTITUTION OF INDIA</p>
+                <p class="book-title-sub">CONSTITUTION OF INDIA</p>
+            </div>
+        </div>
+
+        <div class="social-row">
+            <a href="mailto:officialneelammakkal@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+            <a href="https://instagram.com/neelam.makkal" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://youtube.com/@Neelam.Makkal" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://whatsapp.com/channel/0029VbCIHi3BadmgM4ujo41W" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+    </main>
+
+    <!-- ABOUT SECTION -->
+    <main id="about" class="page-container">
+        <h2 style="font-family: 'Cinzel Decorative'; color: var(--makkal-blue); font-size: 35px;">OUR PURPOSE</h2>
+        <div style="text-align: left; margin: 30px 0; font-size: 18px; line-height: 1.8;">
+            <p>Founder Vasanth believes that every citizen of India must read and understand the ideologies of <strong>Babasaheb Ambedkar, Thanthai Periyar, Karl Marx</strong>, and other revolutionary leaders. This platform is built to reclaim the history that was suppressed or hidden from the people. </p>
+            <p style="margin-top: 15px;">Our mission is to provide these books <strong>free of cost</strong> so that every single citizen can read and awaken their consciousness. Jai Bhim.</p>
+        </div>
+
+        <div class="folder-box" onclick="toggleBio()">
+            <img src="vasanth.jpg" alt="Vasanth" onerror="this.src='https://via.placeholder.com/250x250?text=Founder+Vasanth'">
+        </div>
+        <p class="founder-label">FOUNDER OF NEELAM MAKKAL: VASANTH</p>
+
+        <div id="bio" class="founder-bio">
+            <h3 style="font-family: 'Cinzel Decorative'; margin-bottom: 20px;">The Founder's Story</h3>
+            <p>"My name is Vasanth. You might wonder why I only use my first name. I come from the land where <strong>Thanthai Periyar</strong> lived—a land where attaching a caste surname is considered a sign of regression. There is no need for it."</p>
+            <p style="margin-top: 15px;">"Thanthai Periyar E.V. Ramaswamy taught us that as long as the surname—which holds the seed of caste discrimination—is not discarded, the hierarchy of high and low will never end. This is why he threw away his own caste name. Similarly, Babasaheb Ambedkar chose the path of Buddhism to leave behind the discrimination of the caste system."</p>
+            <p style="margin-top: 15px;">"To advance their vision, I started <strong>Neelam Makkal</strong>. Through this, I aim to amplify their mission. Thank you. Jai Bhim."</p>
+            
+            <div class="upi-box">
+                <a href="mailto:officialvelvasanth@gmail.com" style="font-size: 32px; color: var(--makkal-blue);"><i class="fa-solid fa-envelope-circle-check"></i></a>
+                <a href="upi://pay?pa=officialvelvasanth@oksbi&pn=Vasanth&cu=INR" class="upi-link">SUPPORT VIA UPI</a>
             </div>
         </div>
     </main>
 
-    <main id="about" class="page-container">
-        <h2 style="font-family:'Cinzel Decorative'; color:var(--makkal-blue); font-size:35px; text-align:center;">OUR PURPOSE</h2>
-        <div style="font-size:18px; line-height:1.8; margin:40px 0;">
-            <p>Founder <strong>Vasanth</strong> believes that every citizen must awaken their consciousness through the ideologies of Ambedkar, Periyar, and Karl Marx.</p>
-        </div>
-        <div class="folder-box" onclick="toggleBio()" style="width:280px; height:280px; margin:0 auto; border:5px solid var(--makkal-blue); overflow:hidden;">
-            <img src="vasanth.jpg" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://via.placeholder.com/280x280?text=Vasanth'">
-        </div>
-        <div id="bio" style="display:none; background:#f4f4f4; padding:30px; margin-top:20px; border-left:5px solid var(--makkal-blue);">
-            <p>"I started <strong>Neelam Makkal</strong> to amplify the mission of social justice. Jai Bhim."</p>
-        </div>
-    </main>
-
+    <!-- BOOK READER OVERLAY -->
     <div id="pdf-reader-overlay">
-        <div class="reader-header">
-            <span id="book-title-display">NEELAM MAKKAL LIBRARY</span>
-            <span onclick="closeBook()" style="cursor:pointer; font-weight:bold;">CLOSE [X]</span>
-        </div>
         <div id="book-viewport">
-            <div id="loading-msg">THE REVOLUTION IS LOADING IN HD...</div>
+            <div id="loading-msg">REVOLUTION IS LOADING...</div>
             <div id="flipbook"></div>
         </div>
+        
         <div class="reader-controls">
-            <button class="reader-btn" onclick="prevPage()"><i class="fa fa-arrow-left"></i> PREV</button>
-            <button class="reader-btn" onclick="readAloud()" style="background:#222;"><i class="fa fa-volume-up"></i> LISTEN</button>
+            <button class="reader-btn" onclick="prevPage()"><i class="fa fa-arrow-left"></i> PREVIOUS</button>
+            <button class="reader-btn" style="background:#cc0000;" onclick="closeBook()">CLOSE BOOK</button>
             <button class="reader-btn" onclick="nextPage()">NEXT <i class="fa fa-arrow-right"></i></button>
         </div>
+        <div id="reader-footer-anchor"></div>
     </div>
 
-    <footer class="legal-footer">
-        <p>© 2026 NEELAM MAKKAL | MANAGED BY VASANTH | JAI BHIM</p>
+    <!-- SHARED LEGAL FOOTER -->
+    <footer class="legal-footer" id="main-footer">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <h4>LEGAL NOTICE & PRIVACY</h4>
+            <p>This website, <strong>Neelam Makkal Digital Library</strong>, is a non-profit educational platform operated and controlled exclusively by <strong>Founder Vasanth</strong> and the Neelam Makkal team. All rights reserved. The content provided here is for intellectual awakening and educational purposes only.</p>
+            <p style="margin-top: 10px;">By accessing this site, you agree that the distribution of knowledge is free and any unauthorized commercial use of the Neelam Makkal brand is strictly prohibited. All revolutionary texts are hosted to ensure constitutional rights to education.</p>
+            <p style="margin-top: 20px; font-weight: bold; color: #fff;">© 2026 NEELAM MAKKAL | MANAGED BY VASANTH | JAI BHIM</p>
+        </div>
     </footer>
 
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
-        function toggleMenu() { $('#menu').toggleClass('active'); }
+        function toggleMenu() { document.getElementById('menu').classList.toggle('active'); }
         
         function showHome() { 
-            $('#home').fadeIn(); $('#about').hide(); toggleMenu(); window.scrollTo(0,0); 
+            closeBook();
+            document.getElementById('home').style.display='block'; 
+            document.getElementById('about').style.display='none'; 
+            window.scrollTo(0,0); 
         }
 
         function showAbout() { 
-            $('#home').hide(); $('#about').fadeIn(); toggleMenu(); window.scrollTo(0,0);
+            closeBook();
+            document.getElementById('home').style.display='none'; 
+            document.getElementById('about').style.display='block'; 
+            window.scrollTo(0,0); 
         }
 
-        function toggleBio() { $('#bio').slideToggle(); }
+        function toggleBio() { 
+            const b = document.getElementById('bio');
+            b.style.display = (b.style.display === 'block') ? 'none' : 'block';
+        }
 
         async function openBook(pdfUrl) {
-            $('#pdf-reader-overlay').fadeIn();
+            const overlay = document.getElementById('pdf-reader-overlay');
             const flipbook = $("#flipbook");
             const loader = $("#loading-msg");
-            loader.show();
             
+            overlay.style.display = 'block';
+            loader.show();
+            document.body.style.overflow = 'hidden';
+            document.getElementById('reader-footer-anchor').appendChild(document.getElementById('main-footer'));
+
             if (flipbook.data().turn) { flipbook.turn("destroy"); }
-            flipbook.empty();
+            flipbook.empty().css('visibility', 'hidden');
 
             try {
-                const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+                const loadingTask = pdfjsLib.getDocument(pdfUrl);
+                const pdf = await loadingTask.promise;
+                
                 for (let i = 1; i <= pdf.numPages; i++) {
                     const page = await pdf.getPage(i);
-                    // HD Rendering Logic
-                    const scale = 2.0; // High Definition Scale
-                    const viewport = page.getViewport({ scale: scale });
+                    const viewport = page.getViewport({ scale: 1.5 });
                     
                     const pageDiv = $('<div class="page"></div>');
                     const canvas = document.createElement('canvas');
                     const context = canvas.getContext('2d');
                     canvas.height = viewport.height;
                     canvas.width = viewport.width;
-                    canvas.style.width = "100%";
-                    canvas.style.height = "100%";
                     
                     await page.render({ canvasContext: context, viewport: viewport }).promise;
                     pageDiv.append(canvas);
@@ -245,29 +302,40 @@
                 }
 
                 loader.hide();
+                flipbook.css('visibility', 'visible');
+
                 flipbook.turn({
-                    width: 900, height: 600,
+                    width: ($(window).width() > 800) ? 800 : $(window).width() * 0.95,
+                    height: ($(window).width() > 800) ? 550 : 500,
                     autoCenter: true,
+                    display: ($(window).width() > 800) ? 'double' : 'single',
                     acceleration: true,
-                    gradients: true,
-                    elevation: 100,
-                    when: { turning: function(e, page) { console.log("Turning to page: " + page); } }
+                    elevation: 50,
+                    gradients: true
                 });
+
             } catch (err) {
-                loader.text("Error. File not found.");
+                loader.text("Error loading PDF. Please check file path.");
+                console.error(err);
             }
         }
 
-        function closeBook() { $('#pdf-reader-overlay').fadeOut(); }
+        function closeBook() {
+            document.getElementById('pdf-reader-overlay').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.body.appendChild(document.getElementById('main-footer'));
+        }
+
         function nextPage() { $("#flipbook").turn("next"); }
         function prevPage() { $("#flipbook").turn("previous"); }
 
-        // Audio Feature: Read the current context (Educational purpose)
-        function readAloud() {
-            const msg = new SpeechSynthesisUtterance("Reading Neelam Makkal Library Content. Please use the translator for your preferred language.");
-            window.speechSynthesis.speak(msg);
-            alert("Audio feature activated. It will read the site content in your selected language.");
-        }
+        $(window).resize(function() {
+            if ($("#pdf-reader-overlay").is(":visible")) {
+                let w = ($(window).width() > 800) ? 800 : $(window).width() * 0.95;
+                let h = ($(window).width() > 800) ? 550 : 500;
+                $("#flipbook").turn("size", w, h);
+            }
+        });
     </script>
 </body>
 </html>
