@@ -83,30 +83,27 @@
         .book-card img { width: 100%; height: 100%; object-fit: cover; border-left: 8px solid #001a66; display: block; }
         .book-title-sub { text-align: center; margin-top: 15px; font-family: 'Cinzel Decorative'; color: var(--makkal-blue); font-size: 13px; font-weight: bold; }
 
-        /* --- UPDATED PDF READER --- */
+        /* --- NEW: SINGLE PAGE PDF READER --- */
         #pdf-reader-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #fff; z-index: 2500; flex-direction: column;
+            background: #fff; z-index: 4000; flex-direction: column;
         }
         
-        #pdf-viewer-container {
+        #pdf-container {
             flex-grow: 1; overflow: auto; display: flex; justify-content: center; align-items: flex-start;
-            background: #525659; padding: 40px 0;
+            background: #525659; padding: 20px; position: relative;
         }
 
-        /* Container for Canvas + Text Layer */
-        .pdf-page-wrapper {
-            position: relative; background: white; box-shadow: 0 0 15px rgba(0,0,0,0.5);
-        }
-
+        .pdf-page-wrapper { position: relative; background: white; box-shadow: 0 0 20px rgba(0,0,0,0.5); margin: auto; }
         .textLayer { opacity: 1; mix-blend-mode: multiply; }
 
         .reader-controls {
-            display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px; padding: 12px; 
-            background: #323639; color: white; z-index: 2600;
+            display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; padding: 12px; 
+            background: #323639; color: white; border-top: 2px solid var(--makkal-blue);
         }
-        .reader-btn { background: #4a4a4a; color: white; border: none; padding: 10px 18px; cursor: pointer; border-radius: 4px; font-weight: bold; }
+        .reader-btn { background: #4a4a4a; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 4px; font-size: 14px; }
         .reader-btn:hover { background: var(--makkal-blue); }
+        #page-info { font-size: 14px; margin: 0 10px; }
 
         /* --- ABOUT PAGE --- */
         .page-container { display: none; padding: 140px 20px 100px; max-width: 850px; margin: 0 auto; text-align: center; }
@@ -115,7 +112,6 @@
         .founder-label { font-family: 'Cinzel Decorative'; color: var(--makkal-blue); font-size: 18px; margin-top: 15px; }
         .founder-bio { display: none; text-align: left; background: #f9f9f9; padding: 40px; border-radius: 5px; margin-top: 30px; border-top: 4px solid var(--makkal-blue); }
 
-        /* --- SOCIALS --- */
         .social-row { display: flex; justify-content: center; gap: 35px; padding: 40px 0; }
         .social-row a { font-size: 30px; color: var(--makkal-blue); }
         .upi-box { display: flex; align-items: center; gap: 20px; margin-top: 30px; }
@@ -144,27 +140,22 @@
         <section class="hero-section">
             <h1>NEELAM MAKKAL</h1>
             <p class="motto-text">BUILT WITH THE RIGHTS OF AMBEDKAR, THE IDEOLOGY OF PERIYAR, AND THE WORLD OF KARL MARX.</p>
-            
             <div class="quotes-wrapper">
                 <p class="tamil-font">"கல்வி என்பது வெறும் காகிதமல்ல<br>அது உன்னைக் கட்டிப்போட்டிருக்கும் சங்கிலிகளை அறுக்கும் கூர்மையான ஆயுதம்.<br>உன் தலைமுறை சுமந்த வலிக்கு, நீ தரும் ஒரே புரட்சிகரமான பதில் உன் அறிவாற்றல் மட்டுமே!"</p>
                 <p class="english-font">"Education is not just a leaf of paper; it is the sharpened blade that severs the chains binding you to the agony carried by your generations. Your intellect is your only revolutionary strike!" <br>— Vasanth</p>
                 <p class="slogan-bold">BE EDUCATED • BE ORGANISED • BE AGITATED <br> <small>— DR. B.R. AMBEDKAR</small></p>
             </div>
-
-            <div class="search-box">
-                <input type="text" placeholder="Type here to search Neelam Makkal...">
-                <i class="fa fa-search"></i>
-            </div>
+            <div class="search-box"><input type="text" placeholder="Type here to search Neelam Makkal..."><i class="fa fa-search"></i></div>
         </section>
 
         <div class="banner-blue">BOOKS COLLECTION</div>
         <div class="book-library">
             <div class="book-wrap" onclick="openBook('constitution.pdf')">
-                <div class="book-card"><img src="constitutioncover.jpg" alt="Constitution"></div>
+                <div class="book-card"><img src="constitutioncover.jpg" alt="Cover"></div>
                 <p class="book-title-sub">CONSTITUTION OF INDIA</p>
             </div>
             <div class="book-wrap" onclick="openBook('Collectedworksofperiyar.pdf')">
-                <div class="book-card"><img src="Collectedworksofperiyar.jpg" alt="Periyar"></div>
+                <div class="book-card"><img src="Collectedworksofperiyar.jpg" alt="Cover"></div>
                 <p class="book-title-sub">COLLECTED WORKS OF PERIYAR</p>
             </div>
         </div>
@@ -183,16 +174,13 @@
             <p>Founder Vasanth believes that every citizen of India must read and understand the ideologies of <strong>Babasaheb Ambedkar, Thanthai Periyar, Karl Marx</strong>, and other revolutionary leaders. This platform is built to reclaim the history that was suppressed or hidden from the people. </p>
             <p style="margin-top: 15px;">Our mission is to provide these books <strong>free of cost</strong> so that every single citizen can read and awaken their consciousness. Jai Bhim.</p>
         </div>
-
         <div class="folder-box" onclick="toggleBio()"><img src="vasanth.jpg" alt="Vasanth"></div>
         <p class="founder-label">FOUNDER OF NEELAM MAKKAL: VASANTH</p>
-
         <div id="bio" class="founder-bio">
             <h3 style="font-family: 'Cinzel Decorative'; margin-bottom: 20px;">The Founder's Story</h3>
             <p>"My name is Vasanth. You might wonder why I only use my first name. I come from the land where <strong>Thanthai Periyar</strong> lived—a land where attaching a caste surname is considered a sign of regression. There is no need for it."</p>
             <p style="margin-top: 15px;">"Thanthai Periyar E.V. Ramaswamy taught us that as long as the surname—which holds the seed of caste discrimination—is not discarded, the hierarchy of high and low will never end. This is why he threw away his own caste name. Similarly, Babasaheb Ambedkar chose the path of Buddhism to leave behind the discrimination of the caste system."</p>
             <p style="margin-top: 15px;">"To advance their vision, I started <strong>Neelam Makkal</strong>. Through this, I aim to amplify their mission. Thank you. Jai Bhim."</p>
-            
             <div class="upi-box">
                 <a href="upi://pay?pa=officialvelvasanth@oksbi&pn=Vasanth&cu=INR" class="upi-link">SUPPORT VIA UPI</a>
             </div>
@@ -200,20 +188,20 @@
     </main>
 
     <div id="pdf-reader-overlay">
-        <div class="reader-controls">
-            <button class="reader-btn" onclick="prevPage()"><i class="fa fa-chevron-left"></i> PREV</button>
-            <span id="page-info">Page: <span id="page-num">0</span> / <span id="page-count">0</span></span>
-            <button class="reader-btn" onclick="nextPage()">NEXT <i class="fa fa-chevron-right"></i></button>
-            <button class="reader-btn" onclick="zoomIn()"><i class="fa fa-search-plus"></i></button>
-            <button class="reader-btn" onclick="zoomOut()"><i class="fa fa-search-minus"></i></button>
-            <button class="reader-btn" onclick="toggleFS()"><i class="fa fa-expand"></i></button>
-            <button class="reader-btn" style="background:#cc0000;" onclick="closeBook()">CLOSE</button>
-        </div>
-        <div id="pdf-viewer-container">
-            <div id="pdf-wrap" class="pdf-page-wrapper">
+        <div id="pdf-container">
+            <div id="pdf-wrapper" class="pdf-page-wrapper">
                 <canvas id="pdf-canvas"></canvas>
                 <div id="text-layer" class="textLayer"></div>
             </div>
+        </div>
+        <div class="reader-controls">
+            <button class="reader-btn" onclick="onPrevPage()"><i class="fa fa-chevron-left"></i> PREV</button>
+            <span id="page-info">Page: <span id="page-num">0</span> / <span id="page-count">0</span></span>
+            <button class="reader-btn" onclick="onNextPage()">NEXT <i class="fa fa-chevron-right"></i></button>
+            <button class="reader-btn" onclick="zoomIn()"><i class="fa fa-search-plus"></i></button>
+            <button class="reader-btn" onclick="zoomOut()"><i class="fa fa-search-minus"></i></button>
+            <button class="reader-btn" onclick="toggleFullScreen()"><i class="fa fa-expand"></i></button>
+            <button class="reader-btn" style="background:#cc0000;" onclick="closeBook()">CLOSE</button>
         </div>
     </div>
 
@@ -228,7 +216,7 @@
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
-        let pdfDoc = null, pageNum = 1, scale = 1.5, pageRendering = false;
+        let pdfDoc = null, pageNum = 1, pageRendering = false, pageNumPending = null, scale = 1.5;
         const canvas = document.getElementById('pdf-canvas'), ctx = canvas.getContext('2d');
 
         function toggleMenu() { document.getElementById('menu').classList.toggle('active'); }
@@ -239,13 +227,14 @@
         function renderPage(num) {
             pageRendering = true;
             pdfDoc.getPage(num).then(function(page) {
-                const viewport = page.getViewport({scale: scale});
+                var viewport = page.getViewport({scale: scale});
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
 
-                const renderTask = page.render({canvasContext: ctx, viewport: viewport});
+                var renderTask = page.render({ canvasContext: ctx, viewport: viewport });
                 renderTask.promise.then(function() {
                     pageRendering = false;
+                    if (pageNumPending !== null) { renderPage(pageNumPending); pageNumPending = null; }
                     return page.getTextContent();
                 }).then(function(textContent) {
                     const textLayerDiv = document.getElementById('text-layer');
@@ -258,6 +247,15 @@
             document.getElementById('page-num').textContent = num;
         }
 
+        function onPrevPage() { if (pageNum <= 1) return; pageNum--; renderPage(pageNum); }
+        function onNextPage() { if (pageNum >= pdfDoc.numPages) return; pageNum++; renderPage(pageNum); }
+        function zoomIn() { scale += 0.2; renderPage(pageNum); }
+        function zoomOut() { if (scale <= 0.5) return; scale -= 0.2; renderPage(pageNum); }
+        function toggleFullScreen() {
+            let elem = document.getElementById("pdf-reader-overlay");
+            if (!document.fullscreenElement) elem.requestFullscreen(); else document.exitFullscreen();
+        }
+
         function openBook(url) {
             document.getElementById('pdf-reader-overlay').style.display = 'flex';
             document.body.style.overflow = 'hidden';
@@ -268,12 +266,12 @@
             });
         }
 
-        function closeBook() { document.getElementById('pdf-reader-overlay').style.display = 'none'; document.body.style.overflow = 'auto'; }
-        function prevPage() { if (pageNum <= 1) return; pageNum--; renderPage(pageNum); }
-        function nextPage() { if (pageNum >= pdfDoc.numPages) return; pageNum++; renderPage(pageNum); }
-        function zoomIn() { scale += 0.2; renderPage(pageNum); }
-        function zoomOut() { if (scale <= 0.8) return; scale -= 0.2; renderPage(pageNum); }
-        function toggleFS() { let e = document.getElementById("pdf-reader-overlay"); if (!document.fullscreenElement) e.requestFullscreen(); else document.exitFullscreen(); }
+        function closeBook() {
+            document.getElementById('pdf-reader-overlay').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            if(document.fullscreenElement) document.exitFullscreen();
+        }
     </script>
 </body>
-</html>
+    </html>
+            
