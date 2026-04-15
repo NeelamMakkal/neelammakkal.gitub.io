@@ -130,7 +130,7 @@
         .page-container { display: none; padding: 140px 20px 100px; max-width: 850px; margin: 0 auto; text-align: center; }
         .folder-box { width: 280px; height: 280px; margin: 40px auto; border: 6px double var(--makkal-blue); padding: 5px; cursor: pointer; transition: 0.3s; background: #fff; }
         .folder-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .founder-label { font-family: 'Cinzel Decorative'; color: var(--makkal-blue); font-size: 18px; margin-top: 15px; }
+        .founder-label { font-family: 'Cinzel Decorative'; color: var(--makkal-blue); font-size: 18px; margin-top: 15px; margin-bottom: 50px; }
         .founder-bio { display: none; text-align: left; background: #f9f9f9; padding: 40px; border-radius: 5px; margin-top: 30px; border-top: 4px solid var(--makkal-blue); }
 
         /* --- SOCIALS --- */
@@ -221,7 +221,7 @@
             <p style="margin-top: 15px;">Our mission is to provide these books <strong>free of cost</strong> so that every single citizen can read and awaken their consciousness. Jai Bhim.</p>
         </div>
 
-        <div class="folder-box" onclick="toggleBio()">
+        <div class="folder-box" onclick="toggleBio('bio')">
             <img src="vasanth.jpg" alt="Vasanth" onerror="this.src='https://via.placeholder.com/250x250?text=Founder+Vasanth'">
         </div>
         <p class="founder-label">FOUNDER OF NEELAM MAKKAL: VASANTH</p>
@@ -237,6 +237,19 @@
                 <a href="upi://pay?pa=officialvelvasanth@oksbi&pn=Vasanth&cu=INR" class="upi-link">SUPPORT VIA UPI</a>
             </div>
         </div>
+
+        <div class="folder-box" onclick="toggleBio('bio-jayasri')">
+            <img src="jayasri.jpg" alt="Jayasri" onerror="this.src='https://via.placeholder.com/250x250?text=Jayasri'">
+        </div>
+        <p class="founder-label">NEELAM REPORTER & EDITOR: JAYASRI</p>
+
+        <div id="bio-jayasri" class="founder-bio">
+            <h3 style="font-family: 'Cinzel Decorative'; margin-bottom: 20px;">Bridge to Justice</h3>
+            <p>"I am Jayasri, a dedicated member of the Neelam Makkal team, where I serve as a bridge between the world of law and the lives of the common people. Currently pursuing my BA.L.L.B, my mission is to ensure that justice isn’t confined to heavy textbooks, but is understood by everyone in our society."</p>
+            <p style="margin-top: 15px;">"With over two years of professional experience as a Video and Photo Editor, I believe that visual storytelling is the most powerful tool for social change. Using industry-standard tools like DaVinci Resolve, Adobe Photoshop, and CapCut, I transform complex legal frameworks and social justice issues into high-quality, cinematic visuals."</p>
+            <p style="margin-top: 15px;">"As a 'Neelam Reporter' and active member of this movement, I am committed to simplifying legal rights and amplifying the voices that need to be heard. I don’t just edit videos; I craft narratives that empower, educate, and inspire our community to stand up for their rights."</p>
+        </div>
+
     </main>
 
     <div id="pdf-reader-overlay">
@@ -302,8 +315,9 @@
             window.scrollTo(0,0); 
         }
 
-        function toggleBio() { 
-            const b = document.getElementById('bio');
+        // Updated toggleBio to handle different IDs
+        function toggleBio(bioId) { 
+            const b = document.getElementById(bioId);
             b.style.display = (b.style.display === 'block') ? 'none' : 'block';
         }
 
@@ -374,7 +388,6 @@
         function nextPage() { $("#flipbook").turn("next"); }
         function prevPage() { $("#flipbook").turn("previous"); }
 
-        // --- NEW FUNCTIONS: ZOOM & AUDIO ---
         function zoomBook(step) {
             currentZoom += step;
             if(currentZoom < 0.5) currentZoom = 0.5;
@@ -390,7 +403,7 @@
         function speakPDF() {
             window.speechSynthesis.cancel();
             if(pdfTextContent.length > 10) {
-                const utterance = new SpeechSynthesisUtterance(pdfTextContent.substring(0, 5000)); // Limits to 5000 chars for stability
+                const utterance = new SpeechSynthesisUtterance(pdfTextContent.substring(0, 5000)); 
                 window.speechSynthesis.speak(utterance);
             } else {
                 alert("Text not available for this PDF.");
@@ -407,4 +420,3 @@
     </script>
 </body>
 </html>
-                    
