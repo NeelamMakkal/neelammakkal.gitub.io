@@ -245,9 +245,14 @@
 
         <div id="bio-jayasri" class="founder-bio">
             <h3 style="font-family: 'Cinzel Decorative'; margin-bottom: 20px;">Bridge to Justice</h3>
-            <p>"I am Jayasri, a dedicated member of the Neelam Makkal team, where I serve as a bridge between the world of law and the lives of the common people. Currently pursuing my BA.L.L.B, my mission is to ensure that justice isn’t confined to heavy textbooks, but is understood by everyone in our society."</p>
-            <p style="margin-top: 15px;">"With over two years of professional experience as a Video and Photo Editor, I believe that visual storytelling is the most powerful tool for social change. Using industry-standard tools like DaVinci Resolve, Adobe Photoshop, and CapCut, I transform complex legal frameworks and social justice issues into high-quality, cinematic visuals."</p>
-            <p style="margin-top: 15px;">"As a 'Neelam Makkal Reporter' and active member of this movement, I am committed to simplifying legal rights and amplifying the voices that need to be heard. I don’t just edit videos; I craft narratives that empower, educate, and inspire our community to stand up for their rights."</p>
+            <p>"I am Jayasri, a dedicated member of the Neelam Makkal team, where I serve as a bridge between the world of law and the lives of the common people. Currently pursuing my <strong>BA.L.L.B</strong>, my mission is to ensure that justice isn’t confined to heavy textbooks, but is understood by everyone in our society."</p>
+            <p style="margin-top: 15px;">"With over two years of professional experience as a <strong>Video and Photo Editor</strong>, I believe that visual storytelling is the most powerful tool for social change. Using industry-standard tools like <strong>DaVinci Resolve, Adobe Photoshop, and CapCut</strong>, I transform complex legal frameworks and social justice issues into high-quality, cinematic visuals."</p>
+            <p style="margin-top: 15px;">"As a <strong>'Neelam Makkal Reporter'</strong> and active member of this movement, I am committed to simplifying legal rights and amplifying the voices that need to be heard. I don’t just edit videos; I craft narratives that empower, educate, and inspire our community to stand up for their rights."</p>
+            
+            <div class="upi-box">
+                <a href="mailto:officialjayasri@gmail.com" style="font-size: 32px; color: var(--makkal-blue);"><i class="fa-solid fa-envelope-circle-check"></i></a>
+                <p style="font-weight: bold; color: var(--makkal-blue);">CONTACT: officialjayasri@gmail.com</p>
+            </div>
         </div>
 
     </main>
@@ -297,7 +302,7 @@
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
         let currentZoom = 1.0;
-        let pdfTextContent = ""; // Stores text for Audio feature
+        let pdfTextContent = ""; 
 
         function toggleMenu() { document.getElementById('menu').classList.toggle('active'); }
         
@@ -315,7 +320,6 @@
             window.scrollTo(0,0); 
         }
 
-        // Updated toggleBio to handle different IDs
         function toggleBio(bioId) { 
             const b = document.getElementById(bioId);
             b.style.display = (b.style.display === 'block') ? 'none' : 'block';
@@ -333,7 +337,7 @@
 
             if (flipbook.data().turn) { flipbook.turn("destroy"); }
             flipbook.empty().css('visibility', 'hidden');
-            pdfTextContent = ""; // Reset text
+            pdfTextContent = ""; 
 
             try {
                 const loadingTask = pdfjsLib.getDocument(pdfUrl);
@@ -343,7 +347,6 @@
                     const page = await pdf.getPage(i);
                     const viewport = page.getViewport({ scale: 1.5 });
                     
-                    // Extract text for Audio feature
                     const textContent = await page.getTextContent();
                     pdfTextContent += textContent.items.map(item => item.str).join(" ") + " ";
 
@@ -358,7 +361,7 @@
                     flipbook.append(pageDiv);
                 }
 
-             loader.hide();
+                loader.hide();
                 flipbook.css('visibility', 'visible');
 
                 flipbook.turn({
